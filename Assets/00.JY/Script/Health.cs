@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    public float healthpoint = 100f;
+    //public float healthpoint = 100f;
     public bool isdie = false;
     Animator ani;
 
     void Start()
     {
         ani = GetComponent<Animator>();
+        var HP = GameManager.instance.gameDataObject.Hp;
     }
 
     
@@ -24,11 +25,12 @@ public class Health : MonoBehaviour
         if (isdie)
             return;
 
-        healthpoint = Mathf.Clamp(healthpoint - damage, 0f, healthpoint);
+        GameManager.instance.gameDataObject.Hp -= damage;
+
         if (ani != null)
             ani.SetTrigger("IsHit");
 
-        if (healthpoint <= 0)
+        if (GameManager.instance.gameDataObject.Hp <= 0)
         {
             //Debug.Log("die");
             if (ani != null)

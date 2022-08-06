@@ -37,6 +37,11 @@ public class RayShoot : MonoBehaviour
                 hit.collider.gameObject.SendMessage("OnDamage", _params, SendMessageOptions.DontRequireReceiver);
             }
 
+            var Enemy = hit.transform.GetComponent<EnemyHealth>();
+            if(Enemy != null)
+            {
+                Enemy.takeDamage(25f, hit.point);
+            }
         }
     }
     public void MoveAim()
