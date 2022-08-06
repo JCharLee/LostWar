@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b07e6df195623cd40a562816b90e437b, type: 3}
+  m_Name: GameDataSO
+  m_EditorClassIdentifier: 
+  shortWeapon: []
+  longWeapon: []
+  shoes: []
+  top: []
+  bottoms: []
+  shortWeapon_C:
+    name: 
+    str: 0
+    con: 0
+    vit: 0
+    num: 0
+    weight: 0
+    durability: 0
+    itemType: 0
+    damage: 0
+  longWeapon_C:
+    name: 
+    str: 0
+    con: 0
+    vit: 0
+    num: 0
+    weight: 0
+    durability: 0
+    itemType: 0
+    damage: 0
+  shoes_C:
+    name: 
+    str: 0
+    con: 0
+    vit: 0
+    num: 0
+    weight: 0
+    durability: 0
+    itemType: 0
+    def: 0
+  top_C:
+    name: 
+    str: 0
+    con: 0
+    vit: 0
+    num: 0
+    weight: 0
+    durability: 0
+    itemType: 0
+    def: 0
+  bottoms_C:
+    name: 
+    str: 0
+    con: 0
+    vit: 0
+    num: 0
+    weight: 0
+    durability: 0
+    itemType: 0
+    def: 0
