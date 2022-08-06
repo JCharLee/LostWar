@@ -10,7 +10,9 @@ public class GameDataObject : ScriptableObject
     public int Level { get; set; } = 1;// 레벨
     public int Level_max { get; }=30;// 최대 레벨
     private float exp;// 경험치
+    private float maxHp = 1000f;
     private float hp;
+    private float maxSp = 100f;
     private float sp;
     public float Exp// 경험치 프로퍼티
     {
@@ -21,7 +23,7 @@ public class GameDataObject : ScriptableObject
         set
         {
             exp = value;// 들어오는 값을 받아들인다
-            if (exp > Exp_require)// 경험치가 요구치보다 크다면
+            if (exp >= Exp_require)// 경험치가 요구치보다 크다면
             {
                 exp -= Exp_require;// 요구치 만큼 경험치 값을 뺀다
                 Level++;// 레벨이 오른다
@@ -37,7 +39,22 @@ public class GameDataObject : ScriptableObject
     public int Vit { get; set; } = 5;// 바이탈 스탯
     public int Status_max { get; } = 30;// 스탯 맥스치
     public int Status_own { get; set; } = 5;// 현재 스탯
-    public float MaxHp { get; set; } = 1000;
+    public float MaxHp
+    {
+        get
+        {
+            return maxHp;
+        }
+        set
+        {
+            maxHp = value;
+            if (Hp > maxHp)
+            {
+                Hp -= (Hp - maxHp);
+                UIManager.instance.DisplayHpBar();
+            }
+        }
+    }
     public float Hp
     {
         get
@@ -50,7 +67,22 @@ public class GameDataObject : ScriptableObject
             hp = Mathf.Clamp(hp, 0f, MaxHp);
         }
     }
-    public float MaxSp { get; set; } = 100;// 최대 기력
+    public float MaxSp
+    {
+        get
+        {
+            return maxSp;
+        }
+        set
+        {
+            maxSp = value;
+            if (Sp > maxSp)
+            {
+                Sp -= (Sp - maxSp);
+                UIManager.instance.DisplaySpBar();
+            }
+        }
+    }
     public float Sp
     {
         get

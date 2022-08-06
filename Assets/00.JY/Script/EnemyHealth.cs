@@ -63,6 +63,7 @@ public class EnemyHealth : MonoBehaviour
                 ani.SetTrigger("IsDie");
             isdie = true;
             agent.enabled = false;
+            PlayerInteraction.instance.Kill();
             StopAllCoroutines();
         }
     }
