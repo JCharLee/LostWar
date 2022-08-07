@@ -14,8 +14,28 @@ public class QuestManager : MonoBehaviour
 
     Dictionary<int, QuestData> questList;
 
-    public int QuestId => questId;
-    public int QuestActionIdx => questActionIdx;
+    public int QuestId
+    {
+        get
+        {
+            return questId;
+        }
+        set
+        {
+            questId = value;
+        }
+    }
+    public int QuestActionIdx
+    {
+        get
+        {
+            return questActionIdx;
+        }
+        set
+        {
+            questActionIdx = value;
+        }
+    }
     public Dictionary<int, QuestData> QuestList => questList;
 
     public static QuestManager instance = null;
@@ -38,7 +58,7 @@ public class QuestManager : MonoBehaviour
         GenerateData();
     }
 
-    private void Start()
+    public void Start()
     {
         isStarting = true;
         StartCoroutine(QuestStart());

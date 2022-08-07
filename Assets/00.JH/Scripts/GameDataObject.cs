@@ -6,6 +6,8 @@ using ItemSpace;// 아이템 정보를 담은 네임 스페이스
 [CreateAssetMenu(fileName = "GameDataSO", menuName = "Create GameData", order = 0)]
 public class GameDataObject : ScriptableObject
 {
+    public GameData gameData = new GameData();
+
     //능력치들
     public int Level { get; set; } = 1;// 레벨
     public int Level_max { get; }=30;// 최대 레벨

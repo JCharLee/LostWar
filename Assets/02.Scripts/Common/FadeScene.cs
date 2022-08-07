@@ -52,6 +52,38 @@ public class FadeScene : MonoBehaviour
                 case "Main":
                     SceneManager.LoadScene("Main");
                     break;
+                case "Retry":
+                    if (PlayerInteraction.instance.currentMapName == "Level1")
+                    {
+                        Destroy(FindObjectOfType<PlayerInteraction>().gameObject);
+                        Destroy(FindObjectOfType<UIManager>().gameObject);
+                        Destroy(FindObjectOfType<QuestManager>().gameObject);
+                        Destroy(FindObjectOfType<TalkManager>().gameObject);
+                        Destroy(FindObjectOfType<GameManager>().gameObject);
+                        SceneManager.LoadScene("Level1");
+                    }
+                    else
+                    {
+                        SceneManager.LoadScene(PlayerInteraction.instance.currentMapName);
+                        switch (PlayerInteraction.instance.currentMapName)
+                        {
+                            case "Level2":
+                                QuestManager.instance.QuestId = 40;
+                                QuestManager.instance.QuestActionIdx = 1;
+                                break;
+                            case "Level3":
+                                QuestManager.instance.QuestId = 80;
+                                QuestManager.instance.QuestActionIdx = 1;
+                                break;
+                            case "BossRoom":
+                                QuestManager.instance.QuestId = 130;
+                                QuestManager.instance.QuestActionIdx = 1;
+                                break;
+                        }
+                        DataManager.instance.LoadData();
+                        QuestManager.instance.Start();
+                    }
+                    break;
                 case "Return":
                     Destroy(FindObjectOfType<PlayerInteraction>().gameObject);
                     Destroy(FindObjectOfType<UIManager>().gameObject);

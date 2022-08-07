@@ -77,6 +77,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private CanvasGroup gameOverTxt;
     [SerializeField] private CanvasGroup gameOverBtn;
     private float fadeDuration = 3.0f;
+    public bool gameOver = false;
 
     public GameObject fadeObject;
 
@@ -542,21 +543,21 @@ public class UIManager : MonoBehaviour
     #endregion
 
     #region [게임오버]
-    public void GameOver()
+    public void GameOverPanelOn()
     {
+        gameOver = true;
         gameOverBg.gameObject.SetActive(true);
         gameOverTxt.gameObject.SetActive(true);
         gameOverBtn.gameObject.SetActive(true);
         StartCoroutine(GameOverText());
     }
 
-    public void GameOverPanelFalse()
+    public void GameOverPanelOff()
     {
         gameOverBg.gameObject.SetActive(false);
         gameOverTxt.gameObject.SetActive(false);
         gameOverBtn.gameObject.SetActive(false);
     }
-
     IEnumerator GameOverText()
     {
         float rate = 1.0f / fadeDuration;
@@ -602,7 +603,9 @@ public class UIManager : MonoBehaviour
 
     public void Retry()
     {
-
+        FadeScene fadeScene = fadeObject.GetComponent<FadeScene>();
+        fadeScene.sceneName = "Retry";
+        fadeObject.SetActive(true);
     }
 
     public void GotoMain()

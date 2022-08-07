@@ -63,6 +63,7 @@ public class SceneLoader : MonoBehaviour
                 {
                     isLoading = false;
                     op.allowSceneActivation = true;
+                    DataManager.instance.SaveData();
                     yield break;
                 }
             }

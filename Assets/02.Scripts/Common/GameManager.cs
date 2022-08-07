@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     private GameObject bottoms_C;
     private List<GameObject> list_inventory = new List<GameObject>();
 
+
     private MoveBehaviour moveBehaviour;
     public static GameManager instance;
 
