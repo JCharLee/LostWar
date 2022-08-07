@@ -207,6 +207,8 @@ public class UIManager : MonoBehaviour
         else
             skillPanel.SetActive(true);
 
+        CheckSkillPotion();
+
         hpBar.fillAmount = (gameDataObject.Hp / gameDataObject.MaxHp);
         hpAmount.text = $"{gameDataObject.Hp} / {gameDataObject.MaxHp}";
         spBar.fillAmount = (gameDataObject.Sp / gameDataObject.MaxSp);
@@ -220,6 +222,42 @@ public class UIManager : MonoBehaviour
         def.text = $"DEF : {gameDataObject.Def}";
         hp.text = $"HP : {gameDataObject.MaxHp}";
         sp.text = $"SP : {gameDataObject.MaxSp}";
+    }
+
+    private void CheckSkillPotion()
+    {
+        Potion hpPotion = gameDataObject.hpPotion.Find(x => x.name == "HP Potion") as Potion;
+        Potion spPotion = gameDataObject.spPotion.Find(x => x.name == "SP Potion") as Potion;
+
+        if (hpPotion != null)
+        {
+            hpSkill.gameObject.SetActive(true);
+            hpSkill.sprite = hpPotion.img;
+            hpSkill.GetComponentInChildren<Text>().text = hpPotion.count.ToString();
+            if (Input.GetKeyDown(KeyCode.Alpha3))
+                GameManager.instance.UsePotion(gameDataObject.hpPotion.Find(x => x.name == "HP Potion") as Potion);
+        }
+        else
+        {
+            hpSkill.gameObject.SetActive(false);
+            if (Input.GetKeyDown(KeyCode.Alpha3))
+                StartCoroutine(NoticeText(false, "포션이 없습니다."));
+        }
+
+        if (spPotion != null)
+        {
+            spSkill.gameObject.SetActive(true);
+            spSkill.sprite = spPotion.img;
+            spSkill.GetComponentInChildren<Text>().text = spPotion.count.ToString();
+            if (Input.GetKeyDown(KeyCode.Alpha4))
+                GameManager.instance.UsePotion(gameDataObject.spPotion.Find(x => x.name == "SP Potion") as Potion);
+        }
+        else
+        {
+            spSkill.gameObject.SetActive(false);
+            if (Input.GetKeyDown(KeyCode.Alpha4))
+                StartCoroutine(NoticeText(false, "포션이 없습니다."));
+        }
     }
 
     private void AllUiClose()

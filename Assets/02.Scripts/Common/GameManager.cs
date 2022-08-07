@@ -117,6 +117,7 @@ public class GameManager : MonoBehaviour
         Destroy(shoes_C);
     }
 
+    #region [인벤토리 데이터 반영]
     private void AddInventory(List<Item> items)
     {
         int idx = 1;
@@ -153,7 +154,9 @@ public class GameManager : MonoBehaviour
         obj.GetComponent<SlotItemInfo>().isEquip = true;
         return obj;
     }
+    #endregion
 
+    #region [장비 착용 및 해제]
     private void Equip(ItemType type)
     {
         Weapon weapon;
@@ -346,4 +349,46 @@ public class GameManager : MonoBehaviour
                 list_inventory.Add(SlotItemInfo.instance.gameObject);
         }
     }
+    #endregion
+
+    #region [포션 업데이트]
+    public void UpdatePotion(Potion potion)
+    {
+        if (potion.count <= 0)
+        {
+            switch (potion.potionType)
+            {
+                case PotionType.HP:
+                    gameDataObject.hpPotion.Remove(potion);
+                    break;
+                case PotionType.SP:
+                    gameDataObject.spPotion.Remove(potion);
+                    break;
+            }
+        }
+    }
+
+    public void UsePotion(Potion potion)
+    {
+        switch (potion.potionType)
+        {
+            case PotionType.HP:
+                if (gameDataObject.Hp >= gameDataObject.MaxHp)
+                {
+                    StartCoroutine(UIManager.instance.NoticeText(false, "이미 체력이 가득 차 있습니다."));
+                    return;
+                }
+                break;
+            case PotionType.SP:
+                if (gameDataObject.Sp >= gameDataObject.MaxSp)
+                {
+                    StartCoroutine(UIManager.instance.NoticeText(false, "이미 기력이 가득 차 있습니다."));
+                    return;
+                }
+                break;
+        }
+        potion.Use();
+        UpdatePotion(potion);
+    }
+    #endregion
 }

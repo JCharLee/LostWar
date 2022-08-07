@@ -9,7 +9,7 @@ public class SlotItemInfo : MonoBehaviour, IPointerClickHandler
 {
     public Item item;
     private Potion potion;
-    private Text cnt;
+    public Text cnt;
     public bool isEquip = false;
     public static SlotItemInfo instance;
     [SerializeField] private GameDataObject gameDataObject;
@@ -30,16 +30,6 @@ public class SlotItemInfo : MonoBehaviour, IPointerClickHandler
                 cnt.text = potion.count.ToString();
                 if (potion.count <= 0)
                 {
-                    switch (potion.potionType)
-                    {
-                        case PotionType.HP:
-                            gameDataObject.hpPotion.Remove(potion);
-                            break;
-                        case PotionType.SP:
-                            gameDataObject.spPotion.Remove(potion);
-                            break;
-                    }
-                    item = null;
                     Destroy(gameObject);
                     return;
                 }
@@ -64,20 +54,7 @@ public class SlotItemInfo : MonoBehaviour, IPointerClickHandler
 
             if (item.itemType == ItemType.potion)
             {
-                if (GameManager.instance.gameDataObject.Hp >= GameManager.instance.gameDataObject.MaxHp)
-                {
-                    switch (potion.potionType)
-                    {
-                        case PotionType.HP:
-                            StartCoroutine(UIManager.instance.NoticeText(false, "이미 체력이 가득 차 있습니다."));
-                            break;
-                        case PotionType.SP:
-                            StartCoroutine(UIManager.instance.NoticeText(false, "이미 기력이 가득 차 있습니다."));
-                            break;
-                    }
-                    return;
-                }
-                potion.Use();
+                GameManager.instance.UsePotion(item as Potion);
             }
         }
         else
