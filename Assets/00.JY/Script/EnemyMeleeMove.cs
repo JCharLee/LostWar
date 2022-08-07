@@ -8,7 +8,7 @@ public class EnemyMeleeMove : MonoBehaviour
     NavMeshAgent agent;
     Animator ani;
     Transform tr;
-    Transform playertr;
+    Transform playerTr;
     EnemyPatrol Epatrol;
     EnemyHealth Ehealth;
     public Collider sword;
@@ -21,6 +21,9 @@ public class EnemyMeleeMove : MonoBehaviour
     readonly string attack = "IsAttack";
     [SerializeField]
     int attacknum = 0;
+    int layermask;
+    float traceDist = 15f;
+    bool LookPlayer = false;
 
     void Start()
     {
@@ -29,36 +32,46 @@ public class EnemyMeleeMove : MonoBehaviour
         tr = GetComponent<Transform>();
         Epatrol = GetComponent<EnemyPatrol>();
         Ehealth = GetComponent<EnemyHealth>();
-        playertr = GameObject.FindWithTag("Player").GetComponent<Transform>();
+        playerTr = GameObject.FindWithTag("Player").GetComponent<Transform>();
+        layermask = 1 << 9 | 1 << 10;
     }
 
-    
+    private void Update()
+    {
+        RaycastHit hit;
+        Vector3 dir = (playerTr.position + playerTr.up * 1f - tr.position).normalized;
+        Debug.DrawRay(tr.position, dir * 1.5f, Color.green);
+        if (Physics.Raycast(tr.position, dir, out hit, 1.5f, layermask))
+            LookPlayer = (hit.collider.CompareTag("Player"));
+        else
+            LookPlayer = false;
+    }
+
     void FixedUpdate()
     {
         if (Ehealth.isdie)
             return;
 
-        float dist = Vector3.Distance(playertr.position, tr.position);
+        float dist = Vector3.Distance(playerTr.position, tr.position);
         attacktime += Time.deltaTime;
 
-        if(dist <= 1.5f)
+        if(dist <= 1.5f && LookPlayer)
         {
             ani.SetBool("IsMove", false);
             agent.isStopped = true;
             RandomAttack();
         }
-        else if(dist <= 15f)
+        else if(dist <= traceDist && !LookPlayer)
         {
             if (!isaction)
             {
                 ani.SetBool("IsMove", true);
-                agent.destination = playertr.position;
+                agent.destination = playerTr.position;
                 agent.isStopped = false;
             }
         }
         else
         {
-            ani.SetBool("IsMove", true);
             Epatrol.patrol();
         }
     }
@@ -91,7 +104,7 @@ public class EnemyMeleeMove : MonoBehaviour
     {
         if(attacktime >= nextattack)
         {
-            Quaternion rot = Quaternion.LookRotation(playertr.position - tr.position);
+            Quaternion rot = Quaternion.LookRotation(playerTr.position - tr.position);
             tr.rotation = Quaternion.Slerp(tr.rotation, rot, Time.deltaTime * 50.0f);
 
             sword.enabled = true;

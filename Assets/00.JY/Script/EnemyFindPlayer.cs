@@ -34,8 +34,8 @@ public class EnemyFindPlayer : MonoBehaviour
     {
         RaycastHit hit;
         Vector3 dir = (playerTr.position + playerTr.up * 1f - tr.position).normalized;
-        Debug.DrawRay(tr.position, dir * 50f, Color.green);
-        if (Physics.Raycast(tr.position, dir, out hit, 50f, layermask))
+        Debug.DrawRay(tr.position, dir * combatDist, Color.green);
+        if (Physics.Raycast(tr.position, dir, out hit, combatDist, layermask))
             enemyFire.isFire = (hit.collider.CompareTag("Player"));
         else
             enemyFire.isFire = false;
@@ -56,7 +56,7 @@ public class EnemyFindPlayer : MonoBehaviour
             enemyAgent.isStopped = true;
             ani.SetBool("IsMove", false);
         }
-        else if (dist <= traceDist)
+        else if (dist <= traceDist && !enemyFire.isFire)
         {
             //enemyFire.isFire = false;
             enemyAgent.speed = 7f;
@@ -66,7 +66,6 @@ public class EnemyFindPlayer : MonoBehaviour
         }
         else if (dist >= traceDist)
         {
-            enemyFire.isFire = false;
             //패트롤 할 부분
             enemyPatrol.patrol();
         }
