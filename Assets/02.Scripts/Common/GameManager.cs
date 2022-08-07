@@ -32,12 +32,12 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         DontDestroyOnLoad(this.gameObject);
 
-        itemSlots = GameObject.Find("UI").transform.GetChild(6).transform.GetChild(2).GetComponentsInChildren<Transform>();
-        equiped_top = GameObject.Find("UI").transform.GetChild(6).transform.GetChild(1).transform.GetChild(1).GetComponent<Transform>();
-        equiped_bottoms = GameObject.Find("UI").transform.GetChild(6).transform.GetChild(1).transform.GetChild(2).GetComponent<Transform>();
-        equiped_shoes = GameObject.Find("UI").transform.GetChild(6).transform.GetChild(1).transform.GetChild(3).GetComponent<Transform>();
-        equiped_shortWeapon = GameObject.Find("UI").transform.GetChild(6).transform.GetChild(1).transform.GetChild(4).GetComponent<Transform>();
-        equiped_longWeapon = GameObject.Find("UI").transform.GetChild(6).transform.GetChild(1).transform.GetChild(5).GetComponent<Transform>();
+        itemSlots = GameObject.Find("UI").transform.GetChild(5).transform.GetChild(2).GetComponentsInChildren<Transform>();
+        equiped_top = GameObject.Find("UI").transform.GetChild(5).transform.GetChild(1).transform.GetChild(1).GetComponent<Transform>();
+        equiped_bottoms = GameObject.Find("UI").transform.GetChild(5).transform.GetChild(1).transform.GetChild(2).GetComponent<Transform>();
+        equiped_shoes = GameObject.Find("UI").transform.GetChild(5).transform.GetChild(1).transform.GetChild(3).GetComponent<Transform>();
+        equiped_shortWeapon = GameObject.Find("UI").transform.GetChild(5).transform.GetChild(1).transform.GetChild(4).GetComponent<Transform>();
+        equiped_longWeapon = GameObject.Find("UI").transform.GetChild(5).transform.GetChild(1).transform.GetChild(5).GetComponent<Transform>();
 
         moveBehaviour = GameObject.FindGameObjectWithTag("Player").GetComponent<MoveBehaviour>();
     }

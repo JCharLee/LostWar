@@ -84,7 +84,12 @@ public class MoveBehaviour : GenericBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha1) && !haveMotion)//원거리 무기
 		{
-			if (cur_long_weapon == null) return;
+			if (cur_long_weapon == null)
+            {
+				StartCoroutine(UIManager.instance.NoticeText(false, "무기를 먼저 장착해야 합니다."));
+				return;
+            }
+			UIManager.instance.weaponTxt.text = "WEAPON\n1";
 			if (usingWeapon == UsingWeapon.short_dist)//근거리 무기를 들고 있었다면
 				cur_short_weapon.SetActive(false);//비활성화 한다.
 			StartCoroutine(On(cur_long_weapon));
@@ -95,7 +100,12 @@ public class MoveBehaviour : GenericBehaviour
 		}
 		if (Input.GetKeyDown(KeyCode.Alpha2) && !haveMotion)//근접 무기
 		{
-			if (cur_short_weapon == null) return;//근접무기가 없으면 돌아감
+			if (cur_short_weapon == null)
+            {
+				StartCoroutine(UIManager.instance.NoticeText(false, "무기를 먼저 장착해야 합니다."));
+				return;
+			}
+			UIManager.instance.weaponTxt.text = "WEAPON\n2";
 			if (usingWeapon == UsingWeapon.long_dist)//원거리 무기를 들고 있었다면
 				cur_long_weapon.SetActive(false);//비활성화 한다.
 			StartCoroutine(On(cur_short_weapon));//근거리무기를 활성화
@@ -107,7 +117,8 @@ public class MoveBehaviour : GenericBehaviour
 		
 		if (Input.GetKeyDown(KeyCode.Tab))
 		{
-			if(cur_short_weapon!=null)
+			UIManager.instance.weaponTxt.text = "NO\nWEAPON\n(1or2)";
+			if (cur_short_weapon!=null)
 			cur_short_weapon.SetActive(false);
 			if(cur_long_weapon!=null)
 			cur_long_weapon.SetActive(false);

@@ -66,6 +66,12 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Text sp;
     public bool inventoryOn = false;
 
+    [Header("[Skill]")]
+    public GameObject skillPanel;
+    public Text weaponTxt;
+    public Image hpSkill;
+    public Image spSkill;
+
     public GameObject fadeObject;
 
     public Coroutine castRoutine;
@@ -85,33 +91,35 @@ public class UIManager : MonoBehaviour
             Destroy(gameObject);
         DontDestroyOnLoad(this.gameObject);
 
+        // 0.상호작용
         interactionPanel = transform.GetChild(0).gameObject;
         promptText = interactionPanel.GetComponentInChildren<Text>();
 
+        // 1.캐스팅바
         castingBar_back = transform.GetChild(1).gameObject;
         castingBar = castingBar_back.transform.GetChild(0).GetComponent<Image>();
         castingTimeText = castingBar_back.transform.GetChild(1).GetComponent<Text>();
 
-        noticeText = transform.GetChild(2).GetComponent<Text>();
-
-        talkPanel = transform.GetChild(3).gameObject;
+        // 2.대화창
+        talkPanel = transform.GetChild(2).gameObject;
         npcName = talkPanel.transform.GetChild(0).GetComponent<Text>();
         talkText = talkPanel.transform.GetChild(1).GetComponent<Text>();
         portrait = talkPanel.transform.GetChild(2).transform.GetChild(0).GetComponent<Image>();
 
-        questListPanel = transform.GetChild(4).gameObject;
+        // 3.퀘스트
+        questListPanel = transform.GetChild(3).gameObject;
         questGiver = GameObject.FindGameObjectWithTag("Player").transform.GetChild(1).gameObject;
 
-        hpBar = transform.GetChild(5).transform.GetChild(1).transform.GetChild(0).GetComponent<Image>();
-        hpAmount = transform.GetChild(5).transform.GetChild(1).transform.GetChild(2).GetComponent<Text>();
-        spBar = transform.GetChild(5).transform.GetChild(2).transform.GetChild(0).GetComponent<Image>();
-        spAmount = transform.GetChild(5).transform.GetChild(2).transform.GetChild(2).GetComponent<Text>();
-        expBar = transform.GetChild(5).transform.GetChild(3).transform.GetChild(0).GetComponent<Image>();
-        lvText = transform.GetChild(5).transform.GetChild(4).GetComponent<Text>();
+        // 4.플레이어 상태창
+        hpBar = transform.GetChild(4).transform.GetChild(1).transform.GetChild(0).GetComponent<Image>();
+        hpAmount = transform.GetChild(4).transform.GetChild(1).transform.GetChild(2).GetComponent<Text>();
+        spBar = transform.GetChild(4).transform.GetChild(2).transform.GetChild(0).GetComponent<Image>();
+        spAmount = transform.GetChild(4).transform.GetChild(2).transform.GetChild(2).GetComponent<Text>();
+        expBar = transform.GetChild(4).transform.GetChild(3).transform.GetChild(0).GetComponent<Image>();
+        lvText = transform.GetChild(4).transform.GetChild(4).GetComponent<Text>();
 
-        dropPanel = transform.GetChild(7).gameObject;
-
-        inventoryPanel = transform.GetChild(6).gameObject;
+        // 5.인벤토리 & 스탯창
+        inventoryPanel = transform.GetChild(5).gameObject;
         itemInfoText = inventoryPanel.transform.GetChild(5).GetComponentInChildren<Text>();
         itemInfoImage = inventoryPanel.transform.GetChild(4).transform.GetChild(0).GetComponent<Image>();
         str = inventoryPanel.transform.GetChild(3).transform.GetChild(0).GetComponent<Text>();
@@ -123,7 +131,20 @@ public class UIManager : MonoBehaviour
         hp = inventoryPanel.transform.GetChild(3).transform.GetChild(6).GetComponent<Text>();
         sp = inventoryPanel.transform.GetChild(3).transform.GetChild(7).GetComponent<Text>();
 
-        fadeObject = transform.GetChild(8).gameObject;
+        // 6.드랍창
+        dropPanel = transform.GetChild(6).gameObject;
+
+        // 7.알림
+        noticeText = transform.GetChild(7).GetComponent<Text>();
+
+        // 8.스킬창
+        skillPanel = transform.GetChild(8).gameObject;
+        weaponTxt = skillPanel.transform.GetChild(0).GetComponentInChildren<Text>();
+        hpSkill = skillPanel.transform.GetChild(2).transform.GetChild(0).GetComponent<Image>();
+        spSkill = skillPanel.transform.GetChild(3).transform.GetChild(0).GetComponent<Image>();
+
+        // 9.페이드 인/아웃
+        fadeObject = transform.GetChild(9).gameObject;
 
         talkManager = GameObject.Find("TalkManager").GetComponent<TalkManager>();
         questManager = GameObject.Find("QuestManager").GetComponent<QuestManager>();
@@ -143,6 +164,9 @@ public class UIManager : MonoBehaviour
         dropPanel.SetActive(false);
         itemInfoText.enabled = false;
         itemInfoImage.enabled = false;
+        weaponTxt.text = "NO\nWEAPON\n(1or2)";
+        hpSkill.gameObject.SetActive(false);
+        spSkill.gameObject.SetActive(false);
 
         expBar.fillAmount = 0f;
     }
@@ -177,6 +201,11 @@ public class UIManager : MonoBehaviour
         if (dropOn)
             if (basicBehaviour.IsMoving())
                 CloseDropPanel();
+
+        if (isAction)
+            skillPanel.SetActive(false);
+        else
+            skillPanel.SetActive(true);
 
         hpBar.fillAmount = (gameDataObject.Hp / gameDataObject.MaxHp);
         hpAmount.text = $"{gameDataObject.Hp} / {gameDataObject.MaxHp}";
