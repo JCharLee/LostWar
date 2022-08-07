@@ -7,7 +7,7 @@ public class FadeScene : MonoBehaviour
 {
     [SerializeField] private GameObject fadeObject;
     [SerializeField] private CanvasGroup fadeCg;
-    [SerializeField] private string sceneName;
+    public string sceneName;
     private float fadeDuration = 3.0f;
 
     private void Awake()
@@ -50,6 +50,14 @@ public class FadeScene : MonoBehaviour
                     Cursor.visible = true;
                     break;
                 case "Main":
+                    SceneManager.LoadScene("Main");
+                    break;
+                case "Return":
+                    Destroy(FindObjectOfType<PlayerInteraction>().gameObject);
+                    Destroy(FindObjectOfType<UIManager>().gameObject);
+                    Destroy(FindObjectOfType<QuestManager>().gameObject);
+                    Destroy(FindObjectOfType<TalkManager>().gameObject);
+                    Destroy(FindObjectOfType<GameManager>().gameObject);
                     SceneManager.LoadScene("Main");
                     break;
             }

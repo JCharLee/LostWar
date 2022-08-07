@@ -72,6 +72,12 @@ public class UIManager : MonoBehaviour
     public Image hpSkill;
     public Image spSkill;
 
+    [Header("[GameOver]")]
+    [SerializeField] private CanvasGroup gameOverBg;
+    [SerializeField] private CanvasGroup gameOverTxt;
+    [SerializeField] private CanvasGroup gameOverBtn;
+    private float fadeDuration = 3.0f;
+
     public GameObject fadeObject;
 
     public Coroutine castRoutine;
@@ -143,8 +149,13 @@ public class UIManager : MonoBehaviour
         hpSkill = skillPanel.transform.GetChild(2).transform.GetChild(0).GetComponent<Image>();
         spSkill = skillPanel.transform.GetChild(3).transform.GetChild(0).GetComponent<Image>();
 
-        // 9.페이드 인/아웃
-        fadeObject = transform.GetChild(9).gameObject;
+        // 9.10.11.게임 오버 창
+        gameOverBg = transform.GetChild(9).GetComponent<CanvasGroup>();
+        gameOverTxt = transform.GetChild(10).GetComponent<CanvasGroup>();
+        gameOverBtn = transform.GetChild(11).GetComponent<CanvasGroup>();
+
+        // 12.페이드 인/아웃
+        fadeObject = transform.GetChild(12).gameObject;
 
         talkManager = GameObject.Find("TalkManager").GetComponent<TalkManager>();
         questManager = GameObject.Find("QuestManager").GetComponent<QuestManager>();
@@ -164,11 +175,14 @@ public class UIManager : MonoBehaviour
         dropPanel.SetActive(false);
         itemInfoText.enabled = false;
         itemInfoImage.enabled = false;
-        weaponTxt.text = "NO\nWEAPON\n(1or2)";
         hpSkill.gameObject.SetActive(false);
         spSkill.gameObject.SetActive(false);
 
         expBar.fillAmount = 0f;
+        weaponTxt.text = "NO\nWEAPON\n(1or2)";
+        gameOverBg.alpha = 0f;
+        gameOverTxt.alpha = 0f;
+        gameOverBtn.alpha = 0f;
     }
 
     private void Update()
@@ -521,6 +535,68 @@ public class UIManager : MonoBehaviour
 
         itemInfoImage.sprite = item.img;
         itemInfoImage.preserveAspect = true;
+    }
+    #endregion
+
+    #region [게임오버]
+    public void GameOver()
+    {
+        StartCoroutine(GameOverText());
+    }
+
+    IEnumerator GameOverText()
+    {
+        float rate = 1.0f / fadeDuration;
+        float progress = 0f;
+        while (progress <= 1.0f)
+        {
+            gameOverTxt.alpha = Mathf.Lerp(0f, 1f, progress);
+            progress += rate * Time.deltaTime;
+            yield return null;
+        }
+        gameOverTxt.alpha = 1.0f;
+        StartCoroutine(GameOverBack());
+    }
+
+    IEnumerator GameOverBack()
+    {
+        float rate = 1.0f / fadeDuration;
+        float progress = 0f;
+        while (progress <= 1.0f)
+        {
+            gameOverBg.alpha = Mathf.Lerp(0f, 1f, progress);
+            progress += rate * Time.deltaTime;
+            yield return null;
+        }
+        gameOverBg.alpha = 1.0f;
+        StartCoroutine(GameOverButton());
+    }
+
+    IEnumerator GameOverButton()
+    {
+        float rate = 1.0f / fadeDuration;
+        float progress = 0f;
+        while (progress <= 1.0f)
+        {
+            gameOverBtn.alpha = Mathf.Lerp(0f, 1f, progress);
+            progress += rate * Time.deltaTime;
+            yield return null;
+        }
+        gameOverBtn.alpha = 1.0f;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    public void Retry()
+    {
+
+    }
+
+    public void GotoMain()
+    {
+        FadeScene fadeScene = fadeObject.GetComponent<FadeScene>();
+        fadeScene.sceneName = "Return";
+        fadeObject.SetActive(true);
     }
     #endregion
 }
