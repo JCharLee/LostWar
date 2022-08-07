@@ -177,6 +177,9 @@ public class UIManager : MonoBehaviour
         itemInfoImage.enabled = false;
         hpSkill.gameObject.SetActive(false);
         spSkill.gameObject.SetActive(false);
+        gameOverBg.gameObject.SetActive(false);
+        gameOverTxt.gameObject.SetActive(false);
+        gameOverBtn.gameObject.SetActive(false);
 
         expBar.fillAmount = 0f;
         weaponTxt.text = "NO\nWEAPON\n(1or2)";
@@ -541,7 +544,17 @@ public class UIManager : MonoBehaviour
     #region [게임오버]
     public void GameOver()
     {
+        gameOverBg.gameObject.SetActive(true);
+        gameOverTxt.gameObject.SetActive(true);
+        gameOverBtn.gameObject.SetActive(true);
         StartCoroutine(GameOverText());
+    }
+
+    public void GameOverPanelFalse()
+    {
+        gameOverBg.gameObject.SetActive(false);
+        gameOverTxt.gameObject.SetActive(false);
+        gameOverBtn.gameObject.SetActive(false);
     }
 
     IEnumerator GameOverText()
