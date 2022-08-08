@@ -14,11 +14,15 @@ public class EnemyHealth : MonoBehaviour
     Animator ani;
     [SerializeField]
     Image Hpbar;
+    GameObject HpBarCanvas;
+    Rigidbody rigid;
+    CapsuleCollider capcol;
 
     private void OnEnable()
     {
         healthpoint = hpinit;
         Hpbar = transform.Find("HP_Canvas").transform.GetChild(1).GetComponent<Image>();
+        HpBarCanvas = transform.Find("HP_Canvas").gameObject;
         Hpbar.color = Color.green;
     }
 
@@ -26,6 +30,8 @@ public class EnemyHealth : MonoBehaviour
     {
         ani = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
+        rigid = GetComponent<Rigidbody>();
+        capcol = GetComponent<CapsuleCollider>();
         bloodeff = transform.Find("BloodSprayEffect").GetComponent<ParticleSystem>();
     }
 
@@ -64,6 +70,9 @@ public class EnemyHealth : MonoBehaviour
             isdie = true;
             agent.enabled = false;
             PlayerInteraction.instance.Kill();
+            rigid.Sleep();
+            capcol.enabled = false;
+            HpBarCanvas.SetActive(false);
             StopAllCoroutines();
         }
     }

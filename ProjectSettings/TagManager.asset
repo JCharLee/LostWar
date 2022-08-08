@@ -16,10 +16,10 @@ TagManager:
   - UI
   - 
   - 
-  - INTERACTABLE
-  - PLAYER
-  - ENEMY
   - 
+  - Player
+  - Enemy
+  - Bullet
   - 
   - 
   - 
