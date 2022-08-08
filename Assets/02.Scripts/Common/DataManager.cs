@@ -35,13 +35,15 @@ public class GameData
     public Clothes shoesC;
     public Clothes topC;
     public Clothes bottomsC;
+
+    public QuestData questData;
 }
 
 public class DataManager : MonoBehaviour
 {
     public static DataManager instance;
 
-    [SerializeField] private GameData gameData;
+    private GameData gameData = new GameData();
 
     private string path;
     string fileName = "/save";
@@ -62,6 +64,7 @@ public class DataManager : MonoBehaviour
         Debug.Log("save");
         string data = JsonUtility.ToJson(gameData);
         File.WriteAllText(path, data);
+        Debug.Log(data);
     }
 
     public void LoadData()
