@@ -16039,11 +16039,13 @@ MonoBehaviour:
   questData:
     questName: 
     contentsName: 
+    npcId: 
     isMain: 0
     goal:
       goalType: 0
       currentAmount: 0
       requireAmount: 0
+    expReward: 0
     isActive: 0
 --- !u!4 &814957077
 Transform:
@@ -39726,6 +39728,19 @@ MonoBehaviour:
       durability: 0
       itemType: 0
       def: 0
+    questId: 0
+    questActionIdx: 0
+    questData:
+      questName: 
+      contentsName: 
+      npcId: 
+      isMain: 0
+      goal:
+        goalType: 0
+        currentAmount: 0
+        requireAmount: 0
+      expReward: 0
+      isActive: 0
 --- !u!1001 &1937126711
 PrefabInstance:
   m_ObjectHideFlags: 0

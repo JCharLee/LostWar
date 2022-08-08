@@ -3,22 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using ItemSpace;
 
-public class ItemBox : DropItem, IInteraction
+public class ItemBox : DropItem
 {
+    //public new Item[] items = new Item[3];
     private float castTime = 2f;
 
-    [SerializeField] string prompt;
-
-    private UIManager uiManager;
-    private BasicBehaviour basicBehaviour;
-
-    public string interactionPrompt => prompt;
-
-    void Start()
+    private void Start()
     {
-        uiManager = GameObject.Find("UI").GetComponent<UIManager>();
-        basicBehaviour = FindObjectOfType<BasicBehaviour>();
-
         prompt = "[F] 상자 열기";
         InitItem();
     }
@@ -27,26 +18,27 @@ public class ItemBox : DropItem, IInteraction
     {
         if (items[0] == null && items[1] == null && items[2] == null)
         {
-            if (uiManager.dropOn)
-                uiManager.CloseDropPanel();
+            if (UIManager.instance.dropOn)
+                UIManager.instance.CloseDropPanel();
             gameObject.layer = 0;
             GameObject.FindGameObjectWithTag("Player").transform.GetChild(9).gameObject.SetActive(true);
+            Destroy(FindObjectOfType<ItemBox>());
             return;
         }
     }
 
-    public bool Action(PlayerInteraction interactor)
+    public override bool Action(PlayerInteraction interactor)
     {
-        uiManager.moveRoutine = StartCoroutine(ItemboxOpen());
+        UIManager.instance.moveRoutine = StartCoroutine(ItemboxOpen());
         return true;
     }
 
     IEnumerator ItemboxOpen()
     {
-        uiManager.castRoutine = StartCoroutine(uiManager.InteractionCasting(castTime));
-        if (uiManager.castRoutine == null) uiManager.moveRoutine = null;
+        UIManager.instance.castRoutine = StartCoroutine(UIManager.instance.InteractionCasting(castTime));
+        if (UIManager.instance.castRoutine == null) UIManager.instance.moveRoutine = null;
         yield return new WaitForSeconds(castTime);
-        uiManager.OpenDropPanel(this);
+        UIManager.instance.OpenDropPanel(this);
     }
 
     public override void InitItem()
