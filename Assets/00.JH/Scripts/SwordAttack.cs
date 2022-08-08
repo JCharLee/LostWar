@@ -16,6 +16,12 @@ public class SwordAttack : MonoBehaviour
                 _params[1] = 25f;
                 other.gameObject.SendMessage("OnDamage", _params, SendMessageOptions.DontRequireReceiver);
             }
+
+            var Enemy = other.GetComponent<EnemyHealth>();
+            if(Enemy != null)
+            {
+                Enemy.takeDamage(25f, other.transform.position);
+            }
         }
     }
 
