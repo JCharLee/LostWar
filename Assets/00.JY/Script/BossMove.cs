@@ -33,7 +33,7 @@ public class BossMove : MonoBehaviour
         rocketPrefab = Resources.Load<GameObject>("Rocket");
         Boss2phase = Resources.Load<GameObject>("Boss2Phase");
         plasmaexp = Resources.Load<GameObject>("PlasmaExp");
-        layermask = 1 << 9 | 1 << 10;
+        layermask = 1 << 9 | 1 << 8 | 1 << 0;
     }
 
     void Update()
@@ -46,9 +46,9 @@ public class BossMove : MonoBehaviour
         }
 
         RaycastHit hit;
-        Vector3 dir = (playerTr.position + playerTr.up * 1f - tr.position).normalized;
-        Debug.DrawRay(tr.position, dir * 50f, Color.green);
-        if (Physics.Raycast(tr.position, dir, out hit, 50f, layermask))
+        Vector3 dir = (playerTr.position - tr.position).normalized;
+        Debug.DrawRay(tr.position + tr.up * 1, dir * 50f, Color.green);
+        if (Physics.Raycast(tr.position + tr.up * 1, dir, out hit, 50f, layermask))
             lookPlayer = (hit.collider.CompareTag("Player"));
         else
             lookPlayer = false;

@@ -34,15 +34,15 @@ public class EnemyMeleeMove : MonoBehaviour
         Epatrol = GetComponent<EnemyPatrol>();
         Ehealth = GetComponent<EnemyHealth>();
         playerTr = GameObject.FindWithTag("Player").GetComponent<Transform>();
-        layermask = 1 << 9 | 1 << 10;
+        layermask = 1 << 9 | 1 << 8 | 1 << 10;
     }
 
     private void Update()
     {
         RaycastHit hit;
-        Vector3 dir = (playerTr.position + playerTr.up * 1f - tr.position).normalized;
-        Debug.DrawRay(tr.position, dir * traceDist, Color.green);
-        if (Physics.Raycast(tr.position, dir, out hit, traceDist, layermask))
+        Vector3 dir = (playerTr.position - tr.position).normalized;
+        Debug.DrawRay(tr.position + tr.up * 1, dir * traceDist, Color.green);
+        if (Physics.Raycast(tr.position + tr.up * 1, dir, out hit, traceDist, layermask))
             LookPlayer = (hit.collider.CompareTag("Player"));
         else
             LookPlayer = false;
