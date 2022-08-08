@@ -12,7 +12,7 @@ public class RayShoot : MonoBehaviour
     [SerializeField] private MoveBehaviour moveBehaviour;
     void Start()
     {
-        FirePos_Cur = FirePos_R;
+        FirePos_Cur = Camera.main.transform;
         moveBehaviour = GetComponent<MoveBehaviour>();
     }
 
