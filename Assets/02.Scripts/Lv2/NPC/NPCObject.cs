@@ -28,7 +28,7 @@ public class NPCObject : MonoBehaviour, IInteraction
 
     private void Update()
     {
-        if (QuestManager.instance.QuestList[QuestManager.instance.QuestId].NpcId[QuestManager.instance.QuestActionIdx] == objectId)
+        if (QuestManager.instance.QuestList[DataManager.instance.gameData.questId].npcId[DataManager.instance.gameData.questActionIdx] == objectId)
             questMark.enabled = true;
         else
             questMark.enabled = false;
@@ -39,7 +39,7 @@ public class NPCObject : MonoBehaviour, IInteraction
     public virtual bool Action(PlayerInteraction interactor)
     {
         uiManager.Action(this.gameObject);
-        if (QuestManager.instance.QuestList[QuestManager.instance.QuestId].NpcId[QuestManager.instance.QuestActionIdx] == objectId)
+        if (QuestManager.instance.QuestList[DataManager.instance.gameData.questId].npcId[DataManager.instance.gameData.questActionIdx] == objectId)
             player.Talk();
         return true;
     }

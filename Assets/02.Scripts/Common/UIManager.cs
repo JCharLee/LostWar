@@ -546,6 +546,7 @@ public class UIManager : MonoBehaviour
     public void GameOverPanelOn()
     {
         gameOver = true;
+        AllUiClose();
         gameOverBg.gameObject.SetActive(true);
         gameOverTxt.gameObject.SetActive(true);
         gameOverBtn.gameObject.SetActive(true);
@@ -554,9 +555,13 @@ public class UIManager : MonoBehaviour
 
     public void GameOverPanelOff()
     {
+        gameOver = false;
         gameOverBg.gameObject.SetActive(false);
         gameOverTxt.gameObject.SetActive(false);
         gameOverBtn.gameObject.SetActive(false);
+        gameOverBg.alpha = 0f;
+        gameOverTxt.alpha = 0f;
+        gameOverBtn.alpha = 0f;
     }
     IEnumerator GameOverText()
     {
@@ -606,6 +611,8 @@ public class UIManager : MonoBehaviour
         FadeScene fadeScene = fadeObject.GetComponent<FadeScene>();
         fadeScene.sceneName = "Retry";
         fadeObject.SetActive(true);
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     public void GotoMain()

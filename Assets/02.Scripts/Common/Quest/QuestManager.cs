@@ -14,28 +14,6 @@ public class QuestManager : MonoBehaviour
 
     Dictionary<int, QuestData> questList;
 
-    public int QuestId
-    {
-        get
-        {
-            return questId;
-        }
-        set
-        {
-            questId = value;
-        }
-    }
-    public int QuestActionIdx
-    {
-        get
-        {
-            return questActionIdx;
-        }
-        set
-        {
-            questActionIdx = value;
-        }
-    }
     public Dictionary<int, QuestData> QuestList => questList;
 
     public static QuestManager instance = null;
@@ -61,6 +39,9 @@ public class QuestManager : MonoBehaviour
     public void Start()
     {
         isStarting = true;
+        questId = DataManager.instance.gameData.questId;
+        questActionIdx = DataManager.instance.gameData.questActionIdx;
+
         StartCoroutine(QuestStart());
     }
 
@@ -97,34 +78,35 @@ public class QuestManager : MonoBehaviour
 
     public int GetQuestTalkIdx(int id)
     {
-        return questId + questActionIdx;
+        return DataManager.instance.gameData.questId + DataManager.instance.gameData.questActionIdx;
     }
 
     public void CheckQuest(int id)
     {
-        if (id == questList[questId].NpcId[questActionIdx])
+        if (id == questList[DataManager.instance.gameData.questId].npcId[DataManager.instance.gameData.questActionIdx])
         {
-            questActionIdx++;
+            DataManager.instance.gameData.questActionIdx++;
         }
 
-        if (questActionIdx == questList[questId].NpcId.Length)
+        if (DataManager.instance.gameData.questActionIdx == questList[DataManager.instance.gameData.questId].npcId.Length)
             NextMainQuest();
     }
 
     void NextMainQuest()
     {
-        uiManager.UpdateExp(questList[questId].ExpReward);
-        questId += 10;
-        questActionIdx = 0;
+        uiManager.UpdateExp(questList[DataManager.instance.gameData.questId].expReward);
+        DataManager.instance.gameData.questId += 10;
+        DataManager.instance.gameData.questActionIdx = 0;
 
-        questData = questList[questId];
-        player.QuestData = questData;
+        questData = questList[DataManager.instance.gameData.questId];
+        DataManager.instance.gameData.questData = questData;
+        player.QuestData = DataManager.instance.gameData.questData;
         questData.isActive = true;
         uiManager.QuestListPanel.SetActive(true);
-        if (questId != 150)
+        if (DataManager.instance.gameData.questId != 150)
         {
             Instantiate(uiManager.QuestPrefab, uiManager.QuestListPanel.transform);
-            QuestContents.contents.QuestData = questData;
+            QuestContents.contents.QuestData = DataManager.instance.gameData.questData;
         }
         else
             uiManager.fadeObject.SetActive(true);
@@ -132,22 +114,22 @@ public class QuestManager : MonoBehaviour
 
     public void Complete()
     {
-        if (questId == 110)
+        if (DataManager.instance.gameData.questId == 110)
         {
             GameObject key = Instantiate(Resources.Load<GameObject>("Prefabs/SecondCardKey"), new Vector3(42f, -55.34903f, 57f), Quaternion.Euler(0f, 0f, 25f));
             key.GetComponent<Key>().keyNumber = 2;
         }
 
         questData.isActive = false;
-        if (questList[questId].NpcId.Length == 1) return;
+        if (questList[DataManager.instance.gameData.questId].npcId.Length == 1) return;
 
-        if (questList[questId].NpcId[questActionIdx + 1] == 0)
+        if (questList[DataManager.instance.gameData.questId].npcId[DataManager.instance.gameData.questActionIdx + 1] == 0)
         {
-            questActionIdx++;
+            DataManager.instance.gameData.questActionIdx++;
             questGiver.gameObject.SetActive(true);
             uiManager.Action(questGiver.gameObject);
         }
         else
-            questActionIdx++;
+            DataManager.instance.gameData.questActionIdx++;
     }
 }

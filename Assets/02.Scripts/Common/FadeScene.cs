@@ -65,23 +65,10 @@ public class FadeScene : MonoBehaviour
                     else
                     {
                         SceneManager.LoadScene(PlayerInteraction.instance.currentMapName);
-                        switch (PlayerInteraction.instance.currentMapName)
-                        {
-                            case "Level2":
-                                QuestManager.instance.QuestId = 40;
-                                QuestManager.instance.QuestActionIdx = 1;
-                                break;
-                            case "Level3":
-                                QuestManager.instance.QuestId = 80;
-                                QuestManager.instance.QuestActionIdx = 1;
-                                break;
-                            case "BossRoom":
-                                QuestManager.instance.QuestId = 130;
-                                QuestManager.instance.QuestActionIdx = 1;
-                                break;
-                        }
-                        Destroy(FindObjectOfType<QuestContents>().gameObject);
                         DataManager.instance.LoadData();
+                        DataManager.instance.gameData.questActionIdx++;
+                        if (UIManager.instance.QuestListPanel.transform.childCount != 0)
+                            Destroy(FindObjectOfType<QuestContents>().gameObject);
                         UIManager.instance.GameOverPanelOff();
                         QuestManager.instance.Start();
                         StartCoroutine(Fade());

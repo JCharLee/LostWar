@@ -20,9 +20,9 @@ public class GetDropItem : MonoBehaviour
 
     public void GetItem()
     {
-        if (questManager.QuestList[questManager.QuestId].Goal.GoalType == GoalType.GATHERING)
+        if (questManager.QuestList[DataManager.instance.gameData.questId].goal.goalType == GoalType.GATHERING)
         {
-            if (questManager.QuestId == 10)
+            if (DataManager.instance.gameData.questId == 10)
             {
                 if (uiManager.items[itemIdx].name == "Sword" || uiManager.items[itemIdx].name == "Pistol" || uiManager.items[itemIdx].name == "HP Potion")
                     player.Collect();

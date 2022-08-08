@@ -35,20 +35,20 @@ public class QuestContents : MonoBehaviour
 
     private void Start()
     {
-        titleText.text = questData.QuestName;
-        if (questData.IsMain)
+        titleText.text = questData.questName;
+        if (questData.isMain)
             titleText.color = Color.yellow;
         else
             titleText.color = Color.white;
 
-        contentsText.text = questData.ContentsName;
+        contentsText.text = questData.contentsName;
     }
 
     private void Update()
     {
-        countText.text = $"({questData.Goal.CurrentAmount}/{questData.Goal.RequireAmount})";
+        countText.text = $"({questData.goal.currentAmount}/{questData.goal.requireAmount})";
 
-        if (questData.Goal.IsReached())
+        if (questData.goal.IsReached())
         {
             contentsText.color = Color.green;
             countText.color = Color.green;
@@ -66,5 +66,6 @@ public class QuestContents : MonoBehaviour
         titleText.text = null;
         contentsText.text = null;
         countText.text = null;
+        questData.goal.currentAmount = 0;
     }
 }

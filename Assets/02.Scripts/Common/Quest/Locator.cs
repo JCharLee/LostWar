@@ -16,7 +16,7 @@ public class Locator : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            if (QuestManager.instance.QuestId == questId)
+            if (DataManager.instance.gameData.questId == questId)
                 player.Locate();
         }
     }

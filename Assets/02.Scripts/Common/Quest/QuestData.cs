@@ -5,21 +5,14 @@ using UnityEngine;
 [System.Serializable]
 public class QuestData
 {
-    [SerializeField] private string questName;
-    [SerializeField] private string contentsName;
-    private int[] npcId;
-    [SerializeField] private bool isMain;
-    [SerializeField] private QuestGoal goal;
-    private float expReward;
+    public string questName;
+    public string contentsName;
+    public int[] npcId;
+    public bool isMain;
+    public QuestGoal goal;
+    public float expReward;
 
     public bool isActive;
-
-    public string QuestName => questName;
-    public string ContentsName => contentsName;
-    public int[] NpcId => npcId;
-    public bool IsMain => isMain;
-    public QuestGoal Goal => goal;
-    public float ExpReward => expReward;
 
     public QuestData(string name, string content, int[] npc, bool main, int amount, GoalType type, float exp)
     {

@@ -36,6 +36,8 @@ public class GameData
     public Clothes topC;
     public Clothes bottomsC;
 
+    public int questId;
+    public int questActionIdx;
     public QuestData questData;
 }
 
@@ -43,7 +45,7 @@ public class DataManager : MonoBehaviour
 {
     public static DataManager instance;
 
-    private GameData gameData = new GameData();
+    public GameData gameData = new GameData();
 
     private string path;
     string fileName = "/save";
@@ -72,5 +74,11 @@ public class DataManager : MonoBehaviour
         Debug.Log("load");
         string data = File.ReadAllText(path);
         gameData = JsonUtility.FromJson<GameData>(data);
+        Debug.Log(data);
+    }
+
+    public void ClearData()
+    {
+        gameData = new GameData();
     }
 }

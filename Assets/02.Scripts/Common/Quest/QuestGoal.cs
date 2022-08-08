@@ -10,14 +10,10 @@ public enum GoalType
 [System.Serializable]
 public class QuestGoal
 {
-    [SerializeField] private GoalType goalType;
+    public GoalType goalType;
 
-    [SerializeField] private int currentAmount = 0;
-    [SerializeField] private int requireAmount;
-
-    public GoalType GoalType => goalType;
-    public int CurrentAmount => currentAmount;
-    public int RequireAmount => requireAmount;
+    public int currentAmount;
+    public int requireAmount;
 
     public QuestGoal(GoalType type, int reqAmount)
     {

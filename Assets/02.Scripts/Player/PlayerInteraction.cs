@@ -106,8 +106,8 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (questData.isActive)
         {
-            questData.Goal.EnemyKilled();
-            if (questData.Goal.IsReached())
+            questData.goal.EnemyKilled();
+            if (questData.goal.IsReached())
             {
                 questManager.Complete();
             }
@@ -118,8 +118,8 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (questData.isActive)
         {
-            questData.Goal.ItemCollected();
-            if (questData.Goal.IsReached())
+            questData.goal.ItemCollected();
+            if (questData.goal.IsReached())
             {
                 questManager.Complete();
             }
@@ -130,8 +130,8 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (questData.isActive)
         {
-            questData.Goal.Locate();
-            if (questData.Goal.IsReached())
+            questData.goal.Locate();
+            if (questData.goal.IsReached())
             {
                 questManager.Complete();
             }
@@ -142,8 +142,8 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (questData.isActive)
         {
-            questData.Goal.Talking();
-            if (questData.Goal.IsReached())
+            questData.goal.Talking();
+            if (questData.goal.IsReached())
             {
                 questManager.Complete();
             }

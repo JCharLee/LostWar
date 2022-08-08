@@ -19,7 +19,7 @@ public class GoToNextLevel : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            if (QuestManager.instance.QuestId < questId)
+            if (DataManager.instance.gameData.questId < questId)
             {
                 StartCoroutine(UIManager.instance.NoticeText(false, alert));
                 return;

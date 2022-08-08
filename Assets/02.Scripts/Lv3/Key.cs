@@ -53,9 +53,9 @@ public class Key : MonoBehaviour, IInteraction
         gameObject.layer = 0;
         Destroy(gameObject, 3.1f);
         StartCoroutine(uiManager.NoticeText(true, alertText));
-        if (questManager.QuestId == 90 && keyNumber == 1)
+        if (DataManager.instance.gameData.questId == 90 && keyNumber == 1)
             player.Collect();
-        if (questManager.QuestId == 120 && keyNumber == 2)
+        if (DataManager.instance.gameData.questId == 120 && keyNumber == 2)
             player.Collect();
         return true;
     }

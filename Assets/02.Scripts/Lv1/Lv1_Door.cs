@@ -30,7 +30,7 @@ public class Lv1_Door : MonoBehaviour, IInteraction
 
     public bool Action(PlayerInteraction interactor)
     {
-        if (questManager.QuestId >= 20)
+        if (DataManager.instance.gameData.questId >= 20)
         {
             StartCoroutine(DoorOpen());
             return true;
