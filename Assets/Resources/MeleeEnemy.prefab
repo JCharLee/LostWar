@@ -809,6 +809,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hpinit: 100
+  exp: 10
   isdie: 0
   Hpbar: {fileID: 0}
 --- !u!114 &466965531

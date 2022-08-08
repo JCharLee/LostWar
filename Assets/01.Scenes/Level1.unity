@@ -39648,13 +39648,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameData:
-    level: 0
-    expRequire: 0
-    exp: 0
-    maxHp: 0
-    hp: 0
-    maxSp: 0
-    sp: 0
+    Exp: 0
+    MaxHp: 1000
+    Hp: 0
+    MaxSp: 100
+    Sp: 0
     str: 0
     agi: 0
     con: 0

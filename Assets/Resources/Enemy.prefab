@@ -1697,6 +1697,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hpinit: 100
+  exp: 20
   isdie: 0
   Hpbar: {fileID: 0}
 --- !u!1 &5006391437230097190

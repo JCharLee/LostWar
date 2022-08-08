@@ -75,11 +75,11 @@ namespace ItemSpace
             {
                 case PotionType.HP:
                     Debug.Log($"Hp +{amount}");
-                    GameManager.instance.gameDataObject.Hp += amount;
+                    DataManager.instance.gameData.hp += amount;
                     break;
                 case PotionType.SP:
                     Debug.Log($"Sp +{amount}");
-                    GameManager.instance.gameDataObject.Sp += amount;
+                    DataManager.instance.gameData.sp += amount;
                     break;
             }
             count--;

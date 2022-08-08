@@ -9,7 +9,6 @@ public class GetDropItem : MonoBehaviour
     public UIManager uiManager;
     private QuestManager questManager;
     private PlayerInteraction player;
-    public GameDataObject gameDataObject;
 
     private void Awake()
     {
@@ -31,27 +30,27 @@ public class GetDropItem : MonoBehaviour
 
         if (uiManager.items[itemIdx].itemType == ItemType.shortWeapon)
         {
-            gameDataObject.shortWeapon.Add(uiManager.items[itemIdx]);
+            DataManager.instance.gameData.shortWeapon.Add(uiManager.items[itemIdx]);
             uiManager.items[itemIdx] = null;
         }
         else if (uiManager.items[itemIdx].itemType == ItemType.longWeapon)
         {
-            gameDataObject.longWeapon.Add(uiManager.items[itemIdx]);
+            DataManager.instance.gameData.longWeapon.Add(uiManager.items[itemIdx]);
             uiManager.items[itemIdx] = null;
         }
         else if (uiManager.items[itemIdx].itemType == ItemType.shoes)
         {
-            gameDataObject.shoes.Add(uiManager.items[itemIdx]);
+            DataManager.instance.gameData.shoes.Add(uiManager.items[itemIdx]);
             uiManager.items[itemIdx] = null;
         }
         else if (uiManager.items[itemIdx].itemType == ItemType.top)
         {
-            gameDataObject.top.Add(uiManager.items[itemIdx]);
+            DataManager.instance.gameData.top.Add(uiManager.items[itemIdx]);
             uiManager.items[itemIdx] = null;
         }
         else if (uiManager.items[itemIdx].itemType == ItemType.bottoms)
         {
-            gameDataObject.bottoms.Add(uiManager.items[itemIdx]);
+            DataManager.instance.gameData.bottoms.Add(uiManager.items[itemIdx]);
             uiManager.items[itemIdx] = null;
         }
         else if (uiManager.items[itemIdx].itemType == ItemType.potion)
@@ -60,27 +59,26 @@ public class GetDropItem : MonoBehaviour
             switch (newPotion.potionType)
             {
                 case PotionType.HP:
-                    if (gameDataObject.hpPotion.Contains(gameDataObject.hpPotion.Find(x => x.name == "HP Potion")))
+                    if (DataManager.instance.gameData.hpPotion.Contains(DataManager.instance.gameData.hpPotion.Find(x => x.name == "HP Potion")))
                     {
-                        Potion curPotion = gameDataObject.hpPotion.Find(x => x.name == "HP Potion") as Potion;
+                        Potion curPotion = DataManager.instance.gameData.hpPotion.Find(x => x.name == "HP Potion") as Potion;
                         curPotion.count += newPotion.count;
                     }
                     else
-                        gameDataObject.hpPotion.Add(uiManager.items[itemIdx]);
+                        DataManager.instance.gameData.hpPotion.Add(uiManager.items[itemIdx]);
                     break;
                 case PotionType.SP:
-                    if (gameDataObject.spPotion.Contains(gameDataObject.hpPotion.Find(x => x.name == "SP Potion")))
+                    if (DataManager.instance.gameData.spPotion.Contains(DataManager.instance.gameData.spPotion.Find(x => x.name == "SP Potion")))
                     {
-                        Potion curPotion = gameDataObject.spPotion.Find(x => x.name == "SP Potion") as Potion;
+                        Potion curPotion = DataManager.instance.gameData.spPotion.Find(x => x.name == "SP Potion") as Potion;
                         curPotion.count += newPotion.count;
                     }
                     else
-                        gameDataObject.spPotion.Add(uiManager.items[itemIdx]);
+                        DataManager.instance.gameData.spPotion.Add(uiManager.items[itemIdx]);
                     break;
             }
             uiManager.items[itemIdx] = null;
         }
-
         Destroy(gameObject);
     }
 }

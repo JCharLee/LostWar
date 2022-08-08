@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class EnemyHealth : MonoBehaviour
 {
     public float hpinit = 100f;
+    public float exp;
     float healthpoint;
     public bool isdie = false;
     ParticleSystem bloodeff;
@@ -70,6 +71,8 @@ public class EnemyHealth : MonoBehaviour
             isdie = true;
             agent.enabled = false;
             PlayerInteraction.instance.Kill();
+            UIManager.instance.UpdateExp(exp);
+            Instantiate(Resources.Load<GameObject>("Prefabs/DropItem"), this.transform.position, Quaternion.identity);
             rigid.Sleep();
             capcol.enabled = false;
             HpBarCanvas.SetActive(false);

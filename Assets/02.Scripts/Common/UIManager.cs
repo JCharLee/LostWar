@@ -86,7 +86,6 @@ public class UIManager : MonoBehaviour
 
     private TalkManager talkManager;
     private QuestManager questManager;
-    [SerializeField] private GameDataObject gameDataObject;
     public static UIManager instance = null;
     private BasicBehaviour basicBehaviour;
 
@@ -201,7 +200,7 @@ public class UIManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.I))
         {
-            if (questManager.IsStarting || isAction || dropOn) return;
+            if (questManager.IsStarting || isAction || dropOn || gameOver) return;
             inventoryOn = !inventoryOn;
             Inventory(inventoryOn);
         }
@@ -227,25 +226,25 @@ public class UIManager : MonoBehaviour
 
         CheckSkillPotion();
 
-        hpBar.fillAmount = (gameDataObject.Hp / gameDataObject.MaxHp);
-        hpAmount.text = $"{gameDataObject.Hp} / {gameDataObject.MaxHp}";
-        spBar.fillAmount = (gameDataObject.Sp / gameDataObject.MaxSp);
-        spAmount.text = $"{gameDataObject.Sp} / {gameDataObject.MaxSp}";
+        hpBar.fillAmount = (DataManager.instance.gameData.hp / DataManager.instance.gameData.maxHp);
+        hpAmount.text = $"{DataManager.instance.gameData.hp} / {DataManager.instance.gameData.maxHp}";
+        spBar.fillAmount = (DataManager.instance.gameData.sp / DataManager.instance.gameData.maxSp);
+        spAmount.text = $"{DataManager.instance.gameData.sp} / {DataManager.instance.gameData.maxSp}";
 
-        str.text = $"STR : {gameDataObject.Str}";
-        agi.text = $"AGI : {gameDataObject.Agi}";
-        con.text = $"CON : {gameDataObject.Con}";
-        vit.text = $"VIT : {gameDataObject.Vit}";
-        dmg.text = $"DAM : {gameDataObject.Dam}";
-        def.text = $"DEF : {gameDataObject.Def}";
-        hp.text = $"HP : {gameDataObject.MaxHp}";
-        sp.text = $"SP : {gameDataObject.MaxSp}";
+        str.text = $"STR : {DataManager.instance.gameData.str}";
+        agi.text = $"AGI : {DataManager.instance.gameData.agi}";
+        con.text = $"CON : {DataManager.instance.gameData.con}";
+        vit.text = $"VIT : {DataManager.instance.gameData.vit}";
+        dmg.text = $"DAM : {DataManager.instance.gameData.dam}";
+        def.text = $"DEF : {DataManager.instance.gameData.def}";
+        hp.text = $"HP : {DataManager.instance.gameData.maxHp}";
+        sp.text = $"SP : {DataManager.instance.gameData.maxSp}";
     }
 
     private void CheckSkillPotion()
     {
-        Potion hpPotion = gameDataObject.hpPotion.Find(x => x.name == "HP Potion") as Potion;
-        Potion spPotion = gameDataObject.spPotion.Find(x => x.name == "SP Potion") as Potion;
+        Potion hpPotion = DataManager.instance.gameData.hpPotion.Find(x => x.name == "HP Potion") as Potion;
+        Potion spPotion = DataManager.instance.gameData.spPotion.Find(x => x.name == "SP Potion") as Potion;
 
         if (hpPotion != null)
         {
@@ -253,7 +252,7 @@ public class UIManager : MonoBehaviour
             hpSkill.sprite = hpPotion.img;
             hpSkill.GetComponentInChildren<Text>().text = hpPotion.count.ToString();
             if (Input.GetKeyDown(KeyCode.Alpha3))
-                GameManager.instance.UsePotion(gameDataObject.hpPotion.Find(x => x.name == "HP Potion") as Potion);
+                GameManager.instance.UsePotion(DataManager.instance.gameData.hpPotion.Find(x => x.name == "HP Potion") as Potion);
         }
         else
         {
@@ -268,7 +267,7 @@ public class UIManager : MonoBehaviour
             spSkill.sprite = spPotion.img;
             spSkill.GetComponentInChildren<Text>().text = spPotion.count.ToString();
             if (Input.GetKeyDown(KeyCode.Alpha4))
-                GameManager.instance.UsePotion(gameDataObject.spPotion.Find(x => x.name == "SP Potion") as Potion);
+                GameManager.instance.UsePotion(DataManager.instance.gameData.spPotion.Find(x => x.name == "SP Potion") as Potion);
         }
         else
         {
@@ -419,22 +418,22 @@ public class UIManager : MonoBehaviour
 
     public void UpdateExp(float exp)
     {
-        gameDataObject.Exp += exp;
-        expBar.fillAmount = gameDataObject.Exp / gameDataObject.Exp_require;
+        DataManager.instance.gameData.exp += exp;
+        expBar.fillAmount = DataManager.instance.gameData.exp / DataManager.instance.gameData.expRequire;
     }
     #endregion
 
     #region [플레이어 HP/SP]
     public void DisplayHpBar()
     {
-        hpBar.fillAmount = (gameDataObject.Hp / gameDataObject.MaxHp);
-        hpAmount.text = $"{gameDataObject.Hp} / {gameDataObject.MaxHp}";
+        hpBar.fillAmount = (DataManager.instance.gameData.hp / DataManager.instance.gameData.maxHp);
+        hpAmount.text = $"{DataManager.instance.gameData.hp} / {DataManager.instance.gameData.maxHp}";
     }
 
     public void DisplaySpBar()
     {
-        spBar.fillAmount = (gameDataObject.Sp / gameDataObject.MaxSp);
-        spAmount.text = $"{gameDataObject.Sp} / {gameDataObject.MaxSp}";
+        spBar.fillAmount = (DataManager.instance.gameData.sp / DataManager.instance.gameData.maxSp);
+        spAmount.text = $"{DataManager.instance.gameData.sp} / {DataManager.instance.gameData.maxSp}";
     }
     #endregion
 
@@ -574,10 +573,10 @@ public class UIManager : MonoBehaviour
             yield return null;
         }
         gameOverTxt.alpha = 1.0f;
-        StartCoroutine(GameOverBack());
+        StartCoroutine(GameOverBg());
     }
 
-    IEnumerator GameOverBack()
+    IEnumerator GameOverBg()
     {
         float rate = 1.0f / fadeDuration;
         float progress = 0f;

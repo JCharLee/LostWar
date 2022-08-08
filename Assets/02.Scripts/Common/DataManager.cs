@@ -7,20 +7,93 @@ using ItemSpace;
 [System.Serializable]
 public class GameData
 {
-    public int level;
-    public float expRequire;
-    public float exp;
-    public float maxHp;
-    public float hp;
-    public float maxSp;
-    public float sp;
-
-    public int str;
-    public int agi;
-    public int con;
-    public int vit;
-    public float dam;
-    public float def;
+    public int level = 1;
+    public float expRequire = 100f;
+    [SerializeField] private float Exp = 0;
+    public float exp
+    {
+        get
+        {
+            return Exp;
+        }
+        set
+        {
+            Exp = value;
+            if (Exp >= expRequire)
+            {
+                Exp -= expRequire;
+                level++;
+                expRequire *= 1.2f;
+                UIManager.instance.UpdateLevel(level);
+            }
+        }
+    }
+    [SerializeField] private float MaxHp = 1000f;
+    [SerializeField] private float Hp;
+    [SerializeField] private float MaxSp = 100f;
+    [SerializeField] private float Sp;
+    public float maxHp
+    {
+        get
+        {
+            return MaxHp;
+        }
+        set
+        {
+            MaxHp = value;
+            if (hp > MaxHp)
+            {
+                hp -= (hp - MaxHp);
+                UIManager.instance.DisplayHpBar();
+            }
+        }
+    }
+    public float hp
+    {
+        get
+        {
+            return Hp;
+        }
+        set
+        {
+            Hp = value;
+            Hp = Mathf.Clamp(Hp, 0f, maxHp);
+        }
+    }
+    public float maxSp
+    {
+        get
+        {
+            return MaxSp;
+        }
+        set
+        {
+            MaxSp = value;
+            if (sp > MaxSp)
+            {
+                sp -= (sp - MaxSp);
+                UIManager.instance.DisplaySpBar();
+            }
+        }
+    }
+    public float sp
+    {
+        get
+        {
+            return Sp;
+        }
+        set
+        {
+            Sp = value;
+            Sp = Mathf.Clamp(Sp, 0f, maxSp);
+        }
+    }
+    public int str = 5;
+    public int agi = 5;
+    public int con = 5;
+    public int vit = 5;
+    public float dam = 5;
+    public float def = 5;
 
     public List<Item> shortWeapon;
     public List<Item> longWeapon;

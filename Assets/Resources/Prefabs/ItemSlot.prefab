@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5211557822746234542}
   - component: {fileID: 5211557822746234577}
   - component: {fileID: 5211557822746234576}
+  - component: {fileID: 6962026712913544329}
   - component: {fileID: 1385852047603828895}
   m_Layer: 5
   m_Name: ItemSlot
@@ -131,6 +132,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!225 &6962026712913544329
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5211557822746234578}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &1385852047603828895
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,8 +167,8 @@ MonoBehaviour:
     weight: 0
     durability: 100
     itemType: 0
+  cnt: {fileID: 0}
   isEquip: 0
-  gameDataObject: {fileID: 11400000, guid: 278d03e05c3cb73479d91da37829febd, type: 2}
 --- !u!1 &9063859009838679755
 GameObject:
   m_ObjectHideFlags: 0

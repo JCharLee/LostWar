@@ -12,7 +12,6 @@ public class SlotItemInfo : MonoBehaviour, IPointerClickHandler
     public Text cnt;
     public bool isEquip = false;
     public static SlotItemInfo instance;
-    [SerializeField] private GameDataObject gameDataObject;
     private float clickTime = 0;
 
     private void Awake()

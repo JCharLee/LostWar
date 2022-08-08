@@ -51,59 +51,61 @@ public class GameManager : MonoBehaviour
         top_C = null;
         bottoms_C = null;
 
-        gameDataObject.Hp = gameDataObject.MaxHp;
+        DataManager.instance.gameData.hp = DataManager.instance.gameData.maxHp;
+        DataManager.instance.gameData.sp = DataManager.instance.gameData.maxSp;
 
-        Reset();
+        if (PlayerInteraction.instance.currentMapName == "Level1")
+        {
+            Reset();
+        }
     }
 
     private void Reset()
     {
-        gameDataObject.shortWeapon.Clear();
-        gameDataObject.longWeapon.Clear();
-        gameDataObject.shoes.Clear();
-        gameDataObject.top.Clear();
-        gameDataObject.bottoms.Clear();
-        gameDataObject.hpPotion.Clear();
-        gameDataObject.spPotion.Clear();
+        DataManager.instance.gameData.shortWeapon.Clear();
+        DataManager.instance.gameData.longWeapon.Clear();
+        DataManager.instance.gameData.shoes.Clear();
+        DataManager.instance.gameData.top.Clear();
+        DataManager.instance.gameData.bottoms.Clear();
+        DataManager.instance.gameData.hpPotion.Clear();
+        DataManager.instance.gameData.spPotion.Clear();
 
-        gameDataObject.shortWeapon_C = null;
-        gameDataObject.longWeapon_C = null;
-        gameDataObject.shoes_C = null;
-        gameDataObject.top_C = null;
-        gameDataObject.bottoms_C = null;
+        DataManager.instance.gameData.shortWeaponC = null;
+        DataManager.instance.gameData.longWeaponC = null;
+        DataManager.instance.gameData.shoesC = null;
+        DataManager.instance.gameData.topC = null;
+        DataManager.instance.gameData.bottomsC = null;
 
-        gameDataObject.Level = 1;
-        gameDataObject.Exp = 0;
-        gameDataObject.Exp_require = 100;
+        DataManager.instance.gameData.level = 1;
+        DataManager.instance.gameData.exp = 0;
+        DataManager.instance.gameData.expRequire = 100;
 
-        gameDataObject.Str = 5;
-        gameDataObject.Agi = 5;
-        gameDataObject.Con = 5;
-        gameDataObject.Vit = 5;
-        gameDataObject.Status_own = 7;
-        gameDataObject.MaxHp = 1000;
-        gameDataObject.Hp = gameDataObject.MaxHp;
-        gameDataObject.MaxSp = 100;
-        gameDataObject.Sp = 100;
-        gameDataObject.Dam = 5;
-        gameDataObject.Def = 5;
-        gameDataObject.Weight = 0;
+        DataManager.instance.gameData.str = 5;
+        DataManager.instance.gameData.agi = 5;
+        DataManager.instance.gameData.con = 5;
+        DataManager.instance.gameData.vit = 5;
+        DataManager.instance.gameData.maxHp = 1000;
+        DataManager.instance.gameData.hp = DataManager.instance.gameData.maxHp;
+        DataManager.instance.gameData.maxSp = 100;
+        DataManager.instance.gameData.sp = DataManager.instance.gameData.maxSp;
+        DataManager.instance.gameData.dam = 5;
+        DataManager.instance.gameData.def = 5;
     }
 
     public void InventoryOn()
     {
-        AddInventory(gameDataObject.shortWeapon);
-        AddInventory(gameDataObject.longWeapon);
-        AddInventory(gameDataObject.shoes);
-        AddInventory(gameDataObject.top);
-        AddInventory(gameDataObject.bottoms);
-        AddInventory(gameDataObject.hpPotion);
-        AddInventory(gameDataObject.spPotion);
-        shortWeapon_C = AddEquip(equiped_shortWeapon, gameDataObject.shortWeapon_C);
-        longWeapon_C = AddEquip(equiped_longWeapon, gameDataObject.longWeapon_C);
-        shoes_C = AddEquip(equiped_shoes, gameDataObject.shoes_C);
-        top_C = AddEquip(equiped_top, gameDataObject.top_C);
-        bottoms_C = AddEquip(equiped_bottoms, gameDataObject.bottoms_C);
+        AddInventory(DataManager.instance.gameData.shortWeapon);
+        AddInventory(DataManager.instance.gameData.longWeapon);
+        AddInventory(DataManager.instance.gameData.shoes);
+        AddInventory(DataManager.instance.gameData.top);
+        AddInventory(DataManager.instance.gameData.bottoms);
+        AddInventory(DataManager.instance.gameData.hpPotion);
+        AddInventory(DataManager.instance.gameData.spPotion);
+        shortWeapon_C = AddEquip(equiped_shortWeapon, DataManager.instance.gameData.shortWeaponC);
+        longWeapon_C = AddEquip(equiped_longWeapon, DataManager.instance.gameData.longWeaponC);
+        shoes_C = AddEquip(equiped_shoes, DataManager.instance.gameData.shoesC);
+        top_C = AddEquip(equiped_top, DataManager.instance.gameData.topC);
+        bottoms_C = AddEquip(equiped_bottoms, DataManager.instance.gameData.bottomsC);
     }
 
     public void EmptyItemObject()
@@ -121,27 +123,26 @@ public class GameManager : MonoBehaviour
     #region [인벤토리 데이터 반영]
     private void AddInventory(List<Item> items)
     {
-        int idx = 1;
-
-        for (int i = 1; i < itemSlots.Length + 1; i++)
+        for (int i = 0; i < items.Count; i++)
         {
-            if (itemSlots[i].childCount != 0)
-                idx++;
-            else
-                break;
-        }
-
-        foreach (var item in items)
-        {
-            GameObject obj = Instantiate(Resources.Load<GameObject>("Prefabs/ItemSlot"), itemSlots[idx]);
-            obj.GetComponent<SlotItemInfo>().item = item;
-            if (item.itemType == ItemType.potion)
+            int idx = 1;
+            for (int j = 1; j < itemSlots.Length; j++)
             {
-                Potion potion = item as Potion;
+                if (itemSlots[j].childCount != 0)
+                    idx++;
+                else
+                    break;
+            }
+
+            GameObject obj = Instantiate(Resources.Load<GameObject>("Prefabs/ItemSlot"), itemSlots[idx]);
+            obj.GetComponent<SlotItemInfo>().item = items[i];
+            if (items[i].itemType == ItemType.potion)
+            {
+                Potion potion = items[i] as Potion;
                 obj.GetComponentInChildren<Text>().enabled = true;
                 obj.GetComponentInChildren<Text>().text = potion.count.ToString();
             }
-            obj.GetComponent<Image>().sprite = item.img;
+            obj.GetComponent<Image>().sprite = items[i].img;
             list_inventory.Add(obj);
         }
     }
@@ -167,87 +168,87 @@ public class GameManager : MonoBehaviour
         {
             case ItemType.shortWeapon:
                 if (shortWeapon_C != null)
-                    OffEquip(gameDataObject.shortWeapon, gameDataObject.shortWeapon_C, shortWeapon_C);
+                    OffEquip(DataManager.instance.gameData.shortWeapon, DataManager.instance.gameData.shortWeaponC, shortWeapon_C);
                 SlotItemInfo.instance.transform.SetParent(equiped_shortWeapon);
-                gameDataObject.shortWeapon_C = SlotItemInfo.instance.item as Weapon;
+                DataManager.instance.gameData.shortWeaponC = SlotItemInfo.instance.item as Weapon;
                 shortWeapon_C = SlotItemInfo.instance.gameObject;
                 SlotItemInfo.instance.isEquip = true;
-                gameDataObject.Str += SlotItemInfo.instance.item.str;
-                gameDataObject.Agi += SlotItemInfo.instance.item.agi;
-                gameDataObject.Con += SlotItemInfo.instance.item.con;
-                gameDataObject.Vit += SlotItemInfo.instance.item.vit;
+                DataManager.instance.gameData.str += SlotItemInfo.instance.item.str;
+                DataManager.instance.gameData.agi += SlotItemInfo.instance.item.agi;
+                DataManager.instance.gameData.con += SlotItemInfo.instance.item.con;
+                DataManager.instance.gameData.vit += SlotItemInfo.instance.item.vit;
                 SetState(true, SlotItemInfo.instance.item.str, SlotItemInfo.instance.item.agi, SlotItemInfo.instance.item.con, SlotItemInfo.instance.item.vit);
                 weapon = SlotItemInfo.instance.item as Weapon;
-                gameDataObject.Dam += weapon.damage;
-                gameDataObject.shortWeapon.Remove(SlotItemInfo.instance.item);
+                DataManager.instance.gameData.dam += weapon.damage;
+                DataManager.instance.gameData.shortWeapon.Remove(SlotItemInfo.instance.item);
                 moveBehaviour.ChangeItemObject(SlotItemInfo.instance.item.name);
                 moveBehaviour.usingWeapon = MoveBehaviour.UsingWeapon.short_dist;
                 break;
             case ItemType.longWeapon:
                 if (longWeapon_C != null)
-                    OffEquip(gameDataObject.longWeapon, gameDataObject.longWeapon_C, longWeapon_C);
+                    OffEquip(DataManager.instance.gameData.longWeapon, DataManager.instance.gameData.longWeaponC, longWeapon_C);
                 SlotItemInfo.instance.transform.SetParent(equiped_longWeapon);
-                gameDataObject.longWeapon_C = SlotItemInfo.instance.item as Weapon;
+                DataManager.instance.gameData.longWeaponC = SlotItemInfo.instance.item as Weapon;
                 longWeapon_C = SlotItemInfo.instance.gameObject;
                 SlotItemInfo.instance.isEquip = true;
-                gameDataObject.Str += SlotItemInfo.instance.item.str;
-                gameDataObject.Agi += SlotItemInfo.instance.item.agi;
-                gameDataObject.Con += SlotItemInfo.instance.item.con;
-                gameDataObject.Vit += SlotItemInfo.instance.item.vit;
+                DataManager.instance.gameData.str += SlotItemInfo.instance.item.str;
+                DataManager.instance.gameData.agi += SlotItemInfo.instance.item.agi;
+                DataManager.instance.gameData.con += SlotItemInfo.instance.item.con;
+                DataManager.instance.gameData.vit += SlotItemInfo.instance.item.vit;
                 SetState(true, SlotItemInfo.instance.item.str, SlotItemInfo.instance.item.agi, SlotItemInfo.instance.item.con, SlotItemInfo.instance.item.vit);
                 weapon = SlotItemInfo.instance.item as Weapon;
-                gameDataObject.Dam += weapon.damage;
-                gameDataObject.longWeapon.Remove(SlotItemInfo.instance.item);
+                DataManager.instance.gameData.dam += weapon.damage;
+                DataManager.instance.gameData.longWeapon.Remove(SlotItemInfo.instance.item);
                 moveBehaviour.ChangeItemObject(SlotItemInfo.instance.item.name);
                 moveBehaviour.usingWeapon = MoveBehaviour.UsingWeapon.long_dist;
                 break;
             case ItemType.shoes:
                 if (shoes_C != null)
-                    OffEquip(gameDataObject.shoes, gameDataObject.shoes_C, shoes_C);
+                    OffEquip(DataManager.instance.gameData.shoes, DataManager.instance.gameData.shoesC, shoes_C);
                 SlotItemInfo.instance.transform.SetParent(equiped_shoes);
-                gameDataObject.shoes_C = SlotItemInfo.instance.item as Clothes;
+                DataManager.instance.gameData.shoesC = SlotItemInfo.instance.item as Clothes;
                 shoes_C = SlotItemInfo.instance.gameObject;
                 SlotItemInfo.instance.isEquip = true;
-                gameDataObject.Str += SlotItemInfo.instance.item.str;
-                gameDataObject.Agi += SlotItemInfo.instance.item.agi;
-                gameDataObject.Con += SlotItemInfo.instance.item.con;
-                gameDataObject.Vit += SlotItemInfo.instance.item.vit;
+                DataManager.instance.gameData.str += SlotItemInfo.instance.item.str;
+                DataManager.instance.gameData.agi += SlotItemInfo.instance.item.agi;
+                DataManager.instance.gameData.con += SlotItemInfo.instance.item.con;
+                DataManager.instance.gameData.vit += SlotItemInfo.instance.item.vit;
                 SetState(true, SlotItemInfo.instance.item.str, SlotItemInfo.instance.item.agi, SlotItemInfo.instance.item.con, SlotItemInfo.instance.item.vit);
                 clothes = SlotItemInfo.instance.item as Clothes;
-                gameDataObject.Def += clothes.def;
-                gameDataObject.shoes.Remove(SlotItemInfo.instance.item);
+                DataManager.instance.gameData.def += clothes.def;
+                DataManager.instance.gameData.shoes.Remove(SlotItemInfo.instance.item);
                 break;
             case ItemType.top:
                 if (top_C != null)
-                    OffEquip(gameDataObject.top, gameDataObject.top_C, top_C);
+                    OffEquip(DataManager.instance.gameData.top, DataManager.instance.gameData.topC, top_C);
                 SlotItemInfo.instance.transform.SetParent(equiped_top);
-                gameDataObject.top_C = SlotItemInfo.instance.item as Clothes;
+                DataManager.instance.gameData.topC = SlotItemInfo.instance.item as Clothes;
                 top_C = SlotItemInfo.instance.gameObject;
                 SlotItemInfo.instance.isEquip = true;
-                gameDataObject.Str += SlotItemInfo.instance.item.str;
-                gameDataObject.Agi += SlotItemInfo.instance.item.agi;
-                gameDataObject.Con += SlotItemInfo.instance.item.con;
-                gameDataObject.Vit += SlotItemInfo.instance.item.vit;
+                DataManager.instance.gameData.str += SlotItemInfo.instance.item.str;
+                DataManager.instance.gameData.agi += SlotItemInfo.instance.item.agi;
+                DataManager.instance.gameData.con += SlotItemInfo.instance.item.con;
+                DataManager.instance.gameData.vit += SlotItemInfo.instance.item.vit;
                 SetState(true, SlotItemInfo.instance.item.str, SlotItemInfo.instance.item.agi, SlotItemInfo.instance.item.con, SlotItemInfo.instance.item.vit);
                 clothes = SlotItemInfo.instance.item as Clothes;
-                gameDataObject.Def += clothes.def;
-                gameDataObject.top.Remove(SlotItemInfo.instance.item);
+                DataManager.instance.gameData.def += clothes.def;
+                DataManager.instance.gameData.top.Remove(SlotItemInfo.instance.item);
                 break;
             case ItemType.bottoms:
                 if (bottoms_C != null)
-                    OffEquip(gameDataObject.bottoms, gameDataObject.bottoms_C, bottoms_C);
+                    OffEquip(DataManager.instance.gameData.bottoms, DataManager.instance.gameData.bottomsC, bottoms_C);
                 SlotItemInfo.instance.transform.SetParent(equiped_bottoms);
-                gameDataObject.bottoms_C = SlotItemInfo.instance.item as Clothes;
+                DataManager.instance.gameData.bottomsC = SlotItemInfo.instance.item as Clothes;
                 bottoms_C = SlotItemInfo.instance.gameObject;
                 SlotItemInfo.instance.isEquip = true;
-                gameDataObject.Str += SlotItemInfo.instance.item.str;
-                gameDataObject.Agi += SlotItemInfo.instance.item.agi;
-                gameDataObject.Con += SlotItemInfo.instance.item.con;
-                gameDataObject.Vit += SlotItemInfo.instance.item.vit;
+                DataManager.instance.gameData.str += SlotItemInfo.instance.item.str;
+                DataManager.instance.gameData.agi += SlotItemInfo.instance.item.agi;
+                DataManager.instance.gameData.con += SlotItemInfo.instance.item.con;
+                DataManager.instance.gameData.vit += SlotItemInfo.instance.item.vit;
                 SetState(true, SlotItemInfo.instance.item.str, SlotItemInfo.instance.item.agi, SlotItemInfo.instance.item.con, SlotItemInfo.instance.item.vit);
                 clothes = SlotItemInfo.instance.item as Clothes;
-                gameDataObject.Def += clothes.def;
-                gameDataObject.bottoms.Remove(SlotItemInfo.instance.item);
+                DataManager.instance.gameData.def += clothes.def;
+                DataManager.instance.gameData.bottoms.Remove(SlotItemInfo.instance.item);
                 break;
         }
     }
@@ -268,21 +269,21 @@ public class GameManager : MonoBehaviour
         object_c.transform.SetParent(itemSlots[idx]);
         SlotItemInfo temp = object_c.GetComponent<SlotItemInfo>();
         temp.isEquip = false;
-        gameDataObject.Str -= temp.item.str;
-        gameDataObject.Agi -= temp.item.agi;
-        gameDataObject.Con -= temp.item.con;
-        gameDataObject.Vit -= temp.item.vit;
+        DataManager.instance.gameData.str -= temp.item.str;
+        DataManager.instance.gameData.agi -= temp.item.agi;
+        DataManager.instance.gameData.con -= temp.item.con;
+        DataManager.instance.gameData.vit -= temp.item.vit;
         SetState(false, temp.item.str, temp.item.agi, temp.item.con, temp.item.vit);
 
         if (item_c.itemType == ItemType.shortWeapon || item_c.itemType == ItemType.longWeapon)
         {
             Weapon weapon = temp.item as Weapon;
-            gameDataObject.Dam -= weapon.damage;
+            DataManager.instance.gameData.dam -= weapon.damage;
         }
         else
         {
             Clothes clothes = temp.item as Clothes;
-            gameDataObject.Def -= clothes.def;
+            DataManager.instance.gameData.def -= clothes.def;
         }
     }
 
@@ -290,17 +291,17 @@ public class GameManager : MonoBehaviour
     {
         if (set)
         {
-            gameDataObject.MaxHp += (((float)str * 10f) + ((float)con * 50f));
-            gameDataObject.MaxSp += (((float)con * 10f) + ((float)vit * 20f));
-            gameDataObject.Dam += (((float)str * 5f) + ((float)agi * 2f));
-            gameDataObject.Def += (((float)str * 2f) + ((float)con * 5f));
+            DataManager.instance.gameData.maxHp += (((float)str * 10f) + ((float)con * 50f));
+            DataManager.instance.gameData.maxSp += (((float)con * 10f) + ((float)vit * 20f));
+            DataManager.instance.gameData.dam += (((float)str * 5f) + ((float)agi * 2f));
+            DataManager.instance.gameData.def += (((float)str * 2f) + ((float)con * 5f));
         }
         else
         {
-            gameDataObject.MaxHp -= (((float)str * 10f) + ((float)con * 50f));
-            gameDataObject.MaxSp -= (((float)con * 10f) + ((float)vit * 20f));
-            gameDataObject.Dam -= (((float)str * 5f) + ((float)agi * 2f));
-            gameDataObject.Def -= (((float)str * 2f) + ((float)con * 5f));
+            DataManager.instance.gameData.maxHp -= (((float)str * 10f) + ((float)con * 50f));
+            DataManager.instance.gameData.maxSp -= (((float)con * 10f) + ((float)vit * 20f));
+            DataManager.instance.gameData.dam -= (((float)str * 5f) + ((float)agi * 2f));
+            DataManager.instance.gameData.def -= (((float)str * 2f) + ((float)con * 5f));
         }
     }
 
@@ -320,32 +321,31 @@ public class GameManager : MonoBehaviour
             switch (SlotItemInfo.instance.item.itemType)
             {
                 case ItemType.shortWeapon:
-                    OffEquip(gameDataObject.shortWeapon, gameDataObject.shortWeapon_C, shortWeapon_C);
-                    gameDataObject.shortWeapon_C = null;
+                    OffEquip(DataManager.instance.gameData.shortWeapon, DataManager.instance.gameData.shortWeaponC, shortWeapon_C);
+                    DataManager.instance.gameData.shortWeaponC = null;
                     shortWeapon_C = null;
                     break;
                 case ItemType.longWeapon:
-                    OffEquip(gameDataObject.longWeapon, gameDataObject.longWeapon_C, longWeapon_C);
-                    gameDataObject.longWeapon_C = null;
+                    OffEquip(DataManager.instance.gameData.longWeapon, DataManager.instance.gameData.longWeaponC, longWeapon_C);
+                    DataManager.instance.gameData.longWeaponC = null;
                     longWeapon_C = null;
                     break;
                 case ItemType.top:
-                    OffEquip(gameDataObject.top, gameDataObject.top_C, top_C);
-                    gameDataObject.top_C = null;
+                    OffEquip(DataManager.instance.gameData.top, DataManager.instance.gameData.topC, top_C);
+                    DataManager.instance.gameData.topC = null;
                     top_C = null;
                     break;
                 case ItemType.bottoms:
-                    OffEquip(gameDataObject.bottoms, gameDataObject.bottoms_C, bottoms_C);
-                    gameDataObject.bottoms_C = null;
+                    OffEquip(DataManager.instance.gameData.bottoms, DataManager.instance.gameData.bottomsC, bottoms_C);
+                    DataManager.instance.gameData.bottomsC = null;
                     bottoms_C = null;
                     break;
                 case ItemType.shoes:
-                    OffEquip(gameDataObject.shoes, gameDataObject.shoes_C, shoes_C);
-                    gameDataObject.shoes_C = null;
+                    OffEquip(DataManager.instance.gameData.shoes, DataManager.instance.gameData.shoesC, shoes_C);
+                    DataManager.instance.gameData.shoesC = null;
                     shoes_C = null;
                     break;
             }
-
             if (!list_inventory.Contains(SlotItemInfo.instance.gameObject))
                 list_inventory.Add(SlotItemInfo.instance.gameObject);
         }
@@ -360,10 +360,10 @@ public class GameManager : MonoBehaviour
             switch (potion.potionType)
             {
                 case PotionType.HP:
-                    gameDataObject.hpPotion.Remove(potion);
+                    DataManager.instance.gameData.hpPotion.Remove(potion);
                     break;
                 case PotionType.SP:
-                    gameDataObject.spPotion.Remove(potion);
+                    DataManager.instance.gameData.spPotion.Remove(potion);
                     break;
             }
         }
@@ -374,14 +374,14 @@ public class GameManager : MonoBehaviour
         switch (potion.potionType)
         {
             case PotionType.HP:
-                if (gameDataObject.Hp >= gameDataObject.MaxHp)
+                if (DataManager.instance.gameData.hp >= DataManager.instance.gameData.maxHp)
                 {
                     StartCoroutine(UIManager.instance.NoticeText(false, "이미 체력이 가득 차 있습니다."));
                     return;
                 }
                 break;
             case PotionType.SP:
-                if (gameDataObject.Sp >= gameDataObject.MaxSp)
+                if (DataManager.instance.gameData.sp >= DataManager.instance.gameData.maxSp)
                 {
                     StartCoroutine(UIManager.instance.NoticeText(false, "이미 기력이 가득 차 있습니다."));
                     return;

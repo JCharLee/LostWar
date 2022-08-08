@@ -11,7 +11,6 @@ public class Health : MonoBehaviour
     void Start()
     {
         ani = GetComponent<Animator>();
-        var HP = GameManager.instance.gameDataObject.Hp;
     }
 
     
@@ -25,12 +24,12 @@ public class Health : MonoBehaviour
         if (isdie)
             return;
 
-        GameManager.instance.gameDataObject.Hp -= damage;
+        DataManager.instance.gameData.hp -= damage;
 
         if (ani != null)
             ani.SetTrigger("IsHit");
 
-        if (GameManager.instance.gameDataObject.Hp <= 0)
+        if (DataManager.instance.gameData.hp <= 0)
         {
             //Debug.Log("die");
             if (ani != null)
