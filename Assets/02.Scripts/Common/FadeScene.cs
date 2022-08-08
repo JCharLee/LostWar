@@ -80,8 +80,11 @@ public class FadeScene : MonoBehaviour
                                 QuestManager.instance.QuestActionIdx = 1;
                                 break;
                         }
+                        Destroy(FindObjectOfType<QuestContents>().gameObject);
                         DataManager.instance.LoadData();
+                        UIManager.instance.GameOverPanelOff();
                         QuestManager.instance.Start();
+                        StartCoroutine(Fade());
                     }
                     break;
                 case "Return":
