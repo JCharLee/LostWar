@@ -24,6 +24,7 @@ public class EnemyMeleeMove : MonoBehaviour
     int layermask;
     float traceDist = 15f;
     bool LookPlayer = false;
+    bool IsCombat = false;
 
     void Start()
     {
@@ -40,8 +41,8 @@ public class EnemyMeleeMove : MonoBehaviour
     {
         RaycastHit hit;
         Vector3 dir = (playerTr.position + playerTr.up * 1f - tr.position).normalized;
-        Debug.DrawRay(tr.position, dir * 1.5f, Color.green);
-        if (Physics.Raycast(tr.position, dir, out hit, 1.5f, layermask))
+        Debug.DrawRay(tr.position, dir * traceDist, Color.green);
+        if (Physics.Raycast(tr.position, dir, out hit, traceDist, layermask))
             LookPlayer = (hit.collider.CompareTag("Player"));
         else
             LookPlayer = false;
@@ -57,12 +58,19 @@ public class EnemyMeleeMove : MonoBehaviour
 
         if(dist <= 1.5f && LookPlayer)
         {
+            IsCombat = true;
             ani.SetBool("IsMove", false);
             agent.isStopped = true;
             RandomAttack();
         }
-        else if(dist <= traceDist && !LookPlayer)
+        if (dist <= 1.5f && LookPlayer && IsCombat)
         {
+            ani.SetBool("IsMove", true);
+            agent.isStopped = false;
+        }
+        else if(dist <= traceDist && LookPlayer)
+        {
+            IsCombat = false;
             if (!isaction)
             {
                 ani.SetBool("IsMove", true);
@@ -70,8 +78,14 @@ public class EnemyMeleeMove : MonoBehaviour
                 agent.isStopped = false;
             }
         }
+        else if (dist <= traceDist && !LookPlayer)
+        {
+            IsCombat = false;
+            Epatrol.patrol();
+        }
         else
         {
+            IsCombat = false;
             Epatrol.patrol();
         }
     }
