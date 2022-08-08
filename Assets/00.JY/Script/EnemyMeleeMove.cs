@@ -34,7 +34,7 @@ public class EnemyMeleeMove : MonoBehaviour
         Epatrol = GetComponent<EnemyPatrol>();
         Ehealth = GetComponent<EnemyHealth>();
         playerTr = GameObject.FindWithTag("Player").GetComponent<Transform>();
-        layermask = 1 << 9 | 1 << 8 | 1 << 10;
+        layermask = 1 << 9 | 1 << 8 | 1 << 0;
     }
 
     private void Update()
