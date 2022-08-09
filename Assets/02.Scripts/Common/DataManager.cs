@@ -100,8 +100,8 @@ public class GameData
     public List<Item> shoes;
     public List<Item> top;
     public List<Item> bottoms;
-    public List<Item> hpPotion;
-    public List<Item> spPotion;
+    public List<Potion> hpPotion;
+    public List<Potion> spPotion;
 
     public Weapon shortWeaponC;
     public Weapon longWeaponC;

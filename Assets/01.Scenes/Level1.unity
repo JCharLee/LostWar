@@ -2139,6 +2139,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy 3f_1
       objectReference: {fileID: 0}
+    - target: {fileID: 5006374345420488432, guid: 844011aec8bf08a45a75e8ca06f78fe6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 844011aec8bf08a45a75e8ca06f78fe6, type: 3}
 --- !u!1001 &114228792
@@ -6595,6 +6600,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy 1f_1
       objectReference: {fileID: 0}
+    - target: {fileID: 5006374345420488432, guid: 844011aec8bf08a45a75e8ca06f78fe6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 844011aec8bf08a45a75e8ca06f78fe6, type: 3}
 --- !u!1001 &346669047
@@ -8201,6 +8211,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MeleeEnemy 2f_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251967275165735037, guid: 6aa5f383e30640143abf95fd4c1e8934,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7254886515284240221, guid: 6aa5f383e30640143abf95fd4c1e8934,
         type: 3}
@@ -13839,6 +13854,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy 1f_2
       objectReference: {fileID: 0}
+    - target: {fileID: 5006374345420488432, guid: 844011aec8bf08a45a75e8ca06f78fe6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 844011aec8bf08a45a75e8ca06f78fe6, type: 3}
 --- !u!1001 &728737921
@@ -15664,6 +15684,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MeleeEnemy 1f_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251967275165735037, guid: 6aa5f383e30640143abf95fd4c1e8934,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7254886515284240221, guid: 6aa5f383e30640143abf95fd4c1e8934,
         type: 3}
@@ -18294,6 +18319,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Enemy 1f_3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5006374345420488432, guid: 844011aec8bf08a45a75e8ca06f78fe6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 844011aec8bf08a45a75e8ca06f78fe6, type: 3}
@@ -21503,6 +21533,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy 3f_2
       objectReference: {fileID: 0}
+    - target: {fileID: 5006374345420488432, guid: 844011aec8bf08a45a75e8ca06f78fe6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 844011aec8bf08a45a75e8ca06f78fe6, type: 3}
 --- !u!1001 &1114816044
@@ -23102,6 +23137,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MeleeEnemy 1f_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251967275165735037, guid: 6aa5f383e30640143abf95fd4c1e8934,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7254886515284240221, guid: 6aa5f383e30640143abf95fd4c1e8934,
         type: 3}
@@ -34999,6 +35039,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MeleeEnemy 2f_1
       objectReference: {fileID: 0}
+    - target: {fileID: 7251967275165735037, guid: 6aa5f383e30640143abf95fd4c1e8934,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7254886515284240221, guid: 6aa5f383e30640143abf95fd4c1e8934,
         type: 3}
       propertyPath: m_RootOrder
@@ -40804,6 +40849,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MeleeEnemy 1f_3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251967275165735037, guid: 6aa5f383e30640143abf95fd4c1e8934,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7254886515284240221, guid: 6aa5f383e30640143abf95fd4c1e8934,
         type: 3}

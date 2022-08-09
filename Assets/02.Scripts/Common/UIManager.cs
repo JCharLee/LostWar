@@ -124,8 +124,14 @@ public class UIManager : MonoBehaviour
         expBar = transform.GetChild(4).transform.GetChild(3).transform.GetChild(0).GetComponent<Image>();
         lvText = transform.GetChild(4).transform.GetChild(4).GetComponent<Text>();
 
-        // 5.인벤토리 & 스탯창
-        inventoryPanel = transform.GetChild(5).gameObject;
+        // 5.스킬창
+        skillPanel = transform.GetChild(5).gameObject;
+        weaponTxt = skillPanel.transform.GetChild(0).GetComponentInChildren<Text>();
+        hpSkill = skillPanel.transform.GetChild(2).transform.GetChild(0).GetComponent<Image>();
+        spSkill = skillPanel.transform.GetChild(3).transform.GetChild(0).GetComponent<Image>();
+
+        // 6.인벤토리 & 스탯창
+        inventoryPanel = transform.GetChild(6).gameObject;
         itemInfoText = inventoryPanel.transform.GetChild(5).GetComponentInChildren<Text>();
         itemInfoImage = inventoryPanel.transform.GetChild(4).transform.GetChild(0).GetComponent<Image>();
         str = inventoryPanel.transform.GetChild(3).transform.GetChild(0).GetComponent<Text>();
@@ -137,17 +143,11 @@ public class UIManager : MonoBehaviour
         hp = inventoryPanel.transform.GetChild(3).transform.GetChild(6).GetComponent<Text>();
         sp = inventoryPanel.transform.GetChild(3).transform.GetChild(7).GetComponent<Text>();
 
-        // 6.드랍창
-        dropPanel = transform.GetChild(6).gameObject;
+        // 7.드랍창
+        dropPanel = transform.GetChild(7).gameObject;
 
-        // 7.알림
-        noticeText = transform.GetChild(7).GetComponent<Text>();
-
-        // 8.스킬창
-        skillPanel = transform.GetChild(8).gameObject;
-        weaponTxt = skillPanel.transform.GetChild(0).GetComponentInChildren<Text>();
-        hpSkill = skillPanel.transform.GetChild(2).transform.GetChild(0).GetComponent<Image>();
-        spSkill = skillPanel.transform.GetChild(3).transform.GetChild(0).GetComponent<Image>();
+        // 8.알림
+        noticeText = transform.GetChild(8).GetComponent<Text>();
 
         // 9.10.11.게임 오버 창
         gameOverBg = transform.GetChild(9).GetComponent<CanvasGroup>();

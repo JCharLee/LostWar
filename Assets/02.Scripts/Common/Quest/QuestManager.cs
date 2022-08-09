@@ -110,6 +110,15 @@ public class QuestManager : MonoBehaviour
         }
         else
             uiManager.fadeObject.SetActive(true);
+
+        if (DataManager.instance.gameData.questId == 30)
+        {
+            GameObject enemy = GameObject.Find("Enemy");
+            for (int i = 0; i < enemy.transform.childCount; i++)
+            {
+                enemy.transform.GetChild(i).gameObject.SetActive(true);
+            }
+        }
     }
 
     public void Complete()

@@ -65,7 +65,7 @@ public class GetDropItem : MonoBehaviour
                         curPotion.count += newPotion.count;
                     }
                     else
-                        DataManager.instance.gameData.hpPotion.Add(uiManager.items[itemIdx]);
+                        DataManager.instance.gameData.hpPotion.Add((Potion)uiManager.items[itemIdx]);
                     break;
                 case PotionType.SP:
                     if (DataManager.instance.gameData.spPotion.Contains(DataManager.instance.gameData.spPotion.Find(x => x.name == "SP Potion")))
@@ -74,7 +74,7 @@ public class GetDropItem : MonoBehaviour
                         curPotion.count += newPotion.count;
                     }
                     else
-                        DataManager.instance.gameData.spPotion.Add(uiManager.items[itemIdx]);
+                        DataManager.instance.gameData.spPotion.Add((Potion)uiManager.items[itemIdx]);
                     break;
             }
             uiManager.items[itemIdx] = null;
