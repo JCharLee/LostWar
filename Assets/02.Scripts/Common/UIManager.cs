@@ -54,8 +54,8 @@ public class UIManager : MonoBehaviour
 
     [Header("[Inventory]")]
     [SerializeField] private GameObject inventoryPanel;
-    [SerializeField] private Text itemInfoText;
-    [SerializeField] private Image itemInfoImage;
+    public Text itemInfoText;
+    public Image itemInfoImage;
     [SerializeField] private Text str;
     [SerializeField] private Text agi;
     [SerializeField] private Text con;
@@ -210,6 +210,9 @@ public class UIManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.I))
         {
             if (questManager.IsStarting || isAction || dropOn || gameOver) return;
+            if (questManager.IsStarting || isAction || gameOver) return;
+            if (dropOn)
+                CloseDropPanel();
             if (!inventoryOn)
                 MainCamAudio.PlayOneShot(invenOn);
             else if (inventoryOn)
@@ -429,7 +432,7 @@ public class UIManager : MonoBehaviour
         lvText.text = $"Lv {level}";
     }
 
-    public void UpdateExp(float exp)
+    public void UpdateExp(int exp)
     {
         DataManager.instance.gameData.exp += exp;
         expBar.fillAmount = DataManager.instance.gameData.exp / DataManager.instance.gameData.expRequire;
