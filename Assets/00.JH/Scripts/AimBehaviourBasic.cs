@@ -15,17 +15,24 @@ public class AimBehaviourBasic : GenericBehaviour
 	public Animator ani;
 	[SerializeField] RayShoot rayShoot;
 
+	private Health health;
+
 	// Start is always called after any Awake functions.
 	void Start ()
 	{
 		// Set up the references.
 		aimBool = Animator.StringToHash("Aim");
 		ani.SetBool("Aim", true);
+
+		health = GetComponent<Health>();
 	}
 
 	// Update is used to set features regardless the active behaviour.
 	void FixedUpdate()
 	{
+		if (health.isdie)
+			return;
+
 		// Activate/deactivate aim by input.
 		if (Input.GetAxisRaw(aimButton) != 0 && !aim)
 		{

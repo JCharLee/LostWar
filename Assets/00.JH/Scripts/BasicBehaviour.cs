@@ -44,6 +44,8 @@ public class BasicBehaviour : MonoBehaviour
 	// Get current default behaviour.
 	public int GetDefaultBehaviour {  get { return defaultBehaviour; } }
 
+	private Health health;
+
 	void Awake ()
 	{
 		// Set up the references.
@@ -58,6 +60,8 @@ public class BasicBehaviour : MonoBehaviour
 		// Grounded verification variables.
 		groundedBool = Animator.StringToHash("Grounded");
 		colExtents = GetComponent<Collider>().bounds.extents;
+
+		health = GetComponent<Health>();
 	}
 	void Start()
 	{
@@ -66,6 +70,9 @@ public class BasicBehaviour : MonoBehaviour
 
 	void Update()
 	{
+		if (health.isdie)
+			return;
+
 		// Store the input axes.
 		h = Input.GetAxis("Horizontal");
 		v = Input.GetAxis("Vertical");
@@ -93,6 +100,9 @@ public class BasicBehaviour : MonoBehaviour
 	// Call the FixedUpdate functions of the active or overriding behaviours.
 	void FixedUpdate()
 	{
+		if (health.isdie)
+			return;
+
 		// Call the active behaviour if no other is overriding.
 		bool isAnyBehaviourActive = false;
 		if (behaviourLocked > 0 || overridingBehaviours.Count == 0)
@@ -126,6 +136,9 @@ public class BasicBehaviour : MonoBehaviour
 	// Call the LateUpdate functions of the active or overriding behaviours.
 	private void LateUpdate()
 	{
+		if (health.isdie)
+			return;
+
 		// Call the active behaviour if no other is overriding.
 		if (behaviourLocked > 0 || overridingBehaviours.Count == 0)
 		{

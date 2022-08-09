@@ -89,6 +89,11 @@ public class UIManager : MonoBehaviour
     public static UIManager instance = null;
     private BasicBehaviour basicBehaviour;
 
+    AudioSource MainCamAudio;
+    AudioClip invenOn;
+    AudioClip invenOff;
+
+
     private void Awake()
     {
         if (instance == null)
@@ -160,6 +165,10 @@ public class UIManager : MonoBehaviour
         talkManager = GameObject.Find("TalkManager").GetComponent<TalkManager>();
         questManager = GameObject.Find("QuestManager").GetComponent<QuestManager>();
         basicBehaviour = FindObjectOfType<BasicBehaviour>();
+
+        MainCamAudio = Camera.main.transform.GetComponent<AudioSource>();
+        invenOn = Resources.Load<AudioClip>("Sound/UI_01");
+        invenOff = Resources.Load<AudioClip>("Sound/UI_02");
     }
 
     private void Start()
@@ -201,6 +210,10 @@ public class UIManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.I))
         {
             if (questManager.IsStarting || isAction || dropOn || gameOver) return;
+            if (!inventoryOn)
+                MainCamAudio.PlayOneShot(invenOn);
+            else if (inventoryOn)
+                MainCamAudio.PlayOneShot(invenOff);
             inventoryOn = !inventoryOn;
             Inventory(inventoryOn);
         }

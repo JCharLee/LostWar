@@ -39,14 +39,14 @@ public class RayShoot : MonoBehaviour
             {
                 object[] _params = new object[2];
                 _params[0] = hit.point;
-                _params[1] = 25f;
+                _params[1] = 10f;
                 hit.collider.gameObject.SendMessage("OnDamage", _params, SendMessageOptions.DontRequireReceiver);
             }
 
             var Enemy = hit.transform.GetComponent<EnemyHealth>();
             if(Enemy != null)
             {
-                Enemy.takeDamage(25f, hit.point);
+                Enemy.takeDamage(10f, hit.point);
             }
         }
     }
