@@ -33,12 +33,12 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         DontDestroyOnLoad(this.gameObject);
 
-        itemSlots = GameObject.Find("UI").transform.GetChild(5).transform.GetChild(2).GetComponentsInChildren<Transform>();
-        equiped_top = GameObject.Find("UI").transform.GetChild(5).transform.GetChild(1).transform.GetChild(1).GetComponent<Transform>();
-        equiped_bottoms = GameObject.Find("UI").transform.GetChild(5).transform.GetChild(1).transform.GetChild(2).GetComponent<Transform>();
-        equiped_shoes = GameObject.Find("UI").transform.GetChild(5).transform.GetChild(1).transform.GetChild(3).GetComponent<Transform>();
-        equiped_shortWeapon = GameObject.Find("UI").transform.GetChild(5).transform.GetChild(1).transform.GetChild(4).GetComponent<Transform>();
-        equiped_longWeapon = GameObject.Find("UI").transform.GetChild(5).transform.GetChild(1).transform.GetChild(5).GetComponent<Transform>();
+        itemSlots = GameObject.Find("UI").transform.GetChild(6).transform.GetChild(2).GetComponentsInChildren<Transform>();
+        equiped_top = GameObject.Find("UI").transform.GetChild(6).transform.GetChild(1).transform.GetChild(1).GetComponent<Transform>();
+        equiped_bottoms = GameObject.Find("UI").transform.GetChild(6).transform.GetChild(1).transform.GetChild(2).GetComponent<Transform>();
+        equiped_shoes = GameObject.Find("UI").transform.GetChild(6).transform.GetChild(1).transform.GetChild(3).GetComponent<Transform>();
+        equiped_shortWeapon = GameObject.Find("UI").transform.GetChild(6).transform.GetChild(1).transform.GetChild(4).GetComponent<Transform>();
+        equiped_longWeapon = GameObject.Find("UI").transform.GetChild(6).transform.GetChild(1).transform.GetChild(5).GetComponent<Transform>();
 
         moveBehaviour = GameObject.FindGameObjectWithTag("Player").GetComponent<MoveBehaviour>();
     }
@@ -113,6 +113,7 @@ public class GameManager : MonoBehaviour
         foreach (GameObject obj in list_inventory)
             Destroy(obj);
         list_inventory.Clear();
+        DataManager.instance.gameData.slotItemInfos.Clear();
         Destroy(shortWeapon_C);
         Destroy(longWeapon_C);
         Destroy(top_C);
@@ -121,7 +122,7 @@ public class GameManager : MonoBehaviour
     }
 
     #region [인벤토리 데이터 반영]
-    private void AddInventory(List<Item> items)
+    private void AddInventory<T>(List<T> items) where T : Item
     {
         for (int i = 0; i < items.Count; i++)
         {
@@ -144,17 +145,34 @@ public class GameManager : MonoBehaviour
             }
             obj.GetComponent<Image>().sprite = items[i].img;
             list_inventory.Add(obj);
+            DataManager.instance.gameData.slotItemInfos.Add(obj.GetComponent<SlotItemInfo>());
         }
     }
 
     private GameObject AddEquip(Transform parent, Item item_c)
     {
         if (item_c == null || item_c.name == null || item_c.name == "") return null;
-        GameObject obj = Instantiate(Resources.Load<GameObject>("Prefabs/ItemSlot"), parent);
-        obj.GetComponent<SlotItemInfo>().item = item_c;
-        obj.GetComponent<Image>().sprite = item_c.img;
-        obj.GetComponent<SlotItemInfo>().isEquip = true;
-        return obj;
+
+        if (item_c.itemType == ItemType.shortWeapon || item_c.itemType == ItemType.longWeapon)
+        {
+            Weapon weapon = item_c as Weapon;
+            GameObject obj = Instantiate(Resources.Load<GameObject>("Prefabs/ItemSlot"), parent);
+            obj.GetComponent<SlotItemInfo>().item = weapon;
+            obj.GetComponent<Image>().sprite = weapon.img;
+            obj.GetComponent<SlotItemInfo>().isEquip = true;
+            DataManager.instance.gameData.slotItemInfos.Add(obj.GetComponent<SlotItemInfo>());
+            return obj;
+        }
+        else
+        {
+            Clothes clothes = item_c as Clothes;
+            GameObject obj = Instantiate(Resources.Load<GameObject>("Prefabs/ItemSlot"), parent);
+            obj.GetComponent<SlotItemInfo>().item = clothes;
+            obj.GetComponent<Image>().sprite = clothes.img;
+            obj.GetComponent<SlotItemInfo>().isEquip = true;
+            DataManager.instance.gameData.slotItemInfos.Add(obj.GetComponent<SlotItemInfo>());
+            return obj;
+        }
     }
     #endregion
 
@@ -347,7 +365,10 @@ public class GameManager : MonoBehaviour
                     break;
             }
             if (!list_inventory.Contains(SlotItemInfo.instance.gameObject))
+            {
                 list_inventory.Add(SlotItemInfo.instance.gameObject);
+                DataManager.instance.gameData.slotItemInfos.Add(SlotItemInfo.instance.gameObject.GetComponent<SlotItemInfo>());
+            }
         }
     }
     #endregion
