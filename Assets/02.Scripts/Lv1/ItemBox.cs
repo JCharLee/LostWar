@@ -5,7 +5,6 @@ using ItemSpace;
 
 public class ItemBox : DropItem
 {
-    //public new Item[] items = new Item[3];
     private float castTime = 2f;
 
     private void Start()

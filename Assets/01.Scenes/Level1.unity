@@ -7130,7 +7130,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &385185593 stripped
 Transform:
@@ -15996,6 +15996,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   questId: 0
   questActionIdx: 0
+  boss1Action: 0
+  boss2Action: 0
   questGiver: {fileID: 0}
   questData:
     questName: 
@@ -44150,7 +44152,7 @@ PrefabInstance:
     - target: {fileID: 6417511602688730713, guid: ad64ff01074299d4b93e8ea2f78a72f3,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6417511602688730713, guid: ad64ff01074299d4b93e8ea2f78a72f3,
         type: 3}

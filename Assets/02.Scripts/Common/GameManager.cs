@@ -6,7 +6,7 @@ using ItemSpace;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private Transform[] itemSlots;
+    public Transform[] itemSlots;
     [SerializeField] private Transform equiped_shortWeapon;
     [SerializeField] private Transform equiped_longWeapon;
     [SerializeField] private Transform equiped_shoes;
@@ -194,9 +194,8 @@ public class GameManager : MonoBehaviour
                 SetState(true, SlotItemInfo.instance.item.str, SlotItemInfo.instance.item.agi, SlotItemInfo.instance.item.con, SlotItemInfo.instance.item.vit);
                 weapon = SlotItemInfo.instance.item as Weapon;
                 DataManager.instance.gameData.dam += weapon.damage;
-                DataManager.instance.gameData.shortWeapon.Remove(SlotItemInfo.instance.item);
+                DataManager.instance.gameData.shortWeapon.Remove(SlotItemInfo.instance.item as Weapon);
                 moveBehaviour.ChangeItemObject(SlotItemInfo.instance.item.name);
-                moveBehaviour.usingWeapon = MoveBehaviour.UsingWeapon.short_dist;
                 break;
             case ItemType.longWeapon:
                 if (longWeapon_C != null)
@@ -212,9 +211,8 @@ public class GameManager : MonoBehaviour
                 SetState(true, SlotItemInfo.instance.item.str, SlotItemInfo.instance.item.agi, SlotItemInfo.instance.item.con, SlotItemInfo.instance.item.vit);
                 weapon = SlotItemInfo.instance.item as Weapon;
                 DataManager.instance.gameData.dam += weapon.damage;
-                DataManager.instance.gameData.longWeapon.Remove(SlotItemInfo.instance.item);
+                DataManager.instance.gameData.longWeapon.Remove(SlotItemInfo.instance.item as Weapon);
                 moveBehaviour.ChangeItemObject(SlotItemInfo.instance.item.name);
-                moveBehaviour.usingWeapon = MoveBehaviour.UsingWeapon.long_dist;
                 break;
             case ItemType.shoes:
                 if (shoes_C != null)
@@ -230,7 +228,7 @@ public class GameManager : MonoBehaviour
                 SetState(true, SlotItemInfo.instance.item.str, SlotItemInfo.instance.item.agi, SlotItemInfo.instance.item.con, SlotItemInfo.instance.item.vit);
                 clothes = SlotItemInfo.instance.item as Clothes;
                 DataManager.instance.gameData.def += clothes.def;
-                DataManager.instance.gameData.shoes.Remove(SlotItemInfo.instance.item);
+                DataManager.instance.gameData.shoes.Remove(SlotItemInfo.instance.item as Clothes);
                 break;
             case ItemType.top:
                 if (top_C != null)
@@ -246,7 +244,7 @@ public class GameManager : MonoBehaviour
                 SetState(true, SlotItemInfo.instance.item.str, SlotItemInfo.instance.item.agi, SlotItemInfo.instance.item.con, SlotItemInfo.instance.item.vit);
                 clothes = SlotItemInfo.instance.item as Clothes;
                 DataManager.instance.gameData.def += clothes.def;
-                DataManager.instance.gameData.top.Remove(SlotItemInfo.instance.item);
+                DataManager.instance.gameData.top.Remove(SlotItemInfo.instance.item as Clothes);
                 break;
             case ItemType.bottoms:
                 if (bottoms_C != null)
@@ -262,13 +260,28 @@ public class GameManager : MonoBehaviour
                 SetState(true, SlotItemInfo.instance.item.str, SlotItemInfo.instance.item.agi, SlotItemInfo.instance.item.con, SlotItemInfo.instance.item.vit);
                 clothes = SlotItemInfo.instance.item as Clothes;
                 DataManager.instance.gameData.def += clothes.def;
-                DataManager.instance.gameData.bottoms.Remove(SlotItemInfo.instance.item);
+                DataManager.instance.gameData.bottoms.Remove(SlotItemInfo.instance.item as Clothes);
                 break;
         }
     }
 
-    private void OffEquip(List<Item> list_item, Item item_c, GameObject object_c)
+    private void OffEquip<T>(List<T> list_item, T item_c, GameObject object_c) where T : Item
     {
+        if (item_c.itemType == ItemType.longWeapon)
+        {
+            moveBehaviour.cur_long_weapon.SetActive(false);
+            moveBehaviour.cur_long_weapon = null;
+            moveBehaviour.usingWeapon = MoveBehaviour.UsingWeapon.none;
+            moveBehaviour.ani.SetBool("HavePistol", false);
+        }
+        if (item_c.itemType == ItemType.shortWeapon)
+        {
+            moveBehaviour.cur_short_weapon.SetActive(false);
+            moveBehaviour.cur_short_weapon = null;
+            moveBehaviour.usingWeapon = MoveBehaviour.UsingWeapon.none;
+            moveBehaviour.ani.SetBool("HaveSword", false);
+        }
+
         int idx = 1;
 
         for (int i = 1; i < itemSlots.Length + 1; i++)
@@ -371,6 +384,8 @@ public class GameManager : MonoBehaviour
     {
         if (potion.count <= 0)
         {
+            UIManager.instance.itemInfoText.enabled = false;
+            UIManager.instance.itemInfoImage.enabled = false;
             switch (potion.potionType)
             {
                 case PotionType.HP:

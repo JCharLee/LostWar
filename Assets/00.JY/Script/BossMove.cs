@@ -68,7 +68,8 @@ public class BossMove : MonoBehaviour
         Destroy(this.gameObject);
         var pexp = Instantiate(plasmaexp, tr.position, tr.rotation);
         Instantiate(Boss2phase, tr.position, tr.rotation);
-        QuestManager.instance.bossAction = false;
+        QuestManager.instance.boss1Action = false;
+        QuestManager.instance.boss2Action = true;
         Destroy(pexp, 1.9f);
     }
     void FixedUpdate()

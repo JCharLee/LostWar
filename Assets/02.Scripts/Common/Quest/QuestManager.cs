@@ -6,7 +6,8 @@ public class QuestManager : MonoBehaviour
 {
     [SerializeField] private int questId;
     [SerializeField] private int questActionIdx;
-    public bool bossAction = false;
+    public bool boss1Action = false;
+    public bool boss2Action = false;
 
     private UIManager uiManager;
     [SerializeField] private QuestGiver questGiver;
@@ -57,24 +58,24 @@ public class QuestManager : MonoBehaviour
     void GenerateData()
     {
         // 메인 퀘스트
-        questList.Add(0, new QuestData("시작", "게임 스타트", new int[] { 0 }, true, 1, GoalType.TALK, 0f));
-        questList.Add(10, new QuestData("아파트 탈출", "장비를 찾아서 챙긴다.", new int[] { 0, 0 }, true, 3, GoalType.GATHERING, 10f));
-        questList.Add(20, new QuestData("아파트 탈출", "집 밖으로 나가자.", new int[] { 0, 0 }, true, 1, GoalType.LOCATION, 10f));
-        questList.Add(30, new QuestData("아파트 탈출", "출몰하는 적 처치", new int[] { 0, 0 }, true, 10, GoalType.KILL, 50f));
-        questList.Add(40, new QuestData("아파트 탈출", "건물을 빠져나간다.", new int[] { 0, 0 }, true, 1, GoalType.LOCATION, 10f));
+        questList.Add(0, new QuestData("시작", "게임 스타트", new int[] { 0 }, true, 1, GoalType.TALK, 0));
+        questList.Add(10, new QuestData("아파트 탈출", "장비를 찾아서 챙긴다.", new int[] { 0, 0 }, true, 3, GoalType.GATHERING, 10));
+        questList.Add(20, new QuestData("아파트 탈출", "집 밖으로 나가자.", new int[] { 0, 0 }, true, 1, GoalType.LOCATION, 10));
+        questList.Add(30, new QuestData("아파트 탈출", "출몰하는 적 처치", new int[] { 0, 0 }, true, 10, GoalType.KILL, 50));
+        questList.Add(40, new QuestData("아파트 탈출", "건물을 빠져나간다.", new int[] { 0, 0 }, true, 1, GoalType.LOCATION, 10));
 
-        questList.Add(50, new QuestData("가족의 행방을 찾아서", "캠프로 이동해서 정보를 얻는다.", new int[] { 2000 }, true, 1, GoalType.TALK, 10f));
-        questList.Add(60, new QuestData("가족의 행방을 찾아서", "단장에게 말을 건다.", new int[] { 3000 }, true, 1, GoalType.TALK, 10f));
-        questList.Add(70, new QuestData("가족의 행방을 찾아서", "적 처치", new int[] { 0, 3000 }, true, 10, GoalType.KILL, 70f));
-        questList.Add(80, new QuestData("가족의 행방을 찾아서", "연구소에 들어간다.", new int[] { 0, 0 }, true, 1, GoalType.LOCATION, 20f));
+        questList.Add(50, new QuestData("가족의 행방을 찾아서", "캠프로 이동해서 정보를 얻는다.", new int[] { 2000 }, true, 1, GoalType.TALK, 10));
+        questList.Add(60, new QuestData("가족의 행방을 찾아서", "단장에게 말을 건다.", new int[] { 3000 }, true, 1, GoalType.TALK, 10));
+        questList.Add(70, new QuestData("가족의 행방을 찾아서", "적 처치", new int[] { 0, 3000 }, true, 10, GoalType.KILL, 70));
+        questList.Add(80, new QuestData("가족의 행방을 찾아서", "연구소에 들어간다.", new int[] { 0, 0 }, true, 1, GoalType.LOCATION, 20));
 
-        questList.Add(90, new QuestData("연구소 심층부로", "첫 번째 카드키를 찾아서 획득", new int[] { 0, 0 }, true, 1, GoalType.GATHERING, 20f));
-        questList.Add(100, new QuestData("연구소 심층부로", "우측방으로 이동", new int[] { 0, 0 }, true, 1, GoalType.LOCATION, 20f));
-        questList.Add(110, new QuestData("연구소 심층부로", "나타난 적들 처치", new int[] { 0, 0 }, true, 5, GoalType.KILL, 60f));
-        questList.Add(120, new QuestData("연구소 심층부로", "두 번째 카드키 획득", new int[] { 0, 0 }, true, 1, GoalType.GATHERING, 20f));
-        questList.Add(130, new QuestData("연구소 심층부로", "연구소 심층부에 들어간다.", new int[] { 0, 0 }, true, 1, GoalType.LOCATION, 20f));
-        questList.Add(140, new QuestData("연구소장 처치", "연구소장 처치", new int[] { 0, 0 }, true, 1, GoalType.KILL, 100f));
-        questList.Add(150, new QuestData("", "", new int[] { 0 }, true, 0, GoalType.TALK, 0f));
+        questList.Add(90, new QuestData("연구소 심층부로", "첫 번째 카드키를 찾아서 획득", new int[] { 0, 0 }, true, 1, GoalType.GATHERING, 20));
+        questList.Add(100, new QuestData("연구소 심층부로", "우측방으로 이동", new int[] { 0, 0 }, true, 1, GoalType.LOCATION, 20));
+        questList.Add(110, new QuestData("연구소 심층부로", "나타난 적들 처치", new int[] { 0, 0 }, true, 5, GoalType.KILL, 60));
+        questList.Add(120, new QuestData("연구소 심층부로", "두 번째 카드키 획득", new int[] { 0, 0 }, true, 1, GoalType.GATHERING, 20));
+        questList.Add(130, new QuestData("연구소 심층부로", "연구소 심층부에 들어간다.", new int[] { 0, 0 }, true, 1, GoalType.LOCATION, 20));
+        questList.Add(140, new QuestData("연구소장 처치", "연구소장 처치", new int[] { 0, 0 }, true, 1, GoalType.KILL, 100));
+        questList.Add(150, new QuestData("", "", new int[] { 0 }, true, 0, GoalType.TALK, 0));
     }
 
     public int GetQuestTalkIdx(int id)
@@ -132,7 +133,7 @@ public class QuestManager : MonoBehaviour
 
         if (DataManager.instance.gameData.questId == 140)
         {
-            bossAction = true;
+            boss1Action = true;
             FindObjectOfType<BossCombat>().isCombat = true;
         }
     }

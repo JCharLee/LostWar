@@ -10,11 +10,11 @@ public class QuestData
     public int[] npcId;
     public bool isMain;
     public QuestGoal goal;
-    public float expReward;
+    public int expReward;
 
     public bool isActive;
 
-    public QuestData(string name, string content, int[] npc, bool main, int amount, GoalType type, float exp)
+    public QuestData(string name, string content, int[] npc, bool main, int amount, GoalType type, int exp)
     {
         questName = name;
         contentsName = content;

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using System.Linq;
+using UnityEngine.EventSystems;
 // MoveBehaviour inherits from GenericBehaviour. This class corresponds to basic walk and run behaviour, it is the default behaviour.
 public class MoveBehaviour : GenericBehaviour
 {
@@ -27,8 +28,8 @@ public class MoveBehaviour : GenericBehaviour
 	public GameObject sword;
 	public GameObject axe;
 	public GameObject revolver;
-	[SerializeField]private GameObject cur_short_weapon = null;
-	[SerializeField]private GameObject cur_long_weapon = null;
+	public GameObject cur_short_weapon = null;
+	public GameObject cur_long_weapon = null;
 
 	[SerializeField]private RayShoot rayShoot;
 	//public GameObject curweapon;
@@ -128,6 +129,7 @@ public class MoveBehaviour : GenericBehaviour
 			cur_short_weapon.SetActive(false);
 			if(cur_long_weapon!=null)
 			cur_long_weapon.SetActive(false);
+			usingWeapon = UsingWeapon.none;
 			ani.SetBool("HaveSword", false);
 			ani.SetBool("HavePistol", false);
 			rayShoot.enabled = false;
@@ -263,6 +265,7 @@ public void FixedUpdate()
 	{
 		if (UIManager.instance.isAction || QuestManager.instance.IsStarting)
 			return;
+		if (EventSystem.current.IsPointerOverGameObject()) return;
 		if (Input.GetMouseButton(0)&&!Input.GetKey(KeyCode.LeftShift))
         {
 			if (!haveMotion)
@@ -297,8 +300,10 @@ public void FixedUpdate()
 		ani.SetTrigger("Attack");
 		haveMotion = true;
 		sword.GetComponent<SwordAttack>().canAttack = true;
+		axe.GetComponent<SwordAttack>().canAttack = true;
         yield return new WaitForSeconds(1.3f);
 		sword.GetComponent<SwordAttack>().canAttack = false;
+		axe.GetComponent<SwordAttack>().canAttack = false;
 		haveMotion = false;
     }
 	IEnumerator Reload()

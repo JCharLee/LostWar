@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class RayShoot : MonoBehaviour
 {
@@ -22,10 +23,11 @@ public class RayShoot : MonoBehaviour
 
     void Update()
     {
+        if (EventSystem.current.IsPointerOverGameObject()) return;
         Debug.DrawRay(FirePos_Cur.position, FirePos_Cur.forward * 25f, Color.green);
         if (moveBehaviour.usingWeapon == MoveBehaviour.UsingWeapon.long_dist && AimBehaviourBasic.aim)
         {
-            if(Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0))
             Fire();
         }
     }

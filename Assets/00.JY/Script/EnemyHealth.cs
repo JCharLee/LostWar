@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class EnemyHealth : MonoBehaviour
 {
     public float hpinit = 100f;
-    public float exp;
+    public int exp;
     float healthpoint;
     public bool isdie = false;
     ParticleSystem bloodeff;
@@ -74,10 +74,10 @@ public class EnemyHealth : MonoBehaviour
                 ani.SetTrigger("IsDie");
             isdie = true;
             agent.enabled = false;
-            if (!QuestManager.instance.bossAction)
+            if (!QuestManager.instance.boss1Action)
                 PlayerInteraction.instance.Kill();
             UIManager.instance.UpdateExp(exp);
-            if (!QuestManager.instance.bossAction)
+            if (!QuestManager.instance.boss1Action && !QuestManager.instance.boss2Action)
                 Instantiate(Resources.Load<GameObject>("Prefabs/DropItem"), this.transform.position, Quaternion.identity);
             rigid.Sleep();
             capcol.enabled = false;

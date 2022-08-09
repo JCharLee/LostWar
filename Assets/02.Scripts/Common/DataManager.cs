@@ -8,9 +8,9 @@ using ItemSpace;
 public class GameData
 {
     public int level = 1;
-    public float expRequire = 100f;
-    [SerializeField] private float Exp = 0;
-    public float exp
+    public int expRequire = 100;
+    [SerializeField] private int Exp = 0;
+    public int exp
     {
         get
         {
@@ -23,7 +23,7 @@ public class GameData
             {
                 Exp -= expRequire;
                 level++;
-                expRequire *= 1.2f;
+                expRequire *= (int)1.5f;
                 UIManager.instance.UpdateLevel(level);
             }
         }
@@ -95,11 +95,11 @@ public class GameData
     public float dam = 5;
     public float def = 5;
 
-    public List<Item> shortWeapon;
-    public List<Item> longWeapon;
-    public List<Item> shoes;
-    public List<Item> top;
-    public List<Item> bottoms;
+    public List<Weapon> shortWeapon;
+    public List<Weapon> longWeapon;
+    public List<Clothes> shoes;
+    public List<Clothes> top;
+    public List<Clothes> bottoms;
     public List<Potion> hpPotion;
     public List<Potion> spPotion;
 

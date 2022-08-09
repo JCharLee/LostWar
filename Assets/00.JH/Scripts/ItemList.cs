@@ -90,6 +90,7 @@ namespace ItemSpace
         public Item[] GetRandom()// 아이템 랜덤 드랍
         {
             Item[] item = new Item[3];// 드랍되는 아이템은 3개
+
             int randint = Random.Range(0, 5);
             switch (randint)// 첫 번째 아이템 드랍률
             {
