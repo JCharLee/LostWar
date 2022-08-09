@@ -8,6 +8,10 @@ public class Lv3_Door : MonoBehaviour, IInteraction
     [SerializeField] protected Transform doorTr;
     protected Transform doorUp;
     protected Transform doorDown;
+    private AudioSource Edooraudio;
+    private AudioClip Edooropen;
+    private AudioClip Edoorclose;
+
     public bool isOpen = false;
 
     public float speed { get; protected set; }
@@ -23,6 +27,9 @@ public class Lv3_Door : MonoBehaviour, IInteraction
         doorTr = door.GetComponent<Transform>();
         doorUp = transform.GetChild(3).GetComponent<Transform>();
         doorDown = transform.GetChild(4).GetComponent<Transform>();
+        Edooraudio = GetComponent<AudioSource>();
+        Edooropen = Resources.Load<AudioClip>("Sound/SlideDoorOpen");
+        Edoorclose = Resources.Load<AudioClip>("Sound/SlideDoorClose");
     }
     protected virtual void Start()
     {
@@ -47,6 +54,8 @@ public class Lv3_Door : MonoBehaviour, IInteraction
                 this.gameObject.layer = 0;
                 while (current <= moveTime)
                 {
+                    if (current == 0)
+                        Edooraudio.PlayOneShot(Edooropen);
                     current += Time.deltaTime;
                     doorTr.position = Vector3.MoveTowards(doorTr.position, doorUp.position, speed * Time.deltaTime);
                     yield return null;
@@ -60,6 +69,8 @@ public class Lv3_Door : MonoBehaviour, IInteraction
                 this.gameObject.layer = 8;
                 while (current <= moveTime)
                 {
+                    if (current == 0)
+                        Edooraudio.PlayOneShot(Edoorclose);
                     current += Time.deltaTime;
                     doorTr.position = Vector3.MoveTowards(doorTr.position, doorDown.position, speed * Time.deltaTime);
                     yield return null;

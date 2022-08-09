@@ -20,6 +20,8 @@ public class BossCombat : MonoBehaviour
     public bool isReload = false;
     public int pattern;
     public bool movepattern = false;
+    private AudioSource BCaudio;
+    private AudioClip Bfiresfx;
 
     void Start()
     {
@@ -30,6 +32,8 @@ public class BossCombat : MonoBehaviour
         bossMove = GetComponent<BossMove>();
         EHealth = GetComponent<EnemyHealth>();
         muzzleflash = firepos.GetComponentInChildren<ParticleSystem>();
+        BCaudio = GetComponent<AudioSource>();
+        Bfiresfx = Resources.Load<AudioClip>("Sound/AutoGun_1p_01");
     }
 
     
@@ -50,6 +54,7 @@ public class BossCombat : MonoBehaviour
     void Fire()
     {
         GameObject bullet = Instantiate(bulletPrefab, firepos.position, firepos.rotation);
+        BCaudio.PlayOneShot(Bfiresfx, 0.5f);
         muzzleflash.Play();
         nextFire = Time.time + FireRate + Random.Range(0, 0);
         isReload = (--remainAmmo % rechargeAmmo == 0);

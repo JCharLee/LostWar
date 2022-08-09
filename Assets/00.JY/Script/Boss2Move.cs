@@ -25,6 +25,10 @@ public class Boss2Move : MonoBehaviour
     public CapsuleCollider Boss2Claw;
     public CapsuleCollider Boss2Punch;
     GameObject smallexp;
+    private AudioSource B2audio;
+    private AudioClip B2jumpatksfx;
+    private AudioClip punchsfx;
+    private AudioClip crawsfx;
 
     void Start()
     {
@@ -35,6 +39,10 @@ public class Boss2Move : MonoBehaviour
         EHealth = GetComponent<EnemyHealth>();
         smallexp = Resources.Load<GameObject>("SmallExplosion");
         playerTr = GameObject.FindWithTag("Player").GetComponent<Transform>();
+        B2audio = GetComponent<AudioSource>();
+        B2jumpatksfx = Resources.Load<AudioClip>("Sound/AntiMaterialRifle_3p_03");
+        punchsfx = Resources.Load<AudioClip>("Sound/Swing4-Free-1");
+        crawsfx = Resources.Load<AudioClip>("Sound/Slice-MetalClank2-Free-1");
         layermask = 1 << 9 | 1 << 10;
         agent.isStopped = true;
     }
@@ -124,6 +132,8 @@ public class Boss2Move : MonoBehaviour
                 StartCoroutine(actioncooltime(attack));
                 Boss2Claw.enabled = true;
                 ani.SetTrigger("Attack");
+                B2audio.clip = crawsfx;
+                B2audio.PlayDelayed(0.3f);
                 sinceattacktime = 0;
             }
         }
@@ -145,6 +155,8 @@ public class Boss2Move : MonoBehaviour
                 StartCoroutine(actioncooltime(punch));
                 Boss2Punch.enabled = true;
                 ani.SetTrigger("Punch");
+                B2audio.clip = punchsfx;
+                B2audio.PlayDelayed(0.2f);
                 sinceattacktime = 0;
             }
         }
@@ -167,6 +179,7 @@ public class Boss2Move : MonoBehaviour
     {
         yield return new WaitForSeconds(1.0f);
         var sexp = Instantiate(smallexp, tr.position, Quaternion.identity);
+        B2audio.PlayOneShot(B2jumpatksfx, 0.5f);
         Destroy(sexp, 1.9f);
         Collider[] cols = Physics.OverlapSphere(tr.position, 3f);
         foreach(Collider col in cols)

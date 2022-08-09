@@ -17,6 +17,8 @@ public class SecretWall : MonoBehaviour, IInteraction
 
     private UIManager uiManager;
     private BasicBehaviour basicBehaviour;
+    private AudioSource sdooraudio;
+    private AudioClip sdooropen;
 
     void Start()
     {
@@ -28,6 +30,9 @@ public class SecretWall : MonoBehaviour, IInteraction
 
         moveTime = (openPoint.position - secretWall.position).magnitude / speed;
         prompt = "[F] 조사하기";
+
+        sdooraudio = GetComponent<AudioSource>();
+        sdooropen = Resources.Load<AudioClip>("Sound/SlideDoorOpen");
     }
 
     public string interactionPrompt => prompt;
@@ -48,6 +53,8 @@ public class SecretWall : MonoBehaviour, IInteraction
         current = 0f;
         while (current <= moveTime)
         {
+            if (current == 0)
+                sdooraudio.PlayOneShot(sdooropen, 1.0f);
             current += Time.deltaTime;
             secretWall.position = Vector3.MoveTowards(secretWall.position, openPoint.position, speed * Time.deltaTime);
             yield return null;

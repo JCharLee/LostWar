@@ -13,11 +13,13 @@ public class EnemyHealth : MonoBehaviour
     ParticleSystem bloodeff;
     NavMeshAgent agent;
     Animator ani;
+    new AudioSource audio;
     [SerializeField]
     Image Hpbar;
     GameObject HpBarCanvas;
     Rigidbody rigid;
     CapsuleCollider capcol;
+    AudioClip hitsfx;
 
     private void OnEnable()
     {
@@ -25,6 +27,8 @@ public class EnemyHealth : MonoBehaviour
         Hpbar = transform.Find("HP_Canvas").transform.GetChild(1).GetComponent<Image>();
         HpBarCanvas = transform.Find("HP_Canvas").gameObject;
         Hpbar.color = Color.green;
+        audio = GetComponent<AudioSource>();
+        hitsfx = Resources.Load<AudioClip>("Sound/BluntImpact6-Free-1");
     }
 
     void Start()
@@ -52,7 +56,7 @@ public class EnemyHealth : MonoBehaviour
         bloodeff.transform.rotation = Quaternion.LookRotation(hitpoint);
         bloodeff.Play();
         ani.SetTrigger("IsHit");
-
+        audio.PlayOneShot(hitsfx, 1f);
 
         Hpbar.fillAmount = healthpoint / hpinit;
 

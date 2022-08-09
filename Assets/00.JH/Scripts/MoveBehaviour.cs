@@ -32,10 +32,13 @@ public class MoveBehaviour : GenericBehaviour
 
 	[SerializeField]private RayShoot rayShoot;
 	//public GameObject curweapon;
-	
-	
+
+
 	// Start is always called after any Awake functions.
-	
+
+	private AudioSource playeraudio;
+	private AudioClip[] footsounds;
+
 	void Start()
 	{
 		behaviourManager.SubscribeBehaviour(this);
@@ -46,6 +49,9 @@ public class MoveBehaviour : GenericBehaviour
 
 		Cursor.lockState = CursorLockMode.Locked;
 		Cursor.visible = false;
+
+		playeraudio = GetComponent<AudioSource>();
+		footsounds = Resources.LoadAll<AudioClip>("FootSounds");
 	}
 
 	// Update is used to set features regardless the active behaviour.
@@ -193,6 +199,12 @@ public class MoveBehaviour : GenericBehaviour
 		transform.Translate(Vector3.forward * speed * 2.5f * Time.deltaTime*3);
 
 		behaviourManager.GetAnim.SetFloat(speedFloat, speed, speedDampTime, Time.deltaTime);
+
+		if(speed > 0 && !playeraudio.isPlaying)
+        {
+			playeraudio.clip = footsounds[Random.Range(0, footsounds.Length)];
+			playeraudio.Play();
+        }
 	}
 
 

@@ -9,6 +9,7 @@ public class EnemyFire : MonoBehaviour
     Animator ani;
     public Transform firepos;
     GameObject bulletPrefab;
+    new AudioSource audio;
     EnemyHealth EHealth;
     ParticleSystem muzzleflash;
     private float nextfire = 0f;
@@ -17,11 +18,16 @@ public class EnemyFire : MonoBehaviour
     private int ammo = 10;
     private readonly int pullammo = 10;
     private bool reload = false;
+    AudioClip reloadsfx;
+    AudioClip firesfx;
 
     void Start()
     {
         bulletPrefab = Resources.Load<GameObject>("EBullet");
         playertr = GameObject.FindWithTag("Player").GetComponent<Transform>();
+        audio = GetComponent<AudioSource>();
+        reloadsfx = Resources.Load<AudioClip>("Sound/Pistol_ClipIn_05");
+        firesfx = Resources.Load<AudioClip>("Sound/AutoGun_1p_01");
         tr = GetComponent<Transform>();
         ani = GetComponent<Animator>();
         EHealth = GetComponent<EnemyHealth>();
@@ -54,6 +60,7 @@ public class EnemyFire : MonoBehaviour
         setAccuracy();
         GameObject bullet = Instantiate(bulletPrefab, firepos.position, firepos.rotation);
         muzzleflash.Play();
+        audio.PlayOneShot(firesfx, 0.5f);
         nextfire = Time.time + firerate + Random.Range(0f, 0f);
         reload = (--ammo % pullammo == 0);
         if (reload)
@@ -65,6 +72,7 @@ public class EnemyFire : MonoBehaviour
     IEnumerator Reload()
     {
         ani.SetTrigger("IsReload");
+        audio.PlayOneShot(reloadsfx, 1f);
         yield return new WaitForSeconds(3f);
         ammo = pullammo;
         reload = false;

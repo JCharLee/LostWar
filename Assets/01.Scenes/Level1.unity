@@ -4125,10 +4125,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: wall_4_door
       objectReference: {fileID: 0}
-    - target: {fileID: 100010, guid: 3cc2cf9af0d534e528a0610d76899405, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 400010, guid: 3cc2cf9af0d534e528a0610d76899405, type: 3}
       propertyPath: m_RootOrder
       value: 20
@@ -4173,34 +4169,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 400018, guid: 3cc2cf9af0d534e528a0610d76899405, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 400018, guid: 3cc2cf9af0d534e528a0610d76899405, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400018, guid: 3cc2cf9af0d534e528a0610d76899405, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400018, guid: 3cc2cf9af0d534e528a0610d76899405, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400018, guid: 3cc2cf9af0d534e528a0610d76899405, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2300000, guid: 3cc2cf9af0d534e528a0610d76899405, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: a0646a223f7824324a4b59de3e08caca, type: 2}
-    - target: {fileID: 2300002, guid: 3cc2cf9af0d534e528a0610d76899405, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: a68e90d6265c64ca7bcc3be6c315fbf9, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3cc2cf9af0d534e528a0610d76899405, type: 3}
 --- !u!4 &209822609 stripped
@@ -9508,39 +9476,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 492717292}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &495375622 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100010, guid: 3cc2cf9af0d534e528a0610d76899405,
-    type: 3}
-  m_PrefabInstance: {fileID: 209822608}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &495375623
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 495375622}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8062447a032de243a6186483acd0418, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  door: {fileID: 0}
-  prompt: 
---- !u!65 &495375624
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 495375622}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2, y: 3, z: 0.2}
-  m_Center: {x: -2, y: 1.5, z: 0}
 --- !u!4 &497921324 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 611abffc28f634913b74138a8ea1f233,
@@ -39648,6 +39583,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameData:
+    level: 1
+    expRequire: 100
     Exp: 0
     MaxHp: 1000
     Hp: 0
@@ -43973,11 +43910,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1898415041}
     m_Modifications:
-    - target: {fileID: 3584893068652983689, guid: 726e03c4fb333384ba6ba80d1c5133de,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 4b2740baf23104035b51adf09317c7a4, type: 2}
     - target: {fileID: 3584893068654979917, guid: 726e03c4fb333384ba6ba80d1c5133de,
         type: 3}
       propertyPath: m_Name
@@ -44037,16 +43969,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7646942849595251050, guid: 726e03c4fb333384ba6ba80d1c5133de,
-        type: 3}
-      propertyPath: openPoint
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7646942849595251050, guid: 726e03c4fb333384ba6ba80d1c5133de,
-        type: 3}
-      propertyPath: secretWall
-      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 726e03c4fb333384ba6ba80d1c5133de, type: 3}

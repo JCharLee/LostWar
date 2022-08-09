@@ -14,9 +14,16 @@ public class Lv1_Door : MonoBehaviour, IInteraction
 
     private UIManager uiManager;
     private QuestManager questManager;
+    private AudioSource dooraudio;
+    private AudioClip dooropen;
+    private AudioClip doorclose;
 
     void Start()
     {
+        dooraudio = GetComponent<AudioSource>();
+        dooropen = Resources.Load<AudioClip>("Sound/Door Open 1");
+        doorclose = Resources.Load<AudioClip>("Sound/Door Close 1");
+
         door = transform.GetChild(3).transform.GetChild(2).GetComponent<Transform>();
 
         prompt = "[F] 문 열기";
@@ -48,6 +55,8 @@ public class Lv1_Door : MonoBehaviour, IInteraction
         current = 0f;
         while (current <= moveTime)
         {
+            if (current == 0)
+                dooraudio.PlayOneShot(dooropen, 1.0f);
             current += Time.deltaTime;
             door.rotation = Quaternion.RotateTowards(door.rotation, Quaternion.Euler(0f, 190f, 0f), speed * Time.deltaTime);
             yield return null;
@@ -56,6 +65,8 @@ public class Lv1_Door : MonoBehaviour, IInteraction
         current = 0f;
         while (current <= moveTime)
         {
+            if (current == 0)
+                dooraudio.PlayOneShot(doorclose, 1.0f);
             current += Time.deltaTime;
             door.rotation = Quaternion.RotateTowards(door.rotation, Quaternion.Euler(0f, 90f, 0f), speed * Time.deltaTime);
             yield return null;

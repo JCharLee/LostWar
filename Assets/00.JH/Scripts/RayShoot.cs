@@ -10,10 +10,14 @@ public class RayShoot : MonoBehaviour
     [SerializeField] private Transform FirePos_L;
     [SerializeField] private Transform FirePos_Cur;
     [SerializeField] private MoveBehaviour moveBehaviour;
+    new AudioSource audio;
+    AudioClip firesfx;
     void Start()
     {
         FirePos_Cur = Camera.main.transform;
         moveBehaviour = GetComponent<MoveBehaviour>();
+        audio = GetComponent<AudioSource>();
+        firesfx = Resources.Load<AudioClip>("Sound/AutoGun_3p_02");
     }
 
     void Update()
@@ -27,6 +31,8 @@ public class RayShoot : MonoBehaviour
     }
     void Fire()
     {
+        audio.PlayOneShot(firesfx, 1f);
+
         if (Physics.Raycast(FirePos_Cur.position, FirePos_Cur.forward, out hit, 50f))
         {
             if (hit.collider.tag == "ENEMY")

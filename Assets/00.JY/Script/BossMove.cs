@@ -20,6 +20,8 @@ public class BossMove : MonoBehaviour
     GameObject Boss2phase;
     GameObject plasmaexp;
     bool isboss2phase = false;
+    private AudioSource BMaudio;
+    private AudioClip BMmissile;
 
     void Start()
     {
@@ -33,6 +35,8 @@ public class BossMove : MonoBehaviour
         rocketPrefab = Resources.Load<GameObject>("Rocket");
         Boss2phase = Resources.Load<GameObject>("Boss2Phase");
         plasmaexp = Resources.Load<GameObject>("PlasmaExp");
+        BMaudio = GetComponent<AudioSource>();
+        BMmissile = Resources.Load<AudioClip>("Sound/JackHammer_1p_01");
         layermask = 1 << 9 | 1 << 8 | 1 << 0;
     }
 
@@ -132,6 +136,7 @@ public class BossMove : MonoBehaviour
     {
         GameObject rocket = Instantiate(rocketPrefab, combat.firepos.position,
                         combat.firepos.rotation);
+        BMaudio.PlayOneShot(BMmissile, 0.5f);
         --rocketammo;
         yield return new WaitForSeconds(0.5f);
         rocketammo = 1;

@@ -9,8 +9,9 @@ public class EnemyMeleeMove : MonoBehaviour
     Animator ani;
     Transform tr;
     Transform playerTr;
+    new AudioSource audio;
     EnemyPatrol Epatrol;
-    EnemyHealth Ehealth;
+    EnemyHealth EHealth;
     public Collider sword;
     float attacktime = 0f;
     float nextattack1time = 2.26f;
@@ -25,6 +26,7 @@ public class EnemyMeleeMove : MonoBehaviour
     float traceDist = 15f;
     bool LookPlayer = false;
     bool IsCombat = false;
+    AudioClip swingsfx;
 
     void Start()
     {
@@ -32,7 +34,9 @@ public class EnemyMeleeMove : MonoBehaviour
         ani = GetComponent<Animator>();
         tr = GetComponent<Transform>();
         Epatrol = GetComponent<EnemyPatrol>();
-        Ehealth = GetComponent<EnemyHealth>();
+        EHealth = GetComponent<EnemyHealth>();
+        audio = GetComponent<AudioSource>();
+        swingsfx = Resources.Load<AudioClip>("Sound/Swing1-Free-1");
         playerTr = GameObject.FindWithTag("Player").GetComponent<Transform>();
         layermask = 1 << 9 | 1 << 8 | 1 << 0;
     }
@@ -50,7 +54,7 @@ public class EnemyMeleeMove : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (Ehealth.isdie)
+        if (EHealth.isdie)
             return;
 
         float dist = Vector3.Distance(playerTr.position, tr.position);
@@ -114,6 +118,11 @@ public class EnemyMeleeMove : MonoBehaviour
         }
     }
 
+    void attacksfx()
+    {
+        audio.PlayOneShot(swingsfx, 1f);
+    }
+
     void Attackmove(float nextattack, int attack_num)
     {
         if(attacktime >= nextattack)
@@ -125,6 +134,7 @@ public class EnemyMeleeMove : MonoBehaviour
 
             ani.SetTrigger(attack);
             ani.SetInteger("AttackIdx",attack_num);
+            Invoke("attacksfx", 0.9f);
             StartCoroutine(Cooltime(nextattack));
             attacknum = Random.Range(0, 3);
             attacktime = 0;
