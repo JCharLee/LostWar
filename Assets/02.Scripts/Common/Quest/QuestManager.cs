@@ -6,6 +6,7 @@ public class QuestManager : MonoBehaviour
 {
     [SerializeField] private int questId;
     [SerializeField] private int questActionIdx;
+    public bool bossAction = false;
 
     private UIManager uiManager;
     [SerializeField] private QuestGiver questGiver;
@@ -118,6 +119,21 @@ public class QuestManager : MonoBehaviour
             {
                 enemy.transform.GetChild(i).gameObject.SetActive(true);
             }
+        }
+
+        if (DataManager.instance.gameData.questId == 110)
+        {
+            GameObject enemy = GameObject.Find("EnemyGroup2");
+            for (int i = 0; i < enemy.transform.childCount - 1; i++)
+            {
+                enemy.transform.GetChild(i).gameObject.SetActive(true);
+            }
+        }
+
+        if (DataManager.instance.gameData.questId == 140)
+        {
+            bossAction = true;
+            FindObjectOfType<BossCombat>().isCombat = true;
         }
     }
 

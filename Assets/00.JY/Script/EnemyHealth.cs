@@ -74,9 +74,11 @@ public class EnemyHealth : MonoBehaviour
                 ani.SetTrigger("IsDie");
             isdie = true;
             agent.enabled = false;
-            PlayerInteraction.instance.Kill();
+            if (!QuestManager.instance.bossAction)
+                PlayerInteraction.instance.Kill();
             UIManager.instance.UpdateExp(exp);
-            Instantiate(Resources.Load<GameObject>("Prefabs/DropItem"), this.transform.position, Quaternion.identity);
+            if (!QuestManager.instance.bossAction)
+                Instantiate(Resources.Load<GameObject>("Prefabs/DropItem"), this.transform.position, Quaternion.identity);
             rigid.Sleep();
             capcol.enabled = false;
             HpBarCanvas.SetActive(false);

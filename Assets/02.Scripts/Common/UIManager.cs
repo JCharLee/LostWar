@@ -511,12 +511,12 @@ public class UIManager : MonoBehaviour
         if (item.itemType == ItemType.shortWeapon || item.itemType == ItemType.longWeapon)
         {
             weapon = item as Weapon;
-            itemInfoText.text = $"<{item.name}>\n\n" +
+            itemInfoText.text = $"<{weapon.name}>\n\n" +
                                 $"DAM : {weapon.damage}\n" +
-                                $"STR : {item.str}\n" +
-                                $"AGI : {item.agi}\n" +
-                                $"CON : {item.con}\n" +
-                                $"VIT : {item.vit}";
+                                $"STR : {weapon.str}\n" +
+                                $"AGI : {weapon.agi}\n" +
+                                $"CON : {weapon.con}\n" +
+                                $"VIT : {weapon.vit}";
         }
         else if (item.itemType == ItemType.potion)
         {
@@ -528,12 +528,12 @@ public class UIManager : MonoBehaviour
         else
         {
             clothes = item as Clothes;
-            itemInfoText.text = $"<{item.name}>\n\n" +
+            itemInfoText.text = $"<{clothes.name}>\n\n" +
                                 $"DEF : {clothes.def}\n" +
-                                $"STR : {item.str}\n" +
-                                $"AGI : {item.agi}\n" +
-                                $"CON : {item.con}\n" +
-                                $"VIT : {item.vit}";
+                                $"STR : {clothes.str}\n" +
+                                $"AGI : {clothes.agi}\n" +
+                                $"CON : {clothes.con}\n" +
+                                $"VIT : {clothes.vit}";
         }
 
         itemInfoImage.sprite = item.img;
