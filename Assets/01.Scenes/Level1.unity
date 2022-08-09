@@ -7130,7 +7130,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &385185593 stripped
 Transform:
@@ -15996,8 +15996,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   questId: 0
   questActionIdx: 0
-  boss1Action: 0
-  boss2Action: 0
+  bossAction: 0
   questGiver: {fileID: 0}
   questData:
     questName: 
@@ -44144,6 +44143,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1882411973, guid: ad64ff01074299d4b93e8ea2f78a72f3, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 7fc3c67f0daf5c249b75ecb95a4f15e8, type: 3}
     - target: {fileID: 5927938195185859811, guid: ad64ff01074299d4b93e8ea2f78a72f3,
         type: 3}
       propertyPath: m_Name
@@ -44152,7 +44155,7 @@ PrefabInstance:
     - target: {fileID: 6417511602688730713, guid: ad64ff01074299d4b93e8ea2f78a72f3,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6417511602688730713, guid: ad64ff01074299d4b93e8ea2f78a72f3,
         type: 3}
@@ -44216,6 +44219,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 86e360ef0ab5cf248a52c27af3ae9e9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &5684081578699269752 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 963194225, guid: ad64ff01074299d4b93e8ea2f78a72f3,
+    type: 3}
+  m_PrefabInstance: {fileID: 5684081578699269750}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5684081578699269753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5684081578699269752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3da70a2ee8a6cfd4dbdb1e266a3c2da9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &6294300368890725420

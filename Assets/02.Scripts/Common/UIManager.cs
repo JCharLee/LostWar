@@ -54,8 +54,8 @@ public class UIManager : MonoBehaviour
 
     [Header("[Inventory]")]
     [SerializeField] private GameObject inventoryPanel;
-    public Text itemInfoText;
-    public Image itemInfoImage;
+    [SerializeField] private Text itemInfoText;
+    [SerializeField] private Image itemInfoImage;
     [SerializeField] private Text str;
     [SerializeField] private Text agi;
     [SerializeField] private Text con;
@@ -88,6 +88,11 @@ public class UIManager : MonoBehaviour
     private QuestManager questManager;
     public static UIManager instance = null;
     private BasicBehaviour basicBehaviour;
+
+    AudioSource MainCamAudio;
+    AudioClip invenOn;
+    AudioClip invenOff;
+
 
     private void Awake()
     {
@@ -160,6 +165,10 @@ public class UIManager : MonoBehaviour
         talkManager = GameObject.Find("TalkManager").GetComponent<TalkManager>();
         questManager = GameObject.Find("QuestManager").GetComponent<QuestManager>();
         basicBehaviour = FindObjectOfType<BasicBehaviour>();
+
+        MainCamAudio = Camera.main.transform.GetComponent<AudioSource>();
+        invenOn = Resources.Load<AudioClip>("Sound/UI_01");
+        invenOff = Resources.Load<AudioClip>("Sound/UI_02");
     }
 
     private void Start()
@@ -200,9 +209,11 @@ public class UIManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.I))
         {
-            if (questManager.IsStarting || isAction || gameOver) return;
-            if (dropOn)
-                CloseDropPanel();
+            if (questManager.IsStarting || isAction || dropOn || gameOver) return;
+            if (!inventoryOn)
+                MainCamAudio.PlayOneShot(invenOn);
+            else if (inventoryOn)
+                MainCamAudio.PlayOneShot(invenOff);
             inventoryOn = !inventoryOn;
             Inventory(inventoryOn);
         }
@@ -418,10 +429,10 @@ public class UIManager : MonoBehaviour
         lvText.text = $"Lv {level}";
     }
 
-    public void UpdateExp(int exp)
+    public void UpdateExp(float exp)
     {
         DataManager.instance.gameData.exp += exp;
-        expBar.fillAmount = (float)DataManager.instance.gameData.exp / (float)DataManager.instance.gameData.expRequire;
+        expBar.fillAmount = DataManager.instance.gameData.exp / DataManager.instance.gameData.expRequire;
     }
     #endregion
 
@@ -540,89 +551,6 @@ public class UIManager : MonoBehaviour
 
         itemInfoImage.sprite = item.img;
         itemInfoImage.preserveAspect = true;
-    }
-
-    public void ThrowItem()
-    {
-        if (DataManager.instance.gameData.questId < 50)
-        {
-            StartCoroutine(NoticeText(false, "1스테이지에 있는 동안은 장비를 버릴 수 없습니다."));
-            return;
-        }
-
-        switch (SlotItemInfo.instance.item.itemType)
-        {
-            case ItemType.shortWeapon:
-                if (SlotItemInfo.instance.isEquip)
-                {
-                    Weapon weapon = SlotItemInfo.instance.item as Weapon;
-                    DataManager.instance.gameData.dam -= weapon.damage;
-                    GameManager.instance.SetState(false, SlotItemInfo.instance.item.str, SlotItemInfo.instance.item.agi, SlotItemInfo.instance.item.con, SlotItemInfo.instance.item.vit);
-                    DataManager.instance.gameData.shortWeaponC = null;
-                }
-                else
-                    DataManager.instance.gameData.shortWeapon.Remove(SlotItemInfo.instance.item as Weapon);
-                break;
-            case ItemType.longWeapon:
-                if (SlotItemInfo.instance.isEquip)
-                {
-                    Weapon weapon = SlotItemInfo.instance.item as Weapon;
-                    DataManager.instance.gameData.dam -= weapon.damage;
-                    GameManager.instance.SetState(false, SlotItemInfo.instance.item.str, SlotItemInfo.instance.item.agi, SlotItemInfo.instance.item.con, SlotItemInfo.instance.item.vit);
-                    DataManager.instance.gameData.longWeaponC = null;
-                }
-                else
-                    DataManager.instance.gameData.longWeapon.Remove(SlotItemInfo.instance.item as Weapon);
-                break;
-            case ItemType.shoes:
-                if (SlotItemInfo.instance.isEquip)
-                {
-                    Clothes clothes = SlotItemInfo.instance.item as Clothes;
-                    DataManager.instance.gameData.def -= clothes.def;
-                    GameManager.instance.SetState(false, SlotItemInfo.instance.item.str, SlotItemInfo.instance.item.agi, SlotItemInfo.instance.item.con, SlotItemInfo.instance.item.vit);
-                    DataManager.instance.gameData.shoesC = null;
-                }
-                else
-                    DataManager.instance.gameData.shoes.Remove(SlotItemInfo.instance.item as Clothes);
-                break;
-            case ItemType.top:
-                if (SlotItemInfo.instance.isEquip)
-                {
-                    Clothes clothes = SlotItemInfo.instance.item as Clothes;
-                    DataManager.instance.gameData.def -= clothes.def;
-                    GameManager.instance.SetState(false, SlotItemInfo.instance.item.str, SlotItemInfo.instance.item.agi, SlotItemInfo.instance.item.con, SlotItemInfo.instance.item.vit);
-                    DataManager.instance.gameData.topC = null;
-                }
-                else
-                    DataManager.instance.gameData.top.Remove(SlotItemInfo.instance.item as Clothes);
-                break;
-            case ItemType.bottoms:
-                if (SlotItemInfo.instance.isEquip)
-                {
-                    Clothes clothes = SlotItemInfo.instance.item as Clothes;
-                    DataManager.instance.gameData.def -= clothes.def;
-                    GameManager.instance.SetState(false, SlotItemInfo.instance.item.str, SlotItemInfo.instance.item.agi, SlotItemInfo.instance.item.con, SlotItemInfo.instance.item.vit);
-                    DataManager.instance.gameData.bottomsC = null;
-                }
-                else
-                    DataManager.instance.gameData.bottoms.Remove(SlotItemInfo.instance.item as Clothes);
-                break;
-            case ItemType.potion:
-                Potion potion = SlotItemInfo.instance.item as Potion;
-                switch (potion.potionType)
-                {
-                    case PotionType.HP:
-                        DataManager.instance.gameData.hpPotion.Remove(potion);
-                        break;
-                    case PotionType.SP:
-                        DataManager.instance.gameData.spPotion.Remove(potion);
-                        break;
-                }
-                break;
-        }
-        itemInfoText.enabled = false;
-        itemInfoImage.enabled = false;
-        Destroy(SlotItemInfo.instance.gameObject);
     }
     #endregion
 

@@ -39,6 +39,7 @@ public class MoveBehaviour : GenericBehaviour
 
 	private AudioSource playeraudio;
 	private AudioClip[] footsounds;
+	private Health health;
 
 	void Start()
 	{
@@ -53,11 +54,16 @@ public class MoveBehaviour : GenericBehaviour
 
 		playeraudio = GetComponent<AudioSource>();
 		footsounds = Resources.LoadAll<AudioClip>("FootSounds");
+
+		health = GetComponent<Health>();
 	}
 
 	// Update is used to set features regardless the active behaviour.
 	void Update()
 	{
+		if (health.isdie)
+			return;
+
 		if (UIManager.instance.isAction || QuestManager.instance.IsStarting)
 			return;
 
@@ -263,6 +269,9 @@ public class MoveBehaviour : GenericBehaviour
 	
 public void FixedUpdate()
 	{
+		if (health.isdie)
+			return;
+
 		if (UIManager.instance.isAction || QuestManager.instance.IsStarting)
 			return;
 		if (EventSystem.current.IsPointerOverGameObject()) return;
