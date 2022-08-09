@@ -108,7 +108,6 @@ public class GameData
     public Clothes shoesC;
     public Clothes topC;
     public Clothes bottomsC;
-    public List<SlotItemInfo> slotItemInfos;
 
     public int questId;
     public int questActionIdx;

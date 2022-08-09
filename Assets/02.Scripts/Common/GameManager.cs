@@ -113,7 +113,6 @@ public class GameManager : MonoBehaviour
         foreach (GameObject obj in list_inventory)
             Destroy(obj);
         list_inventory.Clear();
-        DataManager.instance.gameData.slotItemInfos.Clear();
         Destroy(shortWeapon_C);
         Destroy(longWeapon_C);
         Destroy(top_C);
@@ -145,7 +144,6 @@ public class GameManager : MonoBehaviour
             }
             obj.GetComponent<Image>().sprite = items[i].img;
             list_inventory.Add(obj);
-            DataManager.instance.gameData.slotItemInfos.Add(obj.GetComponent<SlotItemInfo>());
         }
     }
 
@@ -160,7 +158,6 @@ public class GameManager : MonoBehaviour
             obj.GetComponent<SlotItemInfo>().item = weapon;
             obj.GetComponent<Image>().sprite = weapon.img;
             obj.GetComponent<SlotItemInfo>().isEquip = true;
-            DataManager.instance.gameData.slotItemInfos.Add(obj.GetComponent<SlotItemInfo>());
             return obj;
         }
         else
@@ -170,7 +167,6 @@ public class GameManager : MonoBehaviour
             obj.GetComponent<SlotItemInfo>().item = clothes;
             obj.GetComponent<Image>().sprite = clothes.img;
             obj.GetComponent<SlotItemInfo>().isEquip = true;
-            DataManager.instance.gameData.slotItemInfos.Add(obj.GetComponent<SlotItemInfo>());
             return obj;
         }
     }
@@ -365,10 +361,7 @@ public class GameManager : MonoBehaviour
                     break;
             }
             if (!list_inventory.Contains(SlotItemInfo.instance.gameObject))
-            {
                 list_inventory.Add(SlotItemInfo.instance.gameObject);
-                DataManager.instance.gameData.slotItemInfos.Add(SlotItemInfo.instance.gameObject.GetComponent<SlotItemInfo>());
-            }
         }
     }
     #endregion
