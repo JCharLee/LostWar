@@ -6,7 +6,7 @@ public class Health : MonoBehaviour
 {
     //public float healthpoint = 100f;
     public bool isdie = false;
-    Animator ani;
+    public Animator ani;
 
     void Start()
     {
@@ -16,8 +16,7 @@ public class Health : MonoBehaviour
     
     void Update()
     {
-        if (DataManager.instance.gameData.hp > 0)
-            isdie = false;
+        
     }
 
     public void takeDamage(float damage)

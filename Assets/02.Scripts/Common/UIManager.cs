@@ -717,6 +717,8 @@ public class UIManager : MonoBehaviour
         fadeObject.SetActive(true);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        FindObjectOfType<Health>().ani.SetTrigger("Awake");
+        FindObjectOfType<Health>().isdie = false;
     }
 
     public void GotoMain()
