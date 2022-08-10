@@ -39,6 +39,8 @@ public class EnemyMeleeMove : MonoBehaviour
         swingsfx = Resources.Load<AudioClip>("Sound/Swing1-Free-1");
         playerTr = GameObject.FindWithTag("Player").GetComponent<Transform>();
         layermask = 1 << 9 | 1 << 8 | 1 << 0;
+
+        agent.speed = 10f;
     }
 
     private void Update()

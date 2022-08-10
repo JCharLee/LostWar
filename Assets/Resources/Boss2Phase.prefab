@@ -1304,10 +1304,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 0
-  m_Radius: 0.18
-  m_Height: 1.04
+  m_Radius: 0.25
+  m_Height: 1.392825
   m_Direction: 1
-  m_Center: {x: 0.029999997, y: 0.31, z: 0.030000025}
+  m_Center: {x: 0.029999968, y: 0.4864127, z: 0.030000113}
 --- !u!114 &914614201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1320,7 +1320,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccb4bd26ec2cff44dae5992e57b0e9f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 80
+  damage: 150
 --- !u!1 &7994586191246359122
 GameObject:
   m_ObjectHideFlags: 0
@@ -1428,10 +1428,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 0
-  m_Radius: 0.42
-  m_Height: 0.7
+  m_Radius: 0.35
+  m_Height: 1.155355
   m_Direction: 1
-  m_Center: {x: -0.0000000024220213, y: 0.11, z: -0.0000000046551096}
+  m_Center: {x: 0.00000070071985, y: 0.26767704, z: -0.000000009228035}
 --- !u!114 &315045986
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1444,7 +1444,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccb4bd26ec2cff44dae5992e57b0e9f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 50
+  damage: 100
 --- !u!1 &8693130316955248571
 GameObject:
   m_ObjectHideFlags: 0

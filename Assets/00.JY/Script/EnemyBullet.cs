@@ -6,7 +6,7 @@ public class EnemyBullet : MonoBehaviour
 {
     Rigidbody rigid;
     Transform tr;
-    private float damage = 10f;
+    public float damage = 25f;
     public float shotforce = 500f;
 
     void Start()

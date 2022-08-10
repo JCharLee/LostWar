@@ -11,7 +11,7 @@ public class Boss2Move : MonoBehaviour
     public Transform playerTr;
     NavMeshAgent agent;
     EnemyHealth EHealth;
-    int layermask;
+    //int layermask;
     public bool lookPlayer = false;
     bool isaction = false;
     float jumpattack = 2f;
@@ -43,8 +43,9 @@ public class Boss2Move : MonoBehaviour
         B2jumpatksfx = Resources.Load<AudioClip>("Sound/AntiMaterialRifle_3p_03");
         punchsfx = Resources.Load<AudioClip>("Sound/Swing4-Free-1");
         crawsfx = Resources.Load<AudioClip>("Sound/Slice-MetalClank2-Free-1");
-        layermask = 1 << 9 | 1 << 10;
+        //layermask = 1 << 9 | 1 << 8 | 1 << 0;
         agent.isStopped = true;
+        agent.speed = 10f;
     }
 
     void Update()
@@ -53,13 +54,14 @@ public class Boss2Move : MonoBehaviour
         {
             return;
         }
-        //플레이어 감지 레이캐스트
-        RaycastHit hit;
-        Debug.DrawRay(tr.position, tr.forward * 50f, Color.green);
-        if (Physics.Raycast(tr.position, tr.forward, out hit, 50f, layermask))
-            lookPlayer = (hit.collider.CompareTag("Player"));
-        else
-            lookPlayer = false;
+        ////플레이어 감지 레이캐스트
+        //RaycastHit hit;
+        //Vector3 dir = (playerTr.position - tr.position).normalized;
+        //Debug.DrawRay(tr.position + tr.up * 1, dir * 50f, Color.green);
+        //if (Physics.Raycast(tr.position + tr.up * 1, dir, out hit, 50f, layermask))
+        //    lookPlayer = (hit.collider.CompareTag("Player"));
+        //else
+        //    lookPlayer = false;
 
         //패턴타이머
         patterntimer += Time.deltaTime;
@@ -129,8 +131,8 @@ public class Boss2Move : MonoBehaviour
             agent.isStopped = true;
             if (sinceattacktime > attack)
             {
-                StartCoroutine(actioncooltime(attack));
                 Boss2Claw.enabled = true;
+                StartCoroutine(actioncooltime(attack));
                 ani.SetTrigger("Attack");
                 B2audio.clip = crawsfx;
                 B2audio.PlayDelayed(0.3f);
@@ -152,8 +154,8 @@ public class Boss2Move : MonoBehaviour
             agent.isStopped = true;
             if (sinceattacktime > punch)
             {
-                StartCoroutine(actioncooltime(punch));
                 Boss2Punch.enabled = true;
+                StartCoroutine(actioncooltime(punch));
                 ani.SetTrigger("Punch");
                 B2audio.clip = punchsfx;
                 B2audio.PlayDelayed(0.2f);

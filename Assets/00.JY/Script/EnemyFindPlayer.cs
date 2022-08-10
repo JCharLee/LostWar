@@ -13,8 +13,8 @@ public class EnemyFindPlayer : MonoBehaviour
     EnemyPatrol enemyPatrol;
     EnemyFire enemyFire;
     EnemyHealth EHealth;
-    private float combatDist = 10f;
-    private float traceDist = 15f;
+    private float combatDist = 15f;
+    private float traceDist = 20f;
     bool IsCombat = false;
     //private float patrolDist = 20f;
     int layermask;
@@ -62,11 +62,13 @@ public class EnemyFindPlayer : MonoBehaviour
         }
         else if (dist <= combatDist && !enemyFire.isFire && IsCombat)
         {
+            enemyAgent.speed = 10f;
             enemyAgent.isStopped = false;
             ani.SetBool("IsMove", true);
         }
         else if (dist <= traceDist && enemyFire.isFire)
         {
+            enemyAgent.speed = 10f;
             IsCombat = false;
             enemyAgent.speed = 7f;
             enemyAgent.destination = playerTr.position;
@@ -75,6 +77,7 @@ public class EnemyFindPlayer : MonoBehaviour
         }
         else if (dist <= traceDist && !enemyFire.isFire)
         {
+            enemyAgent.speed = 10f;
             IsCombat = false;
             enemyPatrol.patrol();
         }

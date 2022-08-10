@@ -39,6 +39,8 @@ public class MoveBehaviour : GenericBehaviour
 
 	private AudioSource playeraudio;
 	private AudioClip[] footsounds;
+	private AudioClip meleeattack;
+	private AudioClip reloadsfx;
 	private Health health;
 
 	void Start()
@@ -54,6 +56,8 @@ public class MoveBehaviour : GenericBehaviour
 
 		playeraudio = GetComponent<AudioSource>();
 		footsounds = Resources.LoadAll<AudioClip>("FootSounds");
+		meleeattack = Resources.Load<AudioClip>("Sound/Swing1-Free-1");
+		reloadsfx = Resources.Load<AudioClip>("Sound/Pistol_ClipIn_05");
 
 		health = GetComponent<Health>();
 	}
@@ -150,7 +154,7 @@ public class MoveBehaviour : GenericBehaviour
 			}
 		}
 
-		if (Input.GetKeyDown(KeyCode.R))
+		if (Input.GetKeyDown(KeyCode.R) && usingWeapon == UsingWeapon.long_dist)
 		{
 			if(!haveMotion)
 			{
@@ -279,9 +283,11 @@ public void FixedUpdate()
         {
 			if (!haveMotion)
 			{
-				if (speed == 0&& usingWeapon == UsingWeapon.short_dist)
+				if (usingWeapon == UsingWeapon.short_dist)
+				{
 					QuickRotating();
 					StartCoroutine(Attack());
+				}
 			}
 		}
 		
@@ -310,6 +316,8 @@ public void FixedUpdate()
 		haveMotion = true;
 		sword.GetComponent<SwordAttack>().canAttack = true;
 		axe.GetComponent<SwordAttack>().canAttack = true;
+		playeraudio.clip = meleeattack;
+		playeraudio.PlayDelayed(0.3f);
         yield return new WaitForSeconds(1.3f);
 		sword.GetComponent<SwordAttack>().canAttack = false;
 		axe.GetComponent<SwordAttack>().canAttack = false;
@@ -318,6 +326,8 @@ public void FixedUpdate()
 	IEnumerator Reload()
 	{
 		haveMotion = true;
+		playeraudio.clip = reloadsfx;
+		playeraudio.PlayDelayed(1.8f);
 		yield return new WaitForSeconds(2.5f);
 		haveMotion = false;
 	}
