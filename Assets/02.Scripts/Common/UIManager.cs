@@ -405,6 +405,7 @@ public class UIManager : MonoBehaviour
         portrait.sprite = talkManager.GetPortrait(id, int.Parse(talkData.Split(':')[2]));
         moveBehaivour.ani.SetFloat("Speed", 0f);
         isAction = true;
+        StartCoroutine(FindObjectOfType<AimBehaviourBasic>().ToggleAimOff());
         talkIndex++;
     }
 

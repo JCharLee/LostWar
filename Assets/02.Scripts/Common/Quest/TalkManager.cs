@@ -10,8 +10,6 @@ public class TalkManager : MonoBehaviour
     public string[] nameArr;
     public Sprite[] portraitArr;
 
-    private UIManager uiManager;
-
     public Dictionary<int, string[]> TalkData => talkData;
 
     public static TalkManager instance = null;
@@ -27,8 +25,7 @@ public class TalkManager : MonoBehaviour
         talkData = new Dictionary<int, string[]>();
         portraitData = new Dictionary<int, Sprite>();
         nameData = new Dictionary<int, string>();
-
-        uiManager = GameObject.Find("UI").GetComponent<UIManager>();
+        
         GenerateData();
     }
 

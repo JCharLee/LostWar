@@ -20,7 +20,7 @@ public class MoveBehaviour : GenericBehaviour
 	public float jumpIntertialForce = 10f;
 	public Animator ani;
 	private bool haveMotion = false;
-	private bool rolling = false;
+	public bool rolling = false;
 	
 	public enum UsingWeapon {none, short_dist, long_dist};
 	public UsingWeapon usingWeapon;
@@ -353,9 +353,9 @@ public void FixedUpdate()
 	{
 		rolling = haveMotion = true;
 		speed = 2;
-		yield return new WaitForSeconds(0.3f);
+		yield return new WaitForSeconds(0.5f);
 		speed = 1;
-		yield return new WaitForSeconds(0.3f);
+		yield return new WaitForSeconds(0.5f);
 		speed = 0;
 		rolling = haveMotion = false;
 

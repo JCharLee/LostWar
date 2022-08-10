@@ -6,10 +6,12 @@ public class Locator : MonoBehaviour
 {
     [SerializeField] private int questId;
     private PlayerInteraction player;
+    private Collider col;
 
     private void Awake()
     {
         player = FindObjectOfType<PlayerInteraction>();
+        col = GetComponent<Collider>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -19,7 +21,7 @@ public class Locator : MonoBehaviour
             if (DataManager.instance.gameData.questId == questId)
             {
                 player.Locate();
-                Destroy(gameObject);
+                col.enabled = false;
             }
         }
     }

@@ -56,6 +56,7 @@ public class Key : MonoBehaviour, IInteraction
         }
         gameObject.GetComponent<MeshRenderer>().enabled = false;
         gameObject.layer = 0;
+        Destroy(transform.GetChild(0).gameObject);
         Destroy(gameObject, 3.1f);
         StartCoroutine(uiManager.NoticeText(true, alertText));
         if (DataManager.instance.gameData.questId == 90 && keyNumber == 1)

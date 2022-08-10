@@ -40,12 +40,12 @@ public class FadeScene : MonoBehaviour
                     SceneManager.LoadScene("Level1");
                     break;
                 case "Finish":
+                    SceneManager.LoadScene("Finish");
                     Destroy(FindObjectOfType<PlayerInteraction>().gameObject);
                     Destroy(FindObjectOfType<UIManager>().gameObject);
                     Destroy(FindObjectOfType<QuestManager>().gameObject);
                     Destroy(FindObjectOfType<TalkManager>().gameObject);
                     Destroy(FindObjectOfType<GameManager>().gameObject);
-                    SceneManager.LoadScene("Finish");
                     Cursor.lockState = CursorLockMode.None;
                     Cursor.visible = true;
                     break;
@@ -55,12 +55,12 @@ public class FadeScene : MonoBehaviour
                 case "Retry":
                     if (PlayerInteraction.instance.currentMapName == "Level1")
                     {
+                        SceneManager.LoadScene("Level1");
                         Destroy(FindObjectOfType<PlayerInteraction>().gameObject);
                         Destroy(FindObjectOfType<UIManager>().gameObject);
                         Destroy(FindObjectOfType<QuestManager>().gameObject);
                         Destroy(FindObjectOfType<TalkManager>().gameObject);
                         Destroy(FindObjectOfType<GameManager>().gameObject);
-                        SceneManager.LoadScene("Level1");
                     }
                     else
                     {
@@ -75,18 +75,21 @@ public class FadeScene : MonoBehaviour
                     }
                     break;
                 case "Return":
+                    SceneManager.LoadScene("Main");
                     Destroy(FindObjectOfType<PlayerInteraction>().gameObject);
                     Destroy(FindObjectOfType<UIManager>().gameObject);
                     Destroy(FindObjectOfType<QuestManager>().gameObject);
                     Destroy(FindObjectOfType<TalkManager>().gameObject);
                     Destroy(FindObjectOfType<GameManager>().gameObject);
-                    SceneManager.LoadScene("Main");
                     break;
             }
             sceneName = "Finish";
-            FindObjectOfType<Health>().ani.SetTrigger("Awake");
-            FindObjectOfType<Health>().ani.SetFloat("Speed", 0f);
-            FindObjectOfType<Health>().isdie = false;
+            if (sceneName != "Start" && sceneName != "Finish")
+            {
+                FindObjectOfType<Health>().ani.SetTrigger("Awake");
+                FindObjectOfType<Health>().ani.SetFloat("Speed", 0f);
+                FindObjectOfType<Health>().isdie = false;
+            }
         }
         else if (fadeCg.alpha == 1)
         {

@@ -14,6 +14,7 @@ public class AimBehaviourBasic : GenericBehaviour
 	public static bool aim;                                              // Boolean to determine whether or not the player is aiming.
 	public Animator ani;
 	[SerializeField] RayShoot rayShoot;
+	private MoveBehaviour moveBehaviour;
 
 	private Health health;
 
@@ -25,24 +26,25 @@ public class AimBehaviourBasic : GenericBehaviour
 		ani.SetBool("Aim", true);
 
 		health = GetComponent<Health>();
+		moveBehaviour = FindObjectOfType<MoveBehaviour>();
 	}
 
 	// Update is used to set features regardless the active behaviour.
 	void FixedUpdate()
 	{
-		if (health.isdie)
+		if (health.isdie || UIManager.instance.isAction)
 		{
 			StartCoroutine(ToggleAimOff());
 			ani.SetBool("Aim", false);
 			return;
 		}
-		if (UIManager.instance.isAction) return;
+		if (moveBehaviour.rolling) return;
 
 		// Activate/deactivate aim by input.
 		if (Input.GetAxisRaw(aimButton) != 0 && !aim)
 		{
 			StartCoroutine(ToggleAimOn());
-			
+
 		}
 		else if (aim && Input.GetAxisRaw(aimButton) == 0)
 		{
@@ -89,7 +91,7 @@ public class AimBehaviourBasic : GenericBehaviour
 	}
 
 	// Co-rountine to end aiming mode with delay.
-	private IEnumerator ToggleAimOff()
+	public IEnumerator ToggleAimOff()
 	{
 		aim = false;
 		yield return new WaitForSeconds(0.3f);
