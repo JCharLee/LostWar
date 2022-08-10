@@ -70,7 +70,8 @@ public class PlayerInteraction : MonoBehaviour
 
         if (numFound > 0)
         {
-            interactable = cols[0].GetComponent<IInteraction>();
+            for (int i = 0; i < numFound; i++)
+                interactable = cols[i].GetComponent<IInteraction>();
 
             if (interactable != null)
             {

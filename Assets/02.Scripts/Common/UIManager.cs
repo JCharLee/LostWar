@@ -555,6 +555,89 @@ public class UIManager : MonoBehaviour
         itemInfoImage.sprite = item.img;
         itemInfoImage.preserveAspect = true;
     }
+
+    public void ThrowItem()
+    {
+        if (DataManager.instance.gameData.questId < 50)
+        {
+            StartCoroutine(NoticeText(false, "1스테이지에 있는 동안은 장비를 버릴 수 없습니다."));
+            return;
+        }
+
+        switch (SlotItemInfo.instance.item.itemType)
+        {
+            case ItemType.shortWeapon:
+                if (SlotItemInfo.instance.isEquip)
+                {
+                    Weapon weapon = SlotItemInfo.instance.item as Weapon;
+                    DataManager.instance.gameData.dam -= weapon.damage;
+                    GameManager.instance.SetState(false, SlotItemInfo.instance.item.str, SlotItemInfo.instance.item.agi, SlotItemInfo.instance.item.con, SlotItemInfo.instance.item.vit);
+                    DataManager.instance.gameData.shortWeaponC = null;
+                }
+                else
+                    DataManager.instance.gameData.shortWeapon.Remove(SlotItemInfo.instance.item as Weapon);
+                break;
+            case ItemType.longWeapon:
+                if (SlotItemInfo.instance.isEquip)
+                {
+                    Weapon weapon = SlotItemInfo.instance.item as Weapon;
+                    DataManager.instance.gameData.dam -= weapon.damage;
+                    GameManager.instance.SetState(false, SlotItemInfo.instance.item.str, SlotItemInfo.instance.item.agi, SlotItemInfo.instance.item.con, SlotItemInfo.instance.item.vit);
+                    DataManager.instance.gameData.longWeaponC = null;
+                }
+                else
+                    DataManager.instance.gameData.longWeapon.Remove(SlotItemInfo.instance.item as Weapon);
+                break;
+            case ItemType.shoes:
+                if (SlotItemInfo.instance.isEquip)
+                {
+                    Clothes clothes = SlotItemInfo.instance.item as Clothes;
+                    DataManager.instance.gameData.def -= clothes.def;
+                    GameManager.instance.SetState(false, SlotItemInfo.instance.item.str, SlotItemInfo.instance.item.agi, SlotItemInfo.instance.item.con, SlotItemInfo.instance.item.vit);
+                    DataManager.instance.gameData.shoesC = null;
+                }
+                else
+                    DataManager.instance.gameData.shoes.Remove(SlotItemInfo.instance.item as Clothes);
+                break;
+            case ItemType.top:
+                if (SlotItemInfo.instance.isEquip)
+                {
+                    Clothes clothes = SlotItemInfo.instance.item as Clothes;
+                    DataManager.instance.gameData.def -= clothes.def;
+                    GameManager.instance.SetState(false, SlotItemInfo.instance.item.str, SlotItemInfo.instance.item.agi, SlotItemInfo.instance.item.con, SlotItemInfo.instance.item.vit);
+                    DataManager.instance.gameData.topC = null;
+                }
+                else
+                    DataManager.instance.gameData.top.Remove(SlotItemInfo.instance.item as Clothes);
+                break;
+            case ItemType.bottoms:
+                if (SlotItemInfo.instance.isEquip)
+                {
+                    Clothes clothes = SlotItemInfo.instance.item as Clothes;
+                    DataManager.instance.gameData.def -= clothes.def;
+                    GameManager.instance.SetState(false, SlotItemInfo.instance.item.str, SlotItemInfo.instance.item.agi, SlotItemInfo.instance.item.con, SlotItemInfo.instance.item.vit);
+                    DataManager.instance.gameData.bottomsC = null;
+                }
+                else
+                    DataManager.instance.gameData.bottoms.Remove(SlotItemInfo.instance.item as Clothes);
+                break;
+            case ItemType.potion:
+                Potion potion = SlotItemInfo.instance.item as Potion;
+                switch (potion.potionType)
+                {
+                    case PotionType.HP:
+                        DataManager.instance.gameData.hpPotion.Remove(potion);
+                        break;
+                    case PotionType.SP:
+                        DataManager.instance.gameData.spPotion.Remove(potion);
+                        break;
+                }
+                break;
+        }
+        itemInfoText.enabled = false;
+        itemInfoImage.enabled = false;
+        Destroy(SlotItemInfo.instance.gameObject);
+    }
     #endregion
 
     #region [게임오버]
