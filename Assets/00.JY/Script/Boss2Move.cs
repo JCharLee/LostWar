@@ -45,12 +45,12 @@ public class Boss2Move : MonoBehaviour
         crawsfx = Resources.Load<AudioClip>("Sound/Slice-MetalClank2-Free-1");
         //layermask = 1 << 9 | 1 << 8 | 1 << 0;
         agent.isStopped = true;
-        agent.speed = 10f;
+        agent.speed = 6f;
     }
 
     void Update()
     {
-        if (EHealth.isdie)
+        if (EHealth.isdie || FindObjectOfType<Health>().isdie)
         {
             return;
         }

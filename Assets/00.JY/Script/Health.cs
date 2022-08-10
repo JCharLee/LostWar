@@ -16,7 +16,8 @@ public class Health : MonoBehaviour
     
     void Update()
     {
-        
+        if (DataManager.instance.gameData.hp > 0)
+            isdie = false;
     }
 
     public void takeDamage(float damage)

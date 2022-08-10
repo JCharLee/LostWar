@@ -74,7 +74,7 @@ public class BossMove : MonoBehaviour
     }
     void FixedUpdate()
     {
-        if (EHealth.isdie)
+        if (EHealth.isdie || FindObjectOfType<Health>().isdie)
             return;
         if (combat.isCombat)
             DoCombat();

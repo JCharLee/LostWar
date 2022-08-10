@@ -39,7 +39,7 @@ public class BossCombat : MonoBehaviour
     
     void Update()
     {
-        if (EHealth.isdie)
+        if (EHealth.isdie || FindObjectOfType<Health>().isdie)
             return;
 
         if (isCombat && !isReload && bossMove.lookPlayer)
