@@ -11,6 +11,8 @@ public class Key : MonoBehaviour, IInteraction
     private UIManager uiManager;
     private QuestManager questManager;
     private PlayerInteraction player;
+    private AudioSource source;
+    private AudioClip itemSfx;
 
     public string interactionPrompt => prompt;
 
@@ -31,6 +33,8 @@ public class Key : MonoBehaviour, IInteraction
         uiManager = GameObject.Find("UI").GetComponent<UIManager>();
         questManager = GameObject.Find("QuestManager").GetComponent<QuestManager>();
         player = FindObjectOfType<PlayerInteraction>();
+        source = GameObject.FindGameObjectWithTag("Player").GetComponent<MoveBehaviour>().playeraudio;
+        itemSfx = Resources.Load<AudioClip>("Sound/Quick Magic Game Item Pick Up");
     }
 
     private void Update()
@@ -40,6 +44,7 @@ public class Key : MonoBehaviour, IInteraction
 
     public bool Action(PlayerInteraction interactor)
     {
+        source.PlayOneShot(itemSfx, 1.0f);
         switch(keyNumber)
         {
             case 1:

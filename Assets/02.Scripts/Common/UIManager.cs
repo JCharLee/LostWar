@@ -94,6 +94,7 @@ public class UIManager : MonoBehaviour
     AudioClip invenOn;
     AudioClip invenOff;
     AudioClip lvlUp;
+    AudioClip btnSfx;
 
     private void Awake()
     {
@@ -172,6 +173,7 @@ public class UIManager : MonoBehaviour
         invenOn = Resources.Load<AudioClip>("Sound/UI_01");
         invenOff = Resources.Load<AudioClip>("Sound/UI_02");
         lvlUp = Resources.Load<AudioClip>("Sound/msfx_shield_glass_blow");
+        btnSfx = Resources.Load<AudioClip>("Sound/Recharge Energy1");
     }
 
     private void Start()
@@ -435,13 +437,15 @@ public class UIManager : MonoBehaviour
     public void UpdateLevel(int level)
     {
         moveBehaivour.playeraudio.PlayOneShot(lvlUp, 1.0f);
+        GameObject obj = Instantiate(Resources.Load<GameObject>("Prefabs/ShockWave"), moveBehaivour.gameObject.transform.position, Quaternion.identity);
+        Destroy(obj, 1.0f);
         lvText.text = $"Lv {level}";
     }
 
     public void UpdateExp(int exp)
     {
         DataManager.instance.gameData.exp += exp;
-        expBar.fillAmount = DataManager.instance.gameData.exp / DataManager.instance.gameData.expRequire;
+        expBar.fillAmount = (float)DataManager.instance.gameData.exp / (float)DataManager.instance.gameData.expRequire;
     }
     #endregion
 
@@ -712,17 +716,17 @@ public class UIManager : MonoBehaviour
 
     public void Retry()
     {
+        MainCamAudio.PlayOneShot(btnSfx, 1.0f);
         FadeScene fadeScene = fadeObject.GetComponent<FadeScene>();
         fadeScene.sceneName = "Retry";
         fadeObject.SetActive(true);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        FindObjectOfType<Health>().ani.SetTrigger("Awake");
-        FindObjectOfType<Health>().isdie = false;
     }
 
     public void GotoMain()
     {
+        MainCamAudio.PlayOneShot(btnSfx, 1.0f);
         FadeScene fadeScene = fadeObject.GetComponent<FadeScene>();
         fadeScene.sceneName = "Return";
         fadeObject.SetActive(true);

@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     public GameDataObject gameDataObject;
+    private AudioClip potionSfx;
 
     private void Awake()
     {
@@ -41,6 +42,7 @@ public class GameManager : MonoBehaviour
         equiped_longWeapon = GameObject.Find("UI").transform.GetChild(6).transform.GetChild(1).transform.GetChild(5).GetComponent<Transform>();
 
         moveBehaviour = GameObject.FindGameObjectWithTag("Player").GetComponent<MoveBehaviour>();
+        potionSfx = Resources.Load<AudioClip>("Sound/UI Hits Game 1");
     }
 
     private void Start()
@@ -417,6 +419,7 @@ public class GameManager : MonoBehaviour
                 }
                 break;
         }
+        moveBehaviour.playeraudio.PlayOneShot(potionSfx, 1.0f);
         potion.Use();
         UpdatePotion(potion);
     }

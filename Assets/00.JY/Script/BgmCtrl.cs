@@ -9,6 +9,7 @@ public class BgmCtrl : MonoBehaviour
     public static AudioClip Level2bgm;
     public static AudioClip Level3bgm;
     public static AudioClip BossRoombgm;
+    public static AudioClip GameOverbgm;
 
     private PlayerInteraction thePlayer;
     
@@ -21,33 +22,43 @@ public class BgmCtrl : MonoBehaviour
         Level2bgm = Resources.Load<AudioClip>("LevelBgm/Level2");
         Level3bgm = Resources.Load<AudioClip>("LevelBgm/Level3");
         BossRoombgm = Resources.Load<AudioClip>("LevelBgm/BossRoom");
+        GameOverbgm = Resources.Load<AudioClip>("LevelBgm/GameOver");
 
     }
     
     void Update()
     {
-        switch(thePlayer.currentMapName)
+        if (!FindObjectOfType<Health>().isdie)
         {
-            case "Level1":
-                levelaudio.clip = Level1bgm;
-                if (!levelaudio.isPlaying)
-                    levelaudio.Play();
-                break;
-            case "Level2":
-                levelaudio.clip = Level2bgm;
-                if (!levelaudio.isPlaying)
-                    levelaudio.Play();
-                break;
-            case "Level3":
-                levelaudio.clip = Level3bgm;
-                if (!levelaudio.isPlaying)
-                    levelaudio.Play();
-                break;
-            case "BossRoom":
-                levelaudio.clip = BossRoombgm;
-                if (!levelaudio.isPlaying)
-                    levelaudio.Play();
-                break;
+            switch (thePlayer.currentMapName)
+            {
+                case "Level1":
+                    levelaudio.clip = Level1bgm;
+                    if (!levelaudio.isPlaying)
+                        levelaudio.Play();
+                    break;
+                case "Level2":
+                    levelaudio.clip = Level2bgm;
+                    if (!levelaudio.isPlaying)
+                        levelaudio.Play();
+                    break;
+                case "Level3":
+                    levelaudio.clip = Level3bgm;
+                    if (!levelaudio.isPlaying)
+                        levelaudio.Play();
+                    break;
+                case "BossRoom":
+                    levelaudio.clip = BossRoombgm;
+                    if (!levelaudio.isPlaying)
+                        levelaudio.Play();
+                    break;
+            }
+        }
+        else
+        {
+            levelaudio.clip = GameOverbgm;
+            if (!levelaudio.isPlaying)
+                levelaudio.Play();
         }
     }
 }

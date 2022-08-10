@@ -83,6 +83,9 @@ public class FadeScene : MonoBehaviour
                     SceneManager.LoadScene("Main");
                     break;
             }
+
+            FindObjectOfType<Health>().ani.SetTrigger("Awake");
+            FindObjectOfType<Health>().isdie = false;
         }
         else if (fadeCg.alpha == 1)
         {
