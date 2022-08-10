@@ -40,7 +40,7 @@ public class EnemyMeleeMove : MonoBehaviour
         playerTr = GameObject.FindWithTag("Player").GetComponent<Transform>();
         layermask = 1 << 9 | 1 << 8 | 1 << 0;
 
-        agent.speed = 10f;
+        agent.speed = 8f;
     }
 
     private void Update()
@@ -56,7 +56,7 @@ public class EnemyMeleeMove : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (EHealth.isdie)
+        if (EHealth.isdie || FindObjectOfType<Health>().isdie)
             return;
 
         float dist = Vector3.Distance(playerTr.position, tr.position);
@@ -71,11 +71,13 @@ public class EnemyMeleeMove : MonoBehaviour
         }
         if (dist <= 1.5f && LookPlayer && IsCombat)
         {
+            agent.speed = 6f;
             ani.SetBool("IsMove", true);
             agent.isStopped = false;
         }
         else if(dist <= traceDist && LookPlayer)
         {
+            agent.speed = 6f;
             IsCombat = false;
             if (!isaction)
             {
@@ -86,6 +88,7 @@ public class EnemyMeleeMove : MonoBehaviour
         }
         else if (dist <= traceDist && !LookPlayer)
         {
+            agent.speed = 6f;
             IsCombat = false;
             Epatrol.patrol();
         }

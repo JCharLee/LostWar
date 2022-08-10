@@ -46,7 +46,7 @@ public class EnemyFindPlayer : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (EHealth.isdie)
+        if (EHealth.isdie || FindObjectOfType<Health>().isdie)
             return;
 
         float dist = Vector3.Distance(playerTr.position, tr.position);
@@ -62,22 +62,21 @@ public class EnemyFindPlayer : MonoBehaviour
         }
         else if (dist <= combatDist && !enemyFire.isFire && IsCombat)
         {
-            enemyAgent.speed = 10f;
+            enemyAgent.speed = 6f;
             enemyAgent.isStopped = false;
             ani.SetBool("IsMove", true);
         }
         else if (dist <= traceDist && enemyFire.isFire)
         {
-            enemyAgent.speed = 10f;
+            enemyAgent.speed = 6f;
             IsCombat = false;
-            enemyAgent.speed = 7f;
             enemyAgent.destination = playerTr.position;
             enemyAgent.isStopped = false;
             ani.SetBool("IsMove", true);
         }
         else if (dist <= traceDist && !enemyFire.isFire)
         {
-            enemyAgent.speed = 10f;
+            enemyAgent.speed = 6f;
             IsCombat = false;
             enemyPatrol.patrol();
         }

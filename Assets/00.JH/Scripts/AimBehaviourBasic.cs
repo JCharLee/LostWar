@@ -31,7 +31,11 @@ public class AimBehaviourBasic : GenericBehaviour
 	void FixedUpdate()
 	{
 		if (health.isdie)
+		{
+			StartCoroutine(ToggleAimOff());
+			ani.SetBool("Aim", false);
 			return;
+		}
 
 		// Activate/deactivate aim by input.
 		if (Input.GetAxisRaw(aimButton) != 0 && !aim)

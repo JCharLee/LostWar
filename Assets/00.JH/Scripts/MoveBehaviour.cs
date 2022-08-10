@@ -66,7 +66,10 @@ public class MoveBehaviour : GenericBehaviour
 	void Update()
 	{
 		if (health.isdie)
+        {
+			AimBehaviourBasic.aim = false;
 			return;
+		}
 
 		if (UIManager.instance.isAction || QuestManager.instance.IsStarting)
 			return;
@@ -274,7 +277,10 @@ public class MoveBehaviour : GenericBehaviour
 public void FixedUpdate()
 	{
 		if (health.isdie)
+		{
+			AimBehaviourBasic.aim = false;
 			return;
+		}
 
 		if (UIManager.instance.isAction || QuestManager.instance.IsStarting)
 			return;
