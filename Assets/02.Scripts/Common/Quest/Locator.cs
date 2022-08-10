@@ -17,7 +17,10 @@ public class Locator : MonoBehaviour
         if (other.tag == "Player")
         {
             if (DataManager.instance.gameData.questId == questId)
+            {
                 player.Locate();
+                Destroy(gameObject);
+            }
         }
     }
 }

@@ -23,6 +23,9 @@ public class QuestManager : MonoBehaviour
     private bool isStarting = false;
     public bool IsStarting => isStarting;
 
+    private MoveBehaviour movebehaviour;
+    private AudioClip completeSfx;
+
     void Awake()
     {
         if (instance == null)
@@ -35,6 +38,8 @@ public class QuestManager : MonoBehaviour
         uiManager = GameObject.Find("UI").GetComponent<UIManager>();
         questGiver = GameObject.Find("QuestGiver").GetComponent<QuestGiver>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInteraction>();
+        movebehaviour = GameObject.FindGameObjectWithTag("Player").GetComponent<MoveBehaviour>();
+        completeSfx = Resources.Load<AudioClip>("Sound/msfx_explosion_3_bell");
         GenerateData();
     }
 
@@ -140,6 +145,7 @@ public class QuestManager : MonoBehaviour
 
     public void Complete()
     {
+        movebehaviour.playeraudio.PlayOneShot(completeSfx, 1.0f);
         if (DataManager.instance.gameData.questId == 110)
         {
             GameObject key = Instantiate(Resources.Load<GameObject>("Prefabs/SecondCardKey"), new Vector3(42f, -55.34903f, 57f), Quaternion.Euler(0f, 0f, 25f));

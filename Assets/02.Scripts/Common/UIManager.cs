@@ -88,11 +88,12 @@ public class UIManager : MonoBehaviour
     private QuestManager questManager;
     public static UIManager instance = null;
     private BasicBehaviour basicBehaviour;
+    private MoveBehaviour moveBehaivour;
 
     AudioSource MainCamAudio;
     AudioClip invenOn;
     AudioClip invenOff;
-
+    AudioClip lvlUp;
 
     private void Awake()
     {
@@ -165,10 +166,12 @@ public class UIManager : MonoBehaviour
         talkManager = GameObject.Find("TalkManager").GetComponent<TalkManager>();
         questManager = GameObject.Find("QuestManager").GetComponent<QuestManager>();
         basicBehaviour = FindObjectOfType<BasicBehaviour>();
+        moveBehaivour = FindObjectOfType<MoveBehaviour>();
 
         MainCamAudio = Camera.main.transform.GetComponent<AudioSource>();
         invenOn = Resources.Load<AudioClip>("Sound/UI_01");
         invenOff = Resources.Load<AudioClip>("Sound/UI_02");
+        lvlUp = Resources.Load<AudioClip>("Sound/msfx_shield_glass_blow");
     }
 
     private void Start()
@@ -431,6 +434,7 @@ public class UIManager : MonoBehaviour
     #region [경험치/레벨업 함수]
     public void UpdateLevel(int level)
     {
+        moveBehaivour.playeraudio.PlayOneShot(lvlUp, 1.0f);
         lvText.text = $"Lv {level}";
     }
 

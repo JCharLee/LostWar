@@ -37,7 +37,7 @@ public class MoveBehaviour : GenericBehaviour
 
 	// Start is always called after any Awake functions.
 
-	private AudioSource playeraudio;
+	public AudioSource playeraudio;
 	private AudioClip[] footsounds;
 	private AudioClip meleeattack;
 	private AudioClip reloadsfx;
