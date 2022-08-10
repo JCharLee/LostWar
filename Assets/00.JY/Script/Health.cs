@@ -35,6 +35,7 @@ public class Health : MonoBehaviour
             if (ani != null)
                 ani.SetTrigger("IsDie");
             isdie = true;
+            UIManager.instance.GameOverPanelOn();
         }
     }
 }

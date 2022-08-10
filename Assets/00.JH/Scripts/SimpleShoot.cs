@@ -33,7 +33,7 @@ public class SimpleShoot : MonoBehaviour
     void Update()
     {
 
-        if (EventSystem.current.IsPointerOverGameObject()) return;
+        if (EventSystem.current.IsPointerOverGameObject() || FindObjectOfType<Health>().isdie) return;
         //If you want a different input, change it here
         if (Input.GetButtonDown("Fire1") && AimBehaviourBasic.aim)
         {
