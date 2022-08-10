@@ -36,6 +36,7 @@ public class AimBehaviourBasic : GenericBehaviour
 			ani.SetBool("Aim", false);
 			return;
 		}
+		if (UIManager.instance.isAction) return;
 
 		// Activate/deactivate aim by input.
 		if (Input.GetAxisRaw(aimButton) != 0 && !aim)

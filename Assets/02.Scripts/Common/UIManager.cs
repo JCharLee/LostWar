@@ -403,7 +403,7 @@ public class UIManager : MonoBehaviour
         npcName.text = talkManager.GetName(id, int.Parse(talkData.Split(':')[0]));
         talkText.text = talkData.Split(':')[1];
         portrait.sprite = talkManager.GetPortrait(id, int.Parse(talkData.Split(':')[2]));
-
+        moveBehaivour.ani.SetFloat("Speed", 0f);
         isAction = true;
         talkIndex++;
     }
@@ -415,7 +415,6 @@ public class UIManager : MonoBehaviour
 
         if (talkData == null)
         {
-            //Cursor.lockState = CursorLockMode.Locked;
             isAction = false;
             talkIndex = 0;
             questManager.CheckQuest(id);
@@ -426,8 +425,7 @@ public class UIManager : MonoBehaviour
         npcName.text = talkManager.GetName(id, int.Parse(talkData.Split(':')[0]));
         talkText.text = talkData.Split(':')[1];
         portrait.sprite = talkManager.GetPortrait(id, int.Parse(talkData.Split(':')[2]));
-
-        //Cursor.lockState = CursorLockMode.None;
+        moveBehaivour.ani.SetFloat("Speed", 0f);
         isAction = true;
         talkIndex++;
     }

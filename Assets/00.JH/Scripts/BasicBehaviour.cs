@@ -72,7 +72,7 @@ public class BasicBehaviour : MonoBehaviour
 	{
 		if (health.isdie)
 			return;
-
+		
 		// Store the input axes.
 		h = Input.GetAxis("Horizontal");
 		v = Input.GetAxis("Vertical");

@@ -2517,7 +2517,7 @@ CapsuleCollider:
   m_Material: {fileID: 13400000, guid: ab4049fdf807ca543a89fbfa0cb9e9e3, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.25
+  m_Radius: 0.35
   m_Height: 1.8
   m_Direction: 1
   m_Center: {x: 0, y: 0.9, z: 0}
@@ -2683,7 +2683,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSpeed: 0.15
   runSpeed: 0.8
-  sprintSpeed: 1.5
+  sprintSpeed: 1.1
   speedDampTime: 0.1
   jumpButton: Jump
   jumpHeight: 1.5

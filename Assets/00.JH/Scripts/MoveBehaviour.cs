@@ -9,7 +9,7 @@ public class MoveBehaviour : GenericBehaviour
 {
 	public float walkSpeed = 0.15f;                 // Default walk speed.
 	public float runSpeed = 0.8f;                   // Default run speed.
-	public float sprintSpeed = 1.5f;                // Default sprint speed.
+	public float sprintSpeed = 1.1f;                // Default sprint speed.
 	public float speedDampTime = 0.1f;              // Default damp time to change the animations based on current speed.       // Default horizontal inertial force when jumping.
 
 	private float aimWalkSpeed = 2f;
@@ -33,7 +33,7 @@ public class MoveBehaviour : GenericBehaviour
 
 	[SerializeField]private RayShoot rayShoot;
 	//public GameObject curweapon;
-
+	private BasicBehaviour basicBehaviour;
 
 	// Start is always called after any Awake functions.
 
@@ -50,6 +50,7 @@ public class MoveBehaviour : GenericBehaviour
 		rayShoot = GetComponent<RayShoot>();
 		speedSeeker = runSpeed;
 		usingWeapon = UsingWeapon.none;
+		basicBehaviour = GetComponent<BasicBehaviour>();
 
 		Cursor.lockState = CursorLockMode.Locked;
 		Cursor.visible = false;
@@ -171,7 +172,7 @@ public class MoveBehaviour : GenericBehaviour
 	// LocalFixedUpdate overrides the virtual function of the base class.
 	public override void LocalFixedUpdate()
 	{
-		if (UIManager.instance.isAction || QuestManager.instance.IsStarting)
+		if (UIManager.instance.isAction || QuestManager.instance.IsStarting || FindObjectOfType<Health>().isdie)
 			return;
 		MovementManagement(behaviourManager.GetH, behaviourManager.GetV);
 	}
@@ -183,7 +184,7 @@ public class MoveBehaviour : GenericBehaviour
 	// Deal with the basic player movement
 	void MovementManagement(float horizontal, float vertical)
 	{
-		if (UIManager.instance.isAction || QuestManager.instance.IsStarting)
+		if (UIManager.instance.isAction || QuestManager.instance.IsStarting || FindObjectOfType<Health>().isdie)
 			return;
 		// On ground, obey gravity.
 
@@ -282,7 +283,7 @@ public void FixedUpdate()
 			return;
 		}
 
-		if (UIManager.instance.isAction || QuestManager.instance.IsStarting)
+		if (UIManager.instance.isAction || QuestManager.instance.IsStarting || FindObjectOfType<Health>().isdie)
 			return;
 		if (EventSystem.current.IsPointerOverGameObject()) return;
 		if (Input.GetMouseButton(0)&&!Input.GetKey(KeyCode.LeftShift))
@@ -301,7 +302,7 @@ public void FixedUpdate()
 
 	void QuickRotating()
 	{
-		if (UIManager.instance.isAction || QuestManager.instance.IsStarting)
+		if (UIManager.instance.isAction || QuestManager.instance.IsStarting || FindObjectOfType<Health>().isdie)
 			return;
 		Vector3 forward = behaviourManager.playerCamera.TransformDirection(Vector3.forward);
 		// Player is moving on ground, Y component of camera facing is not relevant.
