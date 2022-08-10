@@ -213,11 +213,11 @@ public class UIManager : MonoBehaviour
             if (questManager.IsStarting || isAction || gameOver) return;
             if (dropOn)
                 CloseDropPanel();
-            if (!inventoryOn)
-                MainCamAudio.PlayOneShot(invenOn);
-            else if (inventoryOn)
-                MainCamAudio.PlayOneShot(invenOff);
             inventoryOn = !inventoryOn;
+            if (inventoryOn)
+                MainCamAudio.PlayOneShot(invenOn);
+            else if (!inventoryOn)
+                MainCamAudio.PlayOneShot(invenOff);
             Inventory(inventoryOn);
         }
 
@@ -295,6 +295,8 @@ public class UIManager : MonoBehaviour
 
     private void AllUiClose()
     {
+        if (inventoryOn)
+            MainCamAudio.PlayOneShot(invenOff);
         CloseDropPanel();
         inventoryOn = false;
         Inventory(inventoryOn);

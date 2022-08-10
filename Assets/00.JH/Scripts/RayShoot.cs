@@ -35,7 +35,7 @@ public class RayShoot : MonoBehaviour
     {
         audio.PlayOneShot(firesfx, 1f);
 
-        if (Physics.Raycast(FirePos_Cur.position, FirePos_Cur.forward, out hit, 50f))
+        if (Physics.Raycast(FirePos_Cur.position, FirePos_Cur.forward, out hit, 25f))
         {
             if (hit.collider.tag == "ENEMY")
             {

@@ -13,7 +13,7 @@ public class BossCombat : MonoBehaviour
     ParticleSystem muzzleflash;
     public Transform firepos;
     float nextFire = 0;
-    readonly float FireRate = 0.3f;
+    readonly float FireRate = 0.1f;
     public bool isCombat = false;
     int remainAmmo = 3;
     readonly int rechargeAmmo = 3;

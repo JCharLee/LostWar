@@ -23,7 +23,7 @@ public class EnemyMeleeMove : MonoBehaviour
     [SerializeField]
     int attacknum = 0;
     int layermask;
-    float traceDist = 15f;
+    float traceDist = 20f;
     bool LookPlayer = false;
     bool IsCombat = false;
     AudioClip swingsfx;
