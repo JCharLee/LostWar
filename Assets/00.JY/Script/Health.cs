@@ -7,10 +7,14 @@ public class Health : MonoBehaviour
     //public float healthpoint = 100f;
     public bool isdie = false;
     public Animator ani;
+    private Rigidbody rb;
 
     void Start()
     {
         ani = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody>();
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
     }
 
     

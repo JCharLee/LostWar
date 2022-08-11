@@ -341,7 +341,6 @@ public void FixedUpdate()
 	IEnumerator On(GameObject weapon)
 	{
 		yield return new WaitForSeconds(0.2f);
-		Debug.Log("debug");
 		if (weapon != null)
 			weapon.SetActive(true);
 		haveMotion = true;

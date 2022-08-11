@@ -74,11 +74,9 @@ namespace ItemSpace
             switch (potionType)
             {
                 case PotionType.HP:
-                    Debug.Log($"Hp +{amount}");
                     DataManager.instance.gameData.hp += amount;
                     break;
                 case PotionType.SP:
-                    Debug.Log($"Sp +{amount}");
                     DataManager.instance.gameData.sp += amount;
                     break;
             }

@@ -136,18 +136,14 @@ public class DataManager : MonoBehaviour
 
     public void SaveData()
     {
-        Debug.Log("save");
         string data = JsonUtility.ToJson(gameData);
         File.WriteAllText(path, data);
-        Debug.Log(data);
     }
 
     public void LoadData()
     {
-        Debug.Log("load");
         string data = File.ReadAllText(path);
         gameData = JsonUtility.FromJson<GameData>(data);
-        Debug.Log(data);
     }
 
     public void ClearData()
