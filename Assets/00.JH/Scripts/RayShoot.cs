@@ -24,7 +24,7 @@ public class RayShoot : MonoBehaviour
     void Update()
     {
         if (EventSystem.current.IsPointerOverGameObject() || FindObjectOfType<Health>().isdie) return;
-        if (UIManager.instance.isAction) return;
+        if (UIManager.instance.isAction || UIManager.instance.isPaused) return;
         Debug.DrawRay(FirePos_Cur.position, FirePos_Cur.forward * 25f, Color.green);
         if (moveBehaviour.usingWeapon == MoveBehaviour.UsingWeapon.long_dist && AimBehaviourBasic.aim)
         {

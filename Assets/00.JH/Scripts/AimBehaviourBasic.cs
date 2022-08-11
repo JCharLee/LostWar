@@ -32,6 +32,7 @@ public class AimBehaviourBasic : GenericBehaviour
 	// Update is used to set features regardless the active behaviour.
 	void FixedUpdate()
 	{
+		if (UIManager.instance.isPaused) return;
 		if (health.isdie || UIManager.instance.isAction)
 		{
 			StartCoroutine(ToggleAimOff());

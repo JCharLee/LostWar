@@ -34,7 +34,7 @@ public class SimpleShoot : MonoBehaviour
     {
 
         if (EventSystem.current.IsPointerOverGameObject() || FindObjectOfType<Health>().isdie) return;
-        if (UIManager.instance.isAction) return;
+        if (UIManager.instance.isAction || UIManager.instance.isPaused) return;
         //If you want a different input, change it here
         if (Input.GetButtonDown("Fire1") && AimBehaviourBasic.aim)
         {

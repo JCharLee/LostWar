@@ -66,6 +66,8 @@ public class PlayerInteraction : MonoBehaviour
 
     void Update()
     {
+        if (uiManager.isPaused) return;
+
         numFound = Physics.OverlapSphereNonAlloc(interactionPoint.position, pointRadius, cols, interactableMask);
 
         if (numFound > 0)

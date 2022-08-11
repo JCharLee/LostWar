@@ -79,6 +79,10 @@ public class UIManager : MonoBehaviour
     private float fadeDuration = 3.0f;
     public bool gameOver = false;
 
+    [Header("[Pause]")]
+    [SerializeField] private GameObject pausePanel;
+    public bool isPaused = false;
+
     public GameObject fadeObject;
 
     private TalkManager talkManager;
@@ -161,6 +165,9 @@ public class UIManager : MonoBehaviour
         // 12.페이드 인/아웃
         fadeObject = transform.GetChild(12).gameObject;
 
+        // 13.포즈
+        pausePanel = transform.GetChild(13).gameObject;
+
         talkManager = GameObject.Find("TalkManager").GetComponent<TalkManager>();
         questManager = GameObject.Find("QuestManager").GetComponent<QuestManager>();
         basicBehaviour = FindObjectOfType<BasicBehaviour>();
@@ -191,6 +198,7 @@ public class UIManager : MonoBehaviour
         gameOverBg.gameObject.SetActive(false);
         gameOverTxt.gameObject.SetActive(false);
         gameOverBtn.gameObject.SetActive(false);
+        pausePanel.SetActive(false);
 
         expBar.fillAmount = 0f;
         weaponTxt.text = "NO\nWEAPON\n(1or2)";
@@ -206,13 +214,18 @@ public class UIManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            if (questManager.IsStarting || dropOn || gameOver) return;
+            if (!inventoryOn && !dropOn)
+            {
+                isPaused = !isPaused;
+                PauseOpen(isPaused);
+            }
             AllUiClose();
         }
 
         if (Input.GetKeyDown(KeyCode.I))
         {
-            if (questManager.IsStarting || isAction || dropOn || gameOver) return;
-            if (questManager.IsStarting || isAction || gameOver) return;
+            if (questManager.IsStarting || isAction || dropOn || gameOver || isPaused) return;
             if (dropOn)
                 CloseDropPanel();
             inventoryOn = !inventoryOn;
@@ -251,6 +264,7 @@ public class UIManager : MonoBehaviour
 
     private void CheckSkillPotion()
     {
+        if (isPaused) return;
         Potion hpPotion = DataManager.instance.gameData.hpPotion.Find(x => x.name == "HP Potion") as Potion;
         Potion spPotion = DataManager.instance.gameData.spPotion.Find(x => x.name == "SP Potion") as Potion;
 
@@ -710,6 +724,8 @@ public class UIManager : MonoBehaviour
         fadeObject.SetActive(true);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        if (isPaused)
+            PauseOpen(false);
     }
 
     public void GotoMain()
@@ -718,6 +734,43 @@ public class UIManager : MonoBehaviour
         FadeScene fadeScene = fadeObject.GetComponent<FadeScene>();
         fadeScene.sceneName = "Return";
         fadeObject.SetActive(true);
+        if (isPaused)
+        {
+            PauseOpen(false);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+    }
+    #endregion
+
+    #region [포즈 메뉴]
+    public void PauseOpen(bool isOn)
+    {
+        pausePanel.SetActive(isOn);
+        var player = GameObject.FindGameObjectWithTag("Player");
+        var scripts = player.GetComponents<MonoBehaviour>();
+        if (isOn)
+        {
+            Time.timeScale = 0f;
+            foreach (var script in scripts)
+                script.enabled = false;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        else
+        {
+            Time.timeScale = 1f;
+            foreach (var script in scripts)
+                script.enabled = true;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+    }
+
+    public void QuitGame()
+    {
+        MainCamAudio.PlayOneShot(btnSfx, 1.0f);
+        Application.Quit();
     }
     #endregion
 }

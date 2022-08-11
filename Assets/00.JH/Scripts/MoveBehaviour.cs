@@ -52,10 +52,10 @@ public class MoveBehaviour : GenericBehaviour
 		usingWeapon = UsingWeapon.none;
 		basicBehaviour = GetComponent<BasicBehaviour>();
 
-		Cursor.lockState = CursorLockMode.Locked;
-		Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
 
-		playeraudio = GetComponent<AudioSource>();
+        playeraudio = GetComponent<AudioSource>();
 		footsounds = Resources.LoadAll<AudioClip>("FootSounds");
 		meleeattack = Resources.Load<AudioClip>("Sound/Swing1-Free-1");
 		reloadsfx = Resources.Load<AudioClip>("Sound/Pistol_ClipIn_05");
@@ -72,7 +72,7 @@ public class MoveBehaviour : GenericBehaviour
 			return;
 		}
 
-		if (UIManager.instance.isAction || QuestManager.instance.IsStarting) return;
+		if (UIManager.instance.isAction || QuestManager.instance.IsStarting || UIManager.instance.isPaused) return;
 
 		if (!jump && Input.GetButtonDown(jumpButton) && behaviourManager.IsCurrentBehaviour(this.behaviourCode) && !behaviourManager.IsOverriding())
 		{
