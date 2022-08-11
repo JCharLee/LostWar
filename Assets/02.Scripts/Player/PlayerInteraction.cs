@@ -13,7 +13,7 @@ public class PlayerInteraction : MonoBehaviour
     private readonly Collider[] cols = new Collider[3];
     [SerializeField] int numFound;
 
-    private IInteraction interactable;
+    public IInteraction interactable;
     private UIManager uiManager;
 
     [SerializeField] private QuestData questData;

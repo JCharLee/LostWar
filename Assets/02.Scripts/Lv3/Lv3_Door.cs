@@ -21,6 +21,12 @@ public class Lv3_Door : MonoBehaviour, IInteraction
 
     public virtual string interactionPrompt => prompt;
 
+    public Coroutine CastRoutine => throw new System.NotImplementedException();
+
+    public Coroutine MoveRoutine => throw new System.NotImplementedException();
+
+    public float CastingTime => throw new System.NotImplementedException();
+
     protected virtual void Awake()
     {
         door = transform.GetChild(1).gameObject;

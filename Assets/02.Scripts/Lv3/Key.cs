@@ -16,6 +16,12 @@ public class Key : MonoBehaviour, IInteraction
 
     public string interactionPrompt => prompt;
 
+    public Coroutine CastRoutine => throw new System.NotImplementedException();
+
+    public Coroutine MoveRoutine => throw new System.NotImplementedException();
+
+    public float CastingTime => throw new System.NotImplementedException();
+
     void Start()
     {
         prompt = "[F] 획득하기";

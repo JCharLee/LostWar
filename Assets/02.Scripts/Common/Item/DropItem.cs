@@ -11,6 +11,12 @@ public class DropItem : MonoBehaviour, IInteraction
 
     public string interactionPrompt => prompt;
 
+    public virtual Coroutine CastRoutine => null;
+
+    public virtual Coroutine MoveRoutine => null;
+
+    public virtual float CastingTime => throw new System.NotImplementedException();
+
     private void Start()
     {
         prompt = "[F] 아이템 줍기";

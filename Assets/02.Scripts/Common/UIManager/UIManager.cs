@@ -81,9 +81,6 @@ public class UIManager : MonoBehaviour
 
     public GameObject fadeObject;
 
-    public Coroutine castRoutine;
-    public Coroutine moveRoutine;
-
     private TalkManager talkManager;
     private QuestManager questManager;
     public static UIManager instance = null;
@@ -226,16 +223,6 @@ public class UIManager : MonoBehaviour
             Inventory(inventoryOn);
         }
 
-        if (casting)
-        {
-            if (basicBehaviour.IsMoving())
-            {
-                StopCoroutine(moveRoutine);
-                StopCasting();
-                StartCoroutine(NoticeText(false, "중간에 움직여서 취소됐습니다."));
-            }
-        }
-
         if (dropOn)
             if (basicBehaviour.IsMoving())
                 CloseDropPanel();
@@ -347,12 +334,6 @@ public class UIManager : MonoBehaviour
         casting = false;
         castingBar_back.SetActive(false);
         castingBar.fillAmount = 0f;
-
-        if (castRoutine != null)
-        {
-            StopCoroutine(castRoutine);
-            castRoutine = null;
-        }
     }
     #endregion
 

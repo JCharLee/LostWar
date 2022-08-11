@@ -35,6 +35,12 @@ public class Lv1_Door : MonoBehaviour, IInteraction
 
     public string interactionPrompt => prompt;
 
+    public Coroutine CastRoutine => throw new System.NotImplementedException();
+
+    public Coroutine MoveRoutine => throw new System.NotImplementedException();
+
+    public float CastingTime => throw new System.NotImplementedException();
+
     public bool Action(PlayerInteraction interactor)
     {
         if (DataManager.instance.gameData.questId >= 20)

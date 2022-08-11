@@ -7,8 +7,21 @@ public class ItemBox : DropItem
 {
     private float castTime = 2f;
 
+    private IInteraction interactable;
+    private Coroutine castRoutine;
+    private Coroutine moveRoutine;
+
+    private BasicBehaviour basicBehaviour;
+
+    public override Coroutine CastRoutine => castRoutine;
+    public override Coroutine MoveRoutine => moveRoutine;
+    public override float CastingTime => castTime;
+
     private void Start()
     {
+        interactable = this;
+
+        basicBehaviour = FindObjectOfType<BasicBehaviour>();
         prompt = "[F] 상자 열기";
         InitItem();
     }
@@ -24,19 +37,35 @@ public class ItemBox : DropItem
             Destroy(FindObjectOfType<ItemBox>());
             return;
         }
+
+        if (interactable != PlayerInteraction.instance.interactable) return;
+
+        if (UIManager.instance.casting)
+        {
+            if (basicBehaviour.IsMoving())
+            {
+                StopCoroutine(castRoutine);
+                StopCoroutine(moveRoutine);
+                UIManager.instance.StopCasting();
+                castRoutine = null;
+
+                StartCoroutine(UIManager.instance.NoticeText(false, "중간에 움직여서 취소됐습니다."));
+            }
+        }
     }
 
     public override bool Action(PlayerInteraction interactor)
     {
-        UIManager.instance.moveRoutine = StartCoroutine(ItemboxOpen());
+        moveRoutine = StartCoroutine(ItemboxOpen());
         return true;
     }
 
     IEnumerator ItemboxOpen()
     {
-        UIManager.instance.castRoutine = StartCoroutine(UIManager.instance.InteractionCasting(castTime));
-        if (UIManager.instance.castRoutine == null) UIManager.instance.moveRoutine = null;
+        castRoutine = StartCoroutine(UIManager.instance.InteractionCasting(castTime));
         yield return new WaitForSeconds(castTime);
+        castRoutine = null;
+        moveRoutine = null;
         UIManager.instance.OpenDropPanel(this);
     }
 

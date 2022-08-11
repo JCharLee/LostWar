@@ -20,6 +20,10 @@ public class Elevator : MonoBehaviour, IInteraction
     private bool isDown = false;
     public bool onElevator = false;
 
+    private IInteraction interactable;
+    private Coroutine castRoutine;
+    private Coroutine moveRoutine;
+
     ElevatorDoor topDoor;
     ElevatorDoor bottomDoor;
     UIManager uiManager;
@@ -29,6 +33,8 @@ public class Elevator : MonoBehaviour, IInteraction
 
     void Awake()
     {
+        interactable = this;
+
         elevatorFloor = GameObject.Find("Elevator").transform.GetChild(1).transform;
         topFloor = GameObject.Find("Elevator").transform.GetChild(5).transform;
         bottomFloor = GameObject.Find("Elevator").transform.GetChild(6).transform;
@@ -43,6 +49,11 @@ public class Elevator : MonoBehaviour, IInteraction
         basicBehaviour = FindObjectOfType<BasicBehaviour>();
     }
 
+    public string interactionPrompt => prompt;
+    public Coroutine CastRoutine => castRoutine;
+    public Coroutine MoveRoutine => moveRoutine;
+    float IInteraction.CastingTime => castingTime;
+
     void Start()
     {
         mr.material = mat[0];
@@ -52,12 +63,29 @@ public class Elevator : MonoBehaviour, IInteraction
         prompt = "[F] 엘레베이터 작동";
     }
 
-    public string interactionPrompt => prompt;
+    private void Update()
+    {
+        if (interactable != PlayerInteraction.instance.interactable) return;
+
+        if (UIManager.instance.casting)
+        {
+            if (basicBehaviour.IsMoving())
+            {
+                StopCoroutine(castRoutine);
+                StopCoroutine(moveRoutine);
+                UIManager.instance.StopCasting();
+                castRoutine = null;
+                moveRoutine = null;
+
+                StartCoroutine(UIManager.instance.NoticeText(false, "중간에 움직여서 취소됐습니다."));
+            }
+        }
+    }
 
     public bool Action(PlayerInteraction interactor)
     {
         isDown = !isDown;
-        uiManager.moveRoutine = StartCoroutine(ElevatorMove());
+        moveRoutine = StartCoroutine(ElevatorMove());
         return true;
     }
 
@@ -67,9 +95,10 @@ public class Elevator : MonoBehaviour, IInteraction
 
         if (onElevator)
         {
-            uiManager.castRoutine = StartCoroutine(uiManager.InteractionCasting(castingTime));
-            if (uiManager.castRoutine == null) uiManager.moveRoutine = null;
+            castRoutine = StartCoroutine(uiManager.InteractionCasting(castingTime));
             yield return new WaitForSeconds(castingTime);
+            castRoutine = null;
+            moveRoutine = null;
             if (isDown)
             {
                 if (elevatorFloor.position != bottomFloor.position)

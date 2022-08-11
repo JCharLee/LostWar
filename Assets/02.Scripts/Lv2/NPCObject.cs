@@ -36,6 +36,12 @@ public class NPCObject : MonoBehaviour, IInteraction
 
     public virtual string interactionPrompt => prompt;
 
+    public Coroutine CastRoutine => throw new System.NotImplementedException();
+
+    public Coroutine MoveRoutine => throw new System.NotImplementedException();
+
+    public float CastingTime => throw new System.NotImplementedException();
+
     public virtual bool Action(PlayerInteraction interactor)
     {
         uiManager.Action(this.gameObject);

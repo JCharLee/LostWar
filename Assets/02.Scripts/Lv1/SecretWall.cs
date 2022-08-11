@@ -12,8 +12,11 @@ public class SecretWall : MonoBehaviour, IInteraction
     [SerializeField] private float moveTime;
     [SerializeField] private float current;
     private float castingTime = 3.0f;
-
     string prompt;
+
+    private IInteraction interactable;
+    private Coroutine castRoutine;
+    private Coroutine moveRoutine;
 
     private UIManager uiManager;
     private BasicBehaviour basicBehaviour;
@@ -22,6 +25,8 @@ public class SecretWall : MonoBehaviour, IInteraction
 
     void Start()
     {
+        interactable = this;
+
         secretWall = GetComponent<Transform>();
         openPoint = GameObject.Find("OpenPoint").GetComponent<Transform>();
 
@@ -37,17 +42,43 @@ public class SecretWall : MonoBehaviour, IInteraction
 
     public string interactionPrompt => prompt;
 
+    public Coroutine CastRoutine => castRoutine;
+
+    public Coroutine MoveRoutine => moveRoutine;
+
+    float IInteraction.CastingTime => castingTime;
+
+    private void Update()
+    {
+        if (interactable != PlayerInteraction.instance.interactable) return;
+
+        if (UIManager.instance.casting)
+        {
+            if (basicBehaviour.IsMoving())
+            {
+                StopCoroutine(castRoutine);
+                StopCoroutine(moveRoutine);
+                UIManager.instance.StopCasting();
+                castRoutine = null;
+                moveRoutine = null;
+
+                StartCoroutine(UIManager.instance.NoticeText(false, "중간에 움직여서 취소됐습니다."));
+            }
+        }
+    }
+
     public bool Action(PlayerInteraction interactor)
     {
-        uiManager.moveRoutine = StartCoroutine(WallOpen());
+        moveRoutine = StartCoroutine(WallOpen());
         return true;
     }
 
     IEnumerator WallOpen()
     {
-        uiManager.castRoutine = StartCoroutine(uiManager.InteractionCasting(castingTime));
-        if (uiManager.castRoutine == null) uiManager.moveRoutine = null;
+        castRoutine = StartCoroutine(uiManager.InteractionCasting(castingTime));
         yield return new WaitForSeconds(castingTime);
+        castRoutine = null;
+        moveRoutine = null;
         this.gameObject.layer = 0;
 
         current = 0f;
