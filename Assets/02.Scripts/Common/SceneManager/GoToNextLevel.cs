@@ -21,6 +21,7 @@ public class GoToNextLevel : MonoBehaviour
         {
             if (DataManager.instance.gameData.questId < questId)
             {
+                if (UIManager.instance.alert) return;
                 StartCoroutine(UIManager.instance.NoticeText(false, alert));
                 return;
             }

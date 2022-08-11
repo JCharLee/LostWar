@@ -65,8 +65,6 @@ public class Elevator : MonoBehaviour, IInteraction
 
     private void Update()
     {
-        if (interactable != PlayerInteraction.instance.interactable) return;
-
         if (UIManager.instance.casting)
         {
             if (basicBehaviour.IsMoving())
@@ -76,8 +74,8 @@ public class Elevator : MonoBehaviour, IInteraction
                 UIManager.instance.StopCasting();
                 castRoutine = null;
                 moveRoutine = null;
-
-                StartCoroutine(UIManager.instance.NoticeText(false, "중간에 움직여서 취소됐습니다."));
+                if (!UIManager.instance.alert)
+                    StartCoroutine(UIManager.instance.NoticeText(false, "중간에 움직여서 취소됐습니다."));
             }
         }
     }

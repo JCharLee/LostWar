@@ -72,8 +72,7 @@ public class MoveBehaviour : GenericBehaviour
 			return;
 		}
 
-		if (UIManager.instance.isAction || QuestManager.instance.IsStarting)
-			return;
+		if (UIManager.instance.isAction || QuestManager.instance.IsStarting) return;
 
 		if (!jump && Input.GetButtonDown(jumpButton) && behaviourManager.IsCurrentBehaviour(this.behaviourCode) && !behaviourManager.IsOverriding())
 		{
@@ -107,6 +106,7 @@ public class MoveBehaviour : GenericBehaviour
 		{
 			if (cur_long_weapon == null)
             {
+				if (UIManager.instance.alert) return;
 				StartCoroutine(UIManager.instance.NoticeText(false, "무기를 먼저 장착해야 합니다."));
 				return;
             }
@@ -123,6 +123,7 @@ public class MoveBehaviour : GenericBehaviour
 		{
 			if (cur_short_weapon == null)
             {
+				if (UIManager.instance.alert) return;
 				StartCoroutine(UIManager.instance.NoticeText(false, "무기를 먼저 장착해야 합니다."));
 				return;
 			}

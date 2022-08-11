@@ -29,6 +29,7 @@ public class GetDropItem : MonoBehaviour
         {
             if (uiManager.items[itemIdx].itemType != ItemType.potion)
             {
+                if (uiManager.alert) return;
                 StartCoroutine(uiManager.NoticeText(false, "가방이 가득 찼습니다."));
                 return;
             }
@@ -40,6 +41,7 @@ public class GetDropItem : MonoBehaviour
                     case PotionType.HP:
                         if (!DataManager.instance.gameData.hpPotion.Contains(DataManager.instance.gameData.hpPotion.Find(x => x.name == "HP Potion")))
                         {
+                            if (uiManager.alert) return;
                             StartCoroutine(uiManager.NoticeText(false, "가방이 가득 찼습니다."));
                             return;
                         }
@@ -47,6 +49,7 @@ public class GetDropItem : MonoBehaviour
                     case PotionType.SP:
                         if (!DataManager.instance.gameData.spPotion.Contains(DataManager.instance.gameData.spPotion.Find(x => x.name == "SP Potion")))
                         {
+                            if (uiManager.alert) return;
                             StartCoroutine(uiManager.NoticeText(false, "가방이 가득 찼습니다."));
                             return;
                         }

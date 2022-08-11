@@ -38,8 +38,6 @@ public class ItemBox : DropItem
             return;
         }
 
-        if (interactable != PlayerInteraction.instance.interactable) return;
-
         if (UIManager.instance.casting)
         {
             if (basicBehaviour.IsMoving())
@@ -48,8 +46,8 @@ public class ItemBox : DropItem
                 StopCoroutine(moveRoutine);
                 UIManager.instance.StopCasting();
                 castRoutine = null;
-
-                StartCoroutine(UIManager.instance.NoticeText(false, "중간에 움직여서 취소됐습니다."));
+                if (!UIManager.instance.alert)
+                    StartCoroutine(UIManager.instance.NoticeText(false, "중간에 움직여서 취소됐습니다."));
             }
         }
     }

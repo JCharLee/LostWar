@@ -407,6 +407,7 @@ public class GameManager : MonoBehaviour
             case PotionType.HP:
                 if (DataManager.instance.gameData.hp >= DataManager.instance.gameData.maxHp)
                 {
+                    if (UIManager.instance.alert) return;
                     StartCoroutine(UIManager.instance.NoticeText(false, "이미 체력이 가득 차 있습니다."));
                     return;
                 }
@@ -414,6 +415,7 @@ public class GameManager : MonoBehaviour
             case PotionType.SP:
                 if (DataManager.instance.gameData.sp >= DataManager.instance.gameData.maxSp)
                 {
+                    if (UIManager.instance.alert) return;
                     StartCoroutine(UIManager.instance.NoticeText(false, "이미 기력이 가득 차 있습니다."));
                     return;
                 }

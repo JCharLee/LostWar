@@ -25,6 +25,11 @@ public class DropItem : MonoBehaviour, IInteraction
 
     private void Update()
     {
+        if (UIManager.instance.isAction)
+            gameObject.layer = 0;
+        else
+            gameObject.layer = 8;
+
         if (items[0] == null && items[1] == null && items[2] == null)
         {
             if (UIManager.instance.dropOn)

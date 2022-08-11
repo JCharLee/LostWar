@@ -8,6 +8,7 @@ public class QuestGiver : MonoBehaviour, IInteraction
     [SerializeField] private PlayerInteraction player;
     [SerializeField] private int objectID = 0;
 
+    public IInteraction interactable;
     private UIManager uiManager;
 
     public int ObjectID => objectID;
@@ -24,6 +25,7 @@ public class QuestGiver : MonoBehaviour, IInteraction
     {
         questManager = GameObject.Find("QuestManager").GetComponent<QuestManager>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInteraction>();
+        interactable = this;
         uiManager = GameObject.Find("UI").GetComponent<UIManager>();
     }
 

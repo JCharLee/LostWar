@@ -266,7 +266,10 @@ public class UIManager : MonoBehaviour
         {
             hpSkill.gameObject.SetActive(false);
             if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                if (alert) return;
                 StartCoroutine(NoticeText(false, "포션이 없습니다."));
+            }
         }
 
         if (spPotion != null)
@@ -281,7 +284,10 @@ public class UIManager : MonoBehaviour
         {
             spSkill.gameObject.SetActive(false);
             if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                if (alert) return;
                 StartCoroutine(NoticeText(false, "포션이 없습니다."));
+            }
         }
     }
 
@@ -349,8 +355,8 @@ public class UIManager : MonoBehaviour
         noticeText.text = _text;
         noticeText.gameObject.SetActive(true);
         yield return new WaitForSeconds(cautionDurationTime);
-        noticeText.gameObject.SetActive(false);
         alert = false;
+        noticeText.gameObject.SetActive(false);
     }
     #endregion
 
@@ -446,6 +452,7 @@ public class UIManager : MonoBehaviour
     #region [아이템 드랍]
     public void OpenDropPanel(DropItem obj)
     {
+        if (isAction) return;
         Inventory(false);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -550,6 +557,7 @@ public class UIManager : MonoBehaviour
     {
         if (DataManager.instance.gameData.questId < 50)
         {
+            if (alert) return;
             StartCoroutine(NoticeText(false, "1스테이지에 있는 동안은 장비를 버릴 수 없습니다."));
             return;
         }

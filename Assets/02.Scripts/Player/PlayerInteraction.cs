@@ -10,7 +10,7 @@ public class PlayerInteraction : MonoBehaviour
     public bool hasKey1 = false;
     public bool hasKey2 = false;
 
-    private readonly Collider[] cols = new Collider[3];
+    private readonly Collider[] cols = new Collider[2];
     [SerializeField] int numFound;
 
     public IInteraction interactable;
@@ -70,8 +70,7 @@ public class PlayerInteraction : MonoBehaviour
 
         if (numFound > 0)
         {
-            for (int i = 0; i < numFound; i++)
-                interactable = cols[i].GetComponent<IInteraction>();
+            interactable = cols[0].GetComponent<IInteraction>();
 
             if (interactable != null)
             {

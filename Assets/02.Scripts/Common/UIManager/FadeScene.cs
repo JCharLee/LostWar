@@ -83,13 +83,13 @@ public class FadeScene : MonoBehaviour
                     Destroy(FindObjectOfType<GameManager>().gameObject);
                     break;
             }
-            sceneName = "Finish";
             if (sceneName != "Start" && sceneName != "Finish")
             {
                 FindObjectOfType<Health>().ani.SetTrigger("Awake");
                 FindObjectOfType<Health>().ani.SetFloat("Speed", 0f);
                 FindObjectOfType<Health>().isdie = false;
             }
+            sceneName = "Finish";
         }
         else if (fadeCg.alpha == 1)
         {
