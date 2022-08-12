@@ -214,13 +214,13 @@ public class UIManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            AllUiClose();
             if (questManager.IsStarting || dropOn || gameOver) return;
             if (!inventoryOn && !dropOn)
             {
                 isPaused = !isPaused;
                 PauseOpen(isPaused);
             }
-            AllUiClose();
         }
 
         if (Input.GetKeyDown(KeyCode.I))
