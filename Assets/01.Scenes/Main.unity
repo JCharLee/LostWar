@@ -5686,6 +5686,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeScene: {fileID: 1838638977}
+  source: {fileID: 0}
+  btnSfx: {fileID: 0}
 --- !u!1 &485672783
 GameObject:
   m_ObjectHideFlags: 0
