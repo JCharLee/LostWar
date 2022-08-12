@@ -214,13 +214,14 @@ public class UIManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            AllUiClose();
             if (questManager.IsStarting || dropOn || gameOver) return;
             if (!inventoryOn && !dropOn)
             {
                 isPaused = !isPaused;
                 PauseOpen(isPaused);
             }
+            else if (inventoryOn || dropOn)
+                AllUiClose();
         }
 
         if (Input.GetKeyDown(KeyCode.I))
@@ -756,6 +757,7 @@ public class UIManager : MonoBehaviour
                 script.enabled = false;
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+            isPaused = true;
         }
         else
         {
@@ -764,6 +766,7 @@ public class UIManager : MonoBehaviour
                 script.enabled = true;
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+            isPaused = false;
         }
     }
 
